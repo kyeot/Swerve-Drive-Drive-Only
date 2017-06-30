@@ -71,6 +71,25 @@ public class Robot extends IterativeRobot {
     
     public static AHRS getNavSensor() {
 		return navSensor;
+    }
+    
+    public static String parseMatchTime() {
+    	double s = DriverStation.getInstance().getMatchTime();
+    	
+    	if(s != -1.0) {
+	    	if(DriverStation.getInstance().isAutonomous()) {
+	    		int t = (int) (15-Math.ceil(s));
+	    		return ":" + Double.toString(t) + " (Auton)";
+	    	} else if(DriverStation.getInstance().isOperatorControl()) {
+	    		int t = (int) (135-Math.ceil(s));
+	    		return Double.toString(Math.floor(t/60)) + ":" + Double.toString(t%60) + " (TeleOp)";
+	    	} else {
+	    		return "Disabled";
+	    	}
+    	} else {
+    		return "Use Practice mode to show match time";
+    	}
     	
     }
+    
 }

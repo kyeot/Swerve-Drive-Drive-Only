@@ -9,7 +9,7 @@ public class LogData implements Loop{
 	EventLogger batteryHandler = new EventLogger("Brown Out!"){
 		@Override
 		public boolean event() {
-			return DriverStation.getInstance().getBatteryVoltage() < 8.0;
+			return DriverStation.getInstance().isBrownedOut();
 		}
 	};
 
