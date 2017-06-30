@@ -10,6 +10,8 @@ public class Constants {
 	
 	public static final double kAngleToEncoderTick = 0.875;
 	
+	public static final double kEventDelay = 4;
+	
 	public static final int kDriverControllerId = 0;
 	
 	public static final int kFrontLeftWheelId = 5;

@@ -1,5 +1,8 @@
 package org.usfirst.frc2783.robot;
 
+import java.io.File;
+import java.io.IOException;
+
 import org.usfirst.frc2783.loops.LogData;
 import org.usfirst.frc2783.loops.Looper;
 import org.usfirst.frc2783.subystems.SwerveDriveBase;
@@ -23,7 +26,16 @@ public class Robot extends IterativeRobot {
     
     public void robotInit() {
         oi = new OI();
+        
+        looper.addLoop(new LogData());
         looper.startLoops();
+        
+        File logFile = new File("/home/lvuser/log.txt");
+        try {
+			logFile.createNewFile();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
         
         try {
 	         navSensor = new AHRS(SPI.Port.kMXP);
