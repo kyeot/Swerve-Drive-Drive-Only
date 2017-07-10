@@ -1,0 +1,3 @@
+C:/Users/Calasada/Documents/vision_app/app/.externalNativeBuild/cmake/release/armeabi/CMakeFiles/rebuild_cache.dir
+C:/Users/Calasada/Documents/vision_app/app/.externalNativeBuild/cmake/release/armeabi/CMakeFiles/JNIPart.dir
+C:/Users/Calasada/Documents/vision_app/app/.externalNativeBuild/cmake/release/armeabi/CMakeFiles/edit_cache.dir

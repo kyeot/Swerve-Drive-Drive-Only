@@ -1,0 +1,53 @@
+
+{
+	"buildFiles" : [ "C:/Users/Calasada/Documents/vision_app/app/CMakeLists.txt" ],
+	"cFileExtensions" : [ "c" ],
+	"cleanCommands" : 
+	[
+		"C:\\Users\\Calasada\\AppData\\Local\\Android\\Sdk\\cmake\\3.6.4111459\\bin\\cmake.exe --build C:\\Users\\Calasada\\Documents\\vision_app\\app\\.externalNativeBuild\\cmake\\debug\\armeabi-v7a --target clean"
+	],
+	"cppFileExtensions" : [ "cpp" ],
+	"libraries" : 
+	{
+		"JNIPart-Debug-armeabi-v7a" : 
+		{
+			"abi" : "armeabi-v7a",
+			"artifactName" : "JNIPart",
+			"buildCommand" : "C:\\Users\\Calasada\\AppData\\Local\\Android\\Sdk\\cmake\\3.6.4111459\\bin\\cmake.exe --build C:\\Users\\Calasada\\Documents\\vision_app\\app\\.externalNativeBuild\\cmake\\debug\\armeabi-v7a --target JNIPart",
+			"buildType" : "debug",
+			"files" : 
+			[
+				
+				{
+					"flags" : "  --target=armv7-none-linux-androideabi --gcc-toolchain=C:/Users/Calasada/AppData/Local/Android/sdk/ndk-bundle/toolchains/arm-linux-androideabi-4.9/prebuilt/windows-x86_64 --sysroot=C:/Users/Calasada/AppData/Local/Android/sdk/ndk-bundle/sysroot -DJNIPart_EXPORTS -I..\\..\\..\\..\\src\\main\\jni  -isystem C:/Users/Calasada/AppData/Local/Android/sdk/ndk-bundle/sysroot/usr/include/arm-linux-androideabi -D__ANDROID_API__=21 -g -DANDROID -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -march=armv7-a -mfloat-abi=softfp -mfpu=vfpv3-d16 -fno-integrated-as -mthumb -Wa,--noexecstack -Wformat -Werror=format-security  -O0 -fno-limit-debug-info  -fPIC      -c ",
+					"src" : "C:/Users/Calasada/Documents/vision_app/app/src/main/jni/jni.c",
+					"workingDirectory" : "C:/Users/Calasada/Documents/vision_app/app/.externalNativeBuild/cmake/debug/armeabi-v7a"
+				},
+				
+				{
+					"flags" : "  --target=armv7-none-linux-androideabi --gcc-toolchain=C:/Users/Calasada/AppData/Local/Android/sdk/ndk-bundle/toolchains/arm-linux-androideabi-4.9/prebuilt/windows-x86_64 --sysroot=C:/Users/Calasada/AppData/Local/Android/sdk/ndk-bundle/sysroot  -DJNIPart_EXPORTS -I..\\..\\..\\..\\src\\main\\jni -isystem C:\\Users\\Calasada\\AppData\\Local\\Android\\sdk\\ndk-bundle\\sources\\cxx-stl\\gnu-libstdc++\\4.9\\include -isystem C:\\Users\\Calasada\\AppData\\Local\\Android\\sdk\\ndk-bundle\\sources\\cxx-stl\\gnu-libstdc++\\4.9\\libs\\armeabi-v7a\\include -isystem C:\\Users\\Calasada\\AppData\\Local\\Android\\sdk\\ndk-bundle\\sources\\cxx-stl\\gnu-libstdc++\\4.9\\include\\backward  -isystem C:/Users/Calasada/AppData/Local/Android/sdk/ndk-bundle/sysroot/usr/include/arm-linux-androideabi -D__ANDROID_API__=21 -g -DANDROID -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -march=armv7-a -mfloat-abi=softfp -mfpu=vfpv3-d16 -fno-integrated-as -mthumb -Wa,--noexecstack -Wformat -Werror=format-security   -std=gnu++11 -O0 -fno-limit-debug-info  -fPIC    -c ",
+					"src" : "C:/Users/Calasada/Documents/vision_app/app/src/main/jni/image_processor.cpp",
+					"workingDirectory" : "C:/Users/Calasada/Documents/vision_app/app/.externalNativeBuild/cmake/debug/armeabi-v7a"
+				}
+			],
+			"output" : "C:/Users/Calasada/Documents/vision_app/app/build/intermediates/cmake/debug/obj/armeabi-v7a/libJNIPart.so",
+			"toolchain" : "4090797333"
+		},
+		"lib_opencv-Debug-armeabi-v7a" : 
+		{
+			"abi" : "armeabi-v7a",
+			"artifactName" : "lib_opencv",
+			"buildType" : "debug",
+			"output" : "C:/Users/Calasada/Documents/vision_app/app/src/main/jniLibs/armeabi-v7a/libopencv_java3.so",
+			"toolchain" : "4090797333"
+		}
+	},
+	"toolchains" : 
+	{
+		"4090797333" : 
+		{
+			"cCompilerExecutable" : "C:/Users/Calasada/AppData/Local/Android/sdk/ndk-bundle/toolchains/llvm/prebuilt/windows-x86_64/bin/clang.exe",
+			"cppCompilerExecutable" : "C:/Users/Calasada/AppData/Local/Android/sdk/ndk-bundle/toolchains/llvm/prebuilt/windows-x86_64/bin/clang++.exe"
+		}
+	}
+}
