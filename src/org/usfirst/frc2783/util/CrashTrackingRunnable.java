@@ -7,6 +7,7 @@ public abstract class CrashTrackingRunnable implements Runnable {
 		try {
 			runCrashTracked();
 		} catch(Throwable t) {
+			Logger.error("Exception caught in Loops");
 			throw(t);
 		}
 	}

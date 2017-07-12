@@ -6,6 +6,7 @@ import java.io.IOException;
 import org.usfirst.frc2783.loops.LogData;
 import org.usfirst.frc2783.loops.Looper;
 import org.usfirst.frc2783.subystems.SwerveDriveBase;
+import org.usfirst.frc2783.util.Logger;
 
 import com.kauailabs.navx.frc.AHRS;
 
@@ -28,6 +29,7 @@ public class Robot extends IterativeRobot {
         oi = new OI();
         
         looper.addLoop(new LogData());
+        Logger.info("Starting Loops");
         looper.startLoops();
         
         File logFile = new File("/home/lvuser/log.txt");
@@ -52,6 +54,7 @@ public class Robot extends IterativeRobot {
     }
 
     public void autonomousInit() {
+    	Logger.info("Starting Autonomous");
     }
     
     public void autonomousPeriodic() {
@@ -59,6 +62,7 @@ public class Robot extends IterativeRobot {
     }
 
     public void teleopInit() {
+    	Logger.info("Starting Teleop");
     }
 
     public void teleopPeriodic() {
@@ -79,15 +83,15 @@ public class Robot extends IterativeRobot {
     	if(s != -1.0) {
 	    	if(DriverStation.getInstance().isAutonomous()) {
 	    		int t = (int) (15-Math.ceil(s));
-	    		return ":" + Double.toString(t) + " (Auton)";
+	    		return ":" + Integer.toString((int) t) + " (Auton)";
 	    	} else if(DriverStation.getInstance().isOperatorControl()) {
 	    		int t = (int) (135-Math.ceil(s));
-	    		return Double.toString(Math.floor(t/60)) + ":" + Double.toString(t%60) + " (TeleOp)";
+	    		return Integer.toString((int) Math.floor(t/60)) + ":" + Integer.toString((int) t%60) + " (TeleOp)";
 	    	} else {
 	    		return "Disabled";
 	    	}
     	} else {
-    		return "Use Practice mode to show match time";
+    		return "Not Practice";
     	}
     	
     }

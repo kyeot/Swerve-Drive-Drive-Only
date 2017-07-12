@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 
 public class LogData implements Loop{
 	
-	EventLogger batteryHandler = new EventLogger("Brown Out!"){
+	EventLogger batteryHandler = new EventLogger("Battery Browned Out!", "WARN"){
 		@Override
 		public boolean event() {
 			return DriverStation.getInstance().isBrownedOut();
