@@ -8,6 +8,11 @@ import org.usfirst.frc2783.util.CrashTrackingRunnable;
 
 import edu.wpi.first.wpilibj.Notifier;
 
+/**
+ *
+ * Loops the loops
+ *
+ */
 public class Looper {
 	
 	CrashTrackingRunnable runnable = new CrashTrackingRunnable() {

@@ -17,6 +17,9 @@ import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
+ * Subsystem used to control the Swerve Drive
+ * 
+ * 
  *
  */
 public class SwerveDriveBase extends Subsystem {
@@ -28,7 +31,11 @@ public class SwerveDriveBase extends Subsystem {
 	
 	private double angleOffset = 0;
 	
-	//Class for controlling PIDOutput
+	/**
+	 * 
+	 * Class used to set the swivel motor to the value calculated by the PID controller
+	 *
+	 */
 	public class PIDOutputClass implements PIDOutput {
 		private VictorSP motor;
 		
@@ -42,7 +49,11 @@ public class SwerveDriveBase extends Subsystem {
 		}
 	}
 	
-	//Class used for making and controlling Swerve Modules
+	/**
+	 * 
+	 * Class used to make a swerve module
+	 *
+	 */
 	public class SwerveModule {
 		CANTalon driveMot;
 		VictorSP swivelMot;
@@ -54,7 +65,12 @@ public class SwerveDriveBase extends Subsystem {
 		
 		double lastAngle;
 		
-		//Constructor
+		/**
+		 * Constructs the swerve module
+		 * @param swivelMot The motor that controls the module's rotation
+		 * @param driveMot The motor that controls the module's drive speed
+		 * @param enc Encoder that tracks the angle of the swivel motor
+		 */
 		public SwerveModule(
 				VictorSP swivelMot,
 				CANTalon driveMot,
@@ -84,7 +100,12 @@ public class SwerveDriveBase extends Subsystem {
 			enc.setSamplesToAverage(127);
 		}
 		
-		//Sets a swerve modules angle and speed
+		/**
+		 * 
+		 * Method that sets a module's angle of the module and the speed of the drive wheel
+		 * @param angle Angle of the module
+		 * @param speed Speed of the drive wheel
+		 */
 		public void setModule(double angle, double speed) {
 			
 			//Keeps the angle within 0 and 360
@@ -169,6 +190,9 @@ public class SwerveDriveBase extends Subsystem {
 		return Math.sin(Math.toRadians(deg));
 	}
 	
+	/**
+	 * Constructs the swerve modules, each with a VictorSP, a CANTalon, and an Encoder
+	 */
     public SwerveDriveBase() {
     	super();
     	
@@ -219,7 +243,11 @@ public class SwerveDriveBase extends Subsystem {
         setDefaultCommand(new SwerveDrive(ControlType.CONTROLLER));
     }
     
-    //Small, simple tank drive method
+    /**
+     * A simple tank drive that uses the swerve modules with a left value and a right value
+     * @param leftValue Speed of the left side
+     * @param rightValue Speed of the right side
+     */
     public void tankDrive(double leftValue, double rightValue) {
     	if (DriverStation.getInstance().isFMSAttached() && DriverStation.getInstance().getMatchTime() < 4) {
     		setRobotBrake(true);
@@ -234,7 +262,16 @@ public class SwerveDriveBase extends Subsystem {
     	rlMod.setSpeed(leftValue);
     }
     
-    //Method for calculating and setting Speed and Angle of individual wheels given 3 movement inputs
+    /**
+     * Method for calculating and setting Speed and Angle of individual wheels given 3 movement inputs
+     * 
+     * Swerve Math Taken from: https://www.chiefdelphi.com/media/papers/2426
+     * 
+     * @param fbMot Forward/Backward Motion
+     * @param rlMot Right/Left Motion
+     * @param rotMot Rotation Motion
+     * @param fieldOriented If it's field oriented or not
+     */
     public void swerveDrive(double fbMot, double rlMot, double rotMot, boolean fieldOriented) {
     	//Swerve Math Taken from: https://www.chiefdelphi.com/media/papers/2426
     	
@@ -289,6 +326,13 @@ public class SwerveDriveBase extends Subsystem {
     	
     }
     
+    /**
+     * A different way of controlling the swerve drive that drives in a direction you give it with a speed that you give it
+     * @param angle The angle at which the robot drives
+     * @param speed The speed at which the robot drives
+     * @param rotation How fast the robot rotates
+     * @param fieldOriented Whether or not the robot is field oriented
+     */
     public void polarSwerveDrive(double angle, double speed, double rotation, boolean fieldOriented) {
     	swerveDrive(
     			cosDeg(angle)*speed,

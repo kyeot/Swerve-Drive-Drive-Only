@@ -10,6 +10,11 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class SwerveDrive extends Command {
 	
+	/**
+	 * 
+	 * Enum used to set the way in which swerve is controlled
+	 *
+	 */
 	public enum ControlType {
 		CONTROLLER(1, 0, 4, 5, 4, 3, 6),
 		JOYSTICK(1, 0, 2, 1, 2, 4, 6);
@@ -22,7 +27,17 @@ public class SwerveDrive extends Command {
 		int centerGyro;
 		int zeroModules;
 		int dockingMode;
-		
+	
+		/**
+		 * Constructs the variables based on control type
+		 * @param fbAxis Forward/Backward axis
+		 * @param rlAxis Right/Left axis
+		 * @param rotAxis Rotation axis
+		 * @param doubleSpeed Used to double speed if told
+		 * @param centerGyro Used to reset the gyroscope
+		 * @param zeroModules Zero's all the module's encoders
+		 * @param dockingMode Used to set the robot to docking mode
+		 */
 		private ControlType(
 				int fbAxis, int rlAxis, int rotAxis,
 				int doubleSpeed, int centerGyro, int zeroModules, int dockingMode) {
