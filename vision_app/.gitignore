@@ -37,3 +37,6 @@ app/src/main/libs
 app/src/main/obj
 
 /.idea/
+
+#NDK
+/app/.externalNativeBuild/
