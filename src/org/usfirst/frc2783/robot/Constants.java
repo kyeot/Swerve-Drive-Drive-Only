@@ -12,6 +12,8 @@ public class Constants {
 	
 	public static final double kEventDelay = 4;
 	
+	public static int kAndroidAppTcpPort = 8254;
+	
 	public static final int kDriverControllerId = 0;
 	
 	public static final int kFrontLeftWheelId = 5;
