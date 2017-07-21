@@ -12,6 +12,13 @@ public class LogData implements Loop{
 			return DriverStation.getInstance().isBrownedOut();
 		}
 	};
+	
+	EventLogger dcHandler = new EventLogger("The Driver Station is Disconnected!", "WARN"){
+		@Override
+		public boolean event() {
+			return DriverStation.getInstance().isDSAttached();
+		}
+	};
 
 	@Override
 	public void onStart() {
@@ -21,6 +28,7 @@ public class LogData implements Loop{
 	@Override
 	public void onLoop() {
 		batteryHandler.handleEvent();
+		dcHandler.handleEvent();
 	}
 
 	@Override
