@@ -3,9 +3,6 @@ package org.usfirst.frc2783.loops;
 import org.usfirst.frc2783.vision.VisionUpdate;
 import org.usfirst.frc2783.vision.VisionUpdateReceiver;
 
-import edu.wpi.first.wpilibj.RobotState;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 /**
  * This function adds vision updates (from the Nexus smartphone) to a list in
  * RobotState. This helps keep track of goals detected by the vision system. The
