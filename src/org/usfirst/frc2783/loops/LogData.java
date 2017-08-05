@@ -16,7 +16,7 @@ public class LogData implements Loop{
 	EventLogger dcHandler = new EventLogger("The Driver Station is Disconnected!", "WARN"){
 		@Override
 		public boolean event() {
-			return DriverStation.getInstance().isDSAttached();
+			return !DriverStation.getInstance().isDSAttached();
 		}
 	};
 

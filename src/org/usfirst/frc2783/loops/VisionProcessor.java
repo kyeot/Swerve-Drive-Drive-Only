@@ -1,5 +1,6 @@
 package org.usfirst.frc2783.loops;
 
+import org.usfirst.frc2783.util.Logger;
 import org.usfirst.frc2783.vision.VisionUpdate;
 import org.usfirst.frc2783.vision.VisionUpdateReceiver;
 
@@ -49,6 +50,7 @@ public class VisionProcessor implements Loop, VisionUpdateReceiver {
 
     @Override
     public synchronized void gotUpdate(VisionUpdate update) {
+    	Logger.log("INFO", "gotUpdate");
         update_ = update;
     }
 
