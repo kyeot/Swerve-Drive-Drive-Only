@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -254,17 +255,17 @@ public class SwerveDriveBase extends Subsystem {
     	double C = fbMot - rotMot*(W/R);
     	double D = fbMot + rotMot*(W/R);
     	
-    	double frSpd = Math.sqrt((B*B) + (D*D));
-    	double flSpd = Math.sqrt((B*B) + (C*C));
-    	double rlSpd = Math.sqrt((A*A) + (C*C));
-    	double rrSpd = Math.sqrt((A*A) + (D*D));
+    	double frSpd = Math.sqrt((A*A) + (C*C));
+    	double flSpd = Math.sqrt((A*A) + (D*D));
+    	double rlSpd = Math.sqrt((B*B) + (D*D));
+    	double rrSpd = Math.sqrt((B*B) + (C*C));
     	
     	double t = 180/Math.PI;
     	
-    	double frAng = Math.atan2(B, D)*t;
-    	double flAng = Math.atan2(B, C)*t;
-    	double rlAng = Math.atan2(A, C)*t;
-    	double rrAng = Math.atan2(A, D)*t;
+    	double frAng = Math.atan2(A, C)*t;
+    	double flAng = Math.atan2(A, D)*t;
+    	double rlAng = Math.atan2(B, D)*t;
+    	double rrAng = Math.atan2(B, C)*t;
     	 
     	double max = frSpd;
     	if(max < flSpd) max = flSpd;
@@ -280,6 +281,8 @@ public class SwerveDriveBase extends Subsystem {
     		rlSpd /= max;
     		rrSpd /= max;
     	}
+    	
+    	SmartDashboard.putString("DB/String 0", Double.toString(frAng));
     	
     	//Set Wheel Speeds and Angles
     	frMod.setModule(frAng, frSpd);
