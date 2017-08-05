@@ -14,6 +14,15 @@ public class Constants {
 	
 	public static int kAndroidAppTcpPort = 8254;
 	
+	public static double cameraXOffset = 0.0;
+	public static double cameraYOffset = 0.0;
+	public static double cameraZOffset = 0.0;
+	public static double cameraYawOffset = 0.0;
+	public static double cameraPitchOffset = 0.0;
+	public static double cameraRollOffset = 0.0;
+	
+	public static double goalHeight = 89.0;
+	
 	public static final int kDriverControllerId = 0;
 	
 	public static final int kFrontLeftWheelId = 5;
