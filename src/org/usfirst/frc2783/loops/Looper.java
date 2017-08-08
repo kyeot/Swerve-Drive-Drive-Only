@@ -8,6 +8,12 @@ import org.usfirst.frc2783.util.CrashTrackingRunnable;
 
 import edu.wpi.first.wpilibj.Notifier;
 
+/**
+ * Manages a List of loops, starting and stopping them under a
+ * crash tracker.
+ * 
+ * @author 2783
+ */
 public class Looper {
 	
 	CrashTrackingRunnable runnable = new CrashTrackingRunnable() {

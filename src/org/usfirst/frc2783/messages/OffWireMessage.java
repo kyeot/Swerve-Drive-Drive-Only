@@ -7,6 +7,8 @@ import org.json.simple.parser.ParseException;
 /**
  * Used to convert Strings into OffWireMessage objects, which can be interpreted
  * as generic VisionMessages.
+ * 
+ * @author 254
  */
 public class OffWireMessage extends VisionMessage {
 

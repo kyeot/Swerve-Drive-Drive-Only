@@ -8,6 +8,12 @@ import org.usfirst.frc2783.util.Transform;
 import org.usfirst.frc2783.util.Vector;
 import org.usfirst.frc2783.vision.TargetInfo;
 
+/**
+ * Singleton class used to get useful Transformations of things tracked on the field,
+ *  i.e. the robot or vision targets
+ * 
+ * @author 2783
+ */
 public class FieldTransform {
 	public static FieldTransform fieldTransform = new FieldTransform();
 	

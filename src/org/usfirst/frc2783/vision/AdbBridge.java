@@ -11,6 +11,8 @@ import org.usfirst.frc2783.util.Logger;
  * to communicate to Android devices over USB.
  *
  * adb binary provided by https://github.com/Spectrum3847/RIOdroid
+ * 
+ * @author 254
  */
 public class AdbBridge {
     Path bin_location_;

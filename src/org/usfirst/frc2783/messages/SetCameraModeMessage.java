@@ -3,6 +3,8 @@ package org.usfirst.frc2783.messages;
 /**
  * A Message that contains and can set the state of the camera and intake
  * systems.
+ * 
+ * @author 254
  */
 public class SetCameraModeMessage extends VisionMessage {
 

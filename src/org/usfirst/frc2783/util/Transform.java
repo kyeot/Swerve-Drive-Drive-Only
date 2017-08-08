@@ -1,5 +1,12 @@
 package org.usfirst.frc2783.util;
 
+/**
+ * Combines a Vector and a Bearing
+ * 
+ * @author 2783
+ * @see Vector
+ * @see Bearing
+ */
 public class Transform {
 	
 	Vector translation;
