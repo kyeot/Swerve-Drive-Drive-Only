@@ -1,5 +1,12 @@
 package org.usfirst.frc2783.util;
 
+/**
+ * 2D Rotation, used in tandem with Vector
+ * 
+ * @author 2783
+ * @see Transform
+ * @see Vector
+ */
 public class Bearing {
 	double theta;
 	
@@ -8,7 +15,7 @@ public class Bearing {
 	}
 	
 	public Bearing(Vector v) {
-		theta = v.dir();
+		theta = v.dir().getTheta();
 	}
 	
 	public Bearing add(Bearing b) {
