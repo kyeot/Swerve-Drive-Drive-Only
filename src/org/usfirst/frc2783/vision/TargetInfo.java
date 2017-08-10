@@ -3,6 +3,8 @@ package org.usfirst.frc2783.vision;
 /**
  * A container class for Targets detected by the vision system, containing the
  * location in three-dimensional space.
+ * 
+ * @author 254
  */
 public class TargetInfo {
     protected double x = 1.0;

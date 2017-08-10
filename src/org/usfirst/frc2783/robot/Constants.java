@@ -1,18 +1,36 @@
 package org.usfirst.frc2783.robot;
 
+/**
+ * For storing unchanging variables that can be accessed anywhere in the code.
+ * 
+ * @author 2783
+ */
 public class Constants {
 	
 	public static final double kPeriod = 0.01;
 	
-	public static final double kSwerveP = 0.022;
-	public static final double kSwerveI = 0.04; 
-	public static final double kSwerveD = 0.025;
+	public static final double kSwerveModP = 0.022;
+	public static final double kSwerveModI = 0.04; 
+	public static final double kSwerveModD = 0.025;
+	
+	public static final double kSwerveP = 0.001;
+	public static final double kSwerveI = 0.001;
+	public static final double kSwerveD = 0.001;
 	
 	public static final double kAngleToEncoderTick = 0.875;
 	
 	public static final double kEventDelay = 4;
 	
-	public static int kAndroidAppTcpPort = 8254;
+	public static final int kAndroidAppTcpPort = 8254;
+	
+	public static final double cameraXOffset = 0.0;
+	public static final double cameraYOffset = 0.0;
+	public static final double cameraZOffset = 0.0;
+	public static final double cameraYawOffset = 0.0;
+	public static final double cameraPitchOffset = 0.0;
+	public static final double cameraRollOffset = 0.0;
+	
+	public static final double goalHeight = 89.0;
 	
 	public static final int kDriverControllerId = 0;
 	

@@ -1,18 +1,24 @@
 package org.usfirst.frc2783.commands;
 
+import org.usfirst.frc2783.robot.FieldTransform;
 import org.usfirst.frc2783.robot.OI;
 import org.usfirst.frc2783.robot.Robot;
+import org.usfirst.frc2783.subystems.SwerveController;
+import org.usfirst.frc2783.util.NavSensor;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
+ * Command to run swerve based on controller inputs,
+ * default command of SwerveDriveBase
  *
+ * @author 2783
  */
 public class SwerveDrive extends Command {
 	
 	public enum ControlType {
-		CONTROLLER(1, 0, 4, 5, 4, 3, 6),
-		JOYSTICK(1, 0, 2, 1, 2, 4, 6);
+		CONTROLLER(1, 0, 4, 5, 4, 3, 6, 1),
+		JOYSTICK(1, 0, 2, 1, 2, 4, 6, 7);
 		
 		int fbAxis;
 		int rlAxis;
@@ -23,9 +29,12 @@ public class SwerveDrive extends Command {
 		int zeroModules;
 		int dockingMode;
 		
+		int vision;
+		
 		private ControlType(
 				int fbAxis, int rlAxis, int rotAxis,
-				int doubleSpeed, int centerGyro, int zeroModules, int dockingMode) {
+				int doubleSpeed, int centerGyro, int zeroModules, int dockingMode,
+				int vision) {
 			
 			this.fbAxis = fbAxis;
 			this.rlAxis = rlAxis;
@@ -34,6 +43,7 @@ public class SwerveDrive extends Command {
 			this.centerGyro = centerGyro;
 			this.zeroModules = zeroModules;
 			this.dockingMode = dockingMode;
+			this.vision = vision;
 		}
 		
 		public double getFBAxis() {
@@ -64,9 +74,17 @@ public class SwerveDrive extends Command {
 			return OI.driver.getRawButton(dockingMode);
 		}
 		
+		public boolean getVisionButton() {
+			return OI.driver.getRawButton(vision);
+		}
+		
 	}
 
 	private ControlType controlType;
+	
+	NavSensor gyro = NavSensor.getInstance();
+	SwerveController swerveController = SwerveController.getInstance();
+	FieldTransform fieldTransform = FieldTransform.getInstance();
 
 	//Makes SwerveDrive require the subsystem swerveBase
     public SwerveDrive(ControlType controlType) {
@@ -111,15 +129,22 @@ public class SwerveDrive extends Command {
     	
     	//If Y is pressed resets the field orientation
     	if(controlType.getCenterGyroButton()) {
-    		Robot.swerveBase.resetGyroNorth(0, 0);
+    		gyro.resetGyroNorth(0, 0);
+    	}
+    	
+    	if(controlType.getVisionButton()) {
+    		swerveController.slide(fbValue, rlValue);
+    		swerveController.setPose(fieldTransform.getRobotToTargets().get(0).dir());
+    	} else {
+    		swerveController.move(fbValue, rlValue, rotValue);
     	}
     	
     	if(controlType.getDockingModeButton()) {
     		System.out.println("Docking Mode");
     		
-    		Robot.swerveBase.swerveDrive(rlValue, fbValue, rotValue, false);
+    		swerveController.update(false);
     	} else {
-    		Robot.swerveBase.swerveDrive(fbValue, rlValue, rotValue, true);
+    		swerveController.update(true);
     	}
     	
     }

@@ -4,6 +4,11 @@ import org.usfirst.frc2783.robot.Constants;
 
 import edu.wpi.first.wpilibj.Utility;
 
+/**
+ * Abstract class which executes code when the abstract method event() returns true.
+ * 
+ * @author 2783
+ */
 public abstract class EventLogger {
 	
 	String msg;
