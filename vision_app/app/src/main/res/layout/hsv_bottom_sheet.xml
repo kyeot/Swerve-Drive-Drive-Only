@@ -30,8 +30,13 @@
             android:layout_height="wrap_content"
             rsb:absoluteMaxValue="255"
             rsb:absoluteMinValue="0"
-            rsb:textAboveThumbsColor="@android:color/holo_blue_dark"
+            rsb:textAboveThumbsColor="@color/primary_material_light"
             rsb:showLabels="false"
+            rsb:barHeight="3dp"
+            rsb:thumbDisabled="@drawable/custom_slider_thumb"
+            rsb:thumbNormal="@drawable/custom_slider_thumb"
+            rsb:thumbPressed="@drawable/custom_slider_thumb"
+            rsb:activeColor="#143E5C"
             android:layout_gravity="center_vertical"
             android:id="@+id/hSeekBar" />
     </LinearLayout>
@@ -56,8 +61,13 @@
             android:layout_height="wrap_content"
             rsb:absoluteMaxValue="255"
             rsb:absoluteMinValue="0"
-            rsb:textAboveThumbsColor="@android:color/holo_blue_dark"
+            rsb:textAboveThumbsColor="@color/primary_material_light"
             rsb:showLabels="false"
+            rsb:barHeight="3dp"
+            rsb:thumbDisabled="@drawable/custom_slider_thumb"
+            rsb:thumbNormal="@drawable/custom_slider_thumb"
+            rsb:thumbPressed="@drawable/custom_slider_thumb"
+            rsb:activeColor="#143E5C"
             android:layout_gravity="center_vertical"
             android:id="@+id/sSeekBar" />
     </LinearLayout>
@@ -82,8 +92,13 @@
             android:layout_height="wrap_content"
             rsb:absoluteMaxValue="255"
             rsb:absoluteMinValue="0"
-            rsb:textAboveThumbsColor="@android:color/holo_blue_dark"
+            rsb:textAboveThumbsColor="@color/primary_material_light"
             rsb:showLabels="false"
+            rsb:barHeight="3dp"
+            rsb:thumbDisabled="@drawable/custom_slider_thumb"
+            rsb:thumbNormal="@drawable/custom_slider_thumb"
+            rsb:thumbPressed="@drawable/custom_slider_thumb"
+            rsb:activeColor="#143E5C"
             android:layout_gravity="center_vertical"
             android:id="@+id/vSeekBar" />
     </LinearLayout>
@@ -93,6 +108,8 @@
         android:layout_height="wrap_content"
         android:text="Restore Defaults"
         android:id="@+id/restoreDefaultsButton"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        style="@style/Widget.AppCompat.Button"
+        />
 
 </LinearLayout>

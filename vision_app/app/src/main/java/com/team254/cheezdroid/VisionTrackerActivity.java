@@ -51,8 +51,9 @@ public class VisionTrackerActivity extends Activity implements RobotConnectionSt
     private static boolean sLocked = true;
 
     private VisionTrackerGLSurfaceView mView;
-    private TextView mProcMode;
-    private ImageButton mLockButton, mPrefsButton, mViewTypeButton;
+    private TextView mProcMode, connectionStateText;
+    private Button mPrefsButton, mViewTypeButton;
+    private ImageButton mLockButton;
     private TextView mBatteryText;
     private ImageView mChargingIcon;
     private Preferences m_prefs;
@@ -230,10 +231,11 @@ public class VisionTrackerActivity extends Activity implements RobotConnectionSt
 
         connectionStateView = findViewById(R.id.connectionState);
         mLockButton = (ImageButton) findViewById(R.id.lockButton);
-        mViewTypeButton = (ImageButton) findViewById(R.id.viewSelectButton);
-        mPrefsButton = (ImageButton) findViewById(R.id.hsvEditButton);
+        mViewTypeButton = (Button) findViewById(R.id.viewSelectButton);
+        mPrefsButton = (Button) findViewById(R.id.hsvEditButton);
         mBatteryText = (TextView) findViewById(R.id.battery_text);
         mChargingIcon = (ImageView) findViewById(R.id.chargingIcon);
+        connectionStateText = (TextView) findViewById(R.id.connectionStateText);
 
         updateBatteryText();
 
@@ -443,6 +445,7 @@ public class VisionTrackerActivity extends Activity implements RobotConnectionSt
         Log.i("MainActivity", "Robot Connected");
         mView.setRobotConnection(AppContext.getRobotConnection());
         connectionStateView.setBackgroundColor(ContextCompat.getColor(this, R.color.cheesy_poof_blue));
+        connectionStateText.setVisibility(View.GONE);
         stopBadConnectionAnimation();
     }
 
@@ -472,6 +475,7 @@ public class VisionTrackerActivity extends Activity implements RobotConnectionSt
         Log.i("MainActivity", "Robot Disconnected");
         mView.setRobotConnection(null);
         connectionStateView.setBackgroundColor(ContextCompat.getColor(this, R.color.holo_red_light));
+        connectionStateText.setVisibility(View.VISIBLE);
         if (isLocked()) {
             startBadConnectionAnimation();
         } else {
@@ -495,10 +499,10 @@ public class VisionTrackerActivity extends Activity implements RobotConnectionSt
         mPrefsButton.setVisibility(View.VISIBLE);
         mViewTypeButton.setVisibility(View.VISIBLE);
         mLockButton.setImageResource(R.drawable.unlocked);
-        mLockButton.setBackgroundColor(Color.RED);
+        //mLockButton.setBackgroundColor(Color.RED);
         mLockButton.setAlpha(1.0f);
         Animation animation = new AlphaAnimation(1, 0);
-        animation.setDuration(350);
+        animation.setDuration(800);
         animation.setInterpolator(new LinearInterpolator());
         animation.setRepeatCount(Animation.INFINITE);
         animation.setRepeatMode(Animation.REVERSE);

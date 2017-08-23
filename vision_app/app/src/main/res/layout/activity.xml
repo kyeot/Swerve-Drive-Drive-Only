@@ -15,10 +15,10 @@
         android:layout_height="match_parent">
 
         <View
+            android:id="@+id/connectionState"
             android:layout_width="fill_parent"
             android:layout_height="25dp"
-            android:background="@android:color/holo_red_light"
-            android:id="@+id/connectionState" />
+            android:background="@android:color/holo_red_light" />
 
         <LinearLayout
             android:orientation="horizontal"
@@ -95,34 +95,46 @@
                     android:layout_marginLeft="-20dp"
                     android:src="@drawable/battery"/>
 
-            <ImageButton
+            <Button
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
-                android:text="Show view options"
+                android:text="View"
                 android:id="@+id/viewSelectButton"
                 android:layout_gravity="right"
                 android:onClick="showViewOptions"
-                android:src="@android:drawable/ic_menu_view"
-                android:background="@android:color/transparent"
+
+                style="@style/Widget.AppCompat.Button"
                 android:paddingBottom="10dp"
                 android:paddingRight="5dp"
                 android:layout_weight=".05" />
 
-            <ImageButton
+            <Button
+                android:id="@+id/hsvEditButton"
+                style="@style/Widget.AppCompat.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
-                android:text="Edit HSV"
-                android:id="@+id/hsvEditButton"
-                android:onClick="openBottomSheet"
-                android:src="@android:drawable/ic_menu_manage"
-                android:background="@android:color/transparent"
                 android:layout_gravity="right"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight=".05"
+                android:onClick="openBottomSheet"
                 android:paddingBottom="10dp"
                 android:paddingRight="5dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginLeft="5dp"
-                android:layout_weight=".05" />
+
+                android:text="HSV"
+                android:textAlignment="textStart" />
         </LinearLayout>
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/connectionStateText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="                                                       Disconnected"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="@color/kyeot_blue"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
 </FrameLayout>

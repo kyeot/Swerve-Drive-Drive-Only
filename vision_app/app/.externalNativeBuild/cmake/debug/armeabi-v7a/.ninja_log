@@ -1,0 +1,4 @@
+# ninja log v5
+1	62	0	CMakeFiles/JNIPart.dir/src/main/jni/jni.c.o	8d40217d0d89bc01
+2	792	0	CMakeFiles/JNIPart.dir/src/main/jni/image_processor.cpp.o	3fed6321b3998632
+793	882	0	../../../../build/intermediates/cmake/debug/obj/armeabi-v7a/libJNIPart.so	d7777fbb6c1da124

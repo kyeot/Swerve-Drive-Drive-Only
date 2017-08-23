@@ -12,8 +12,8 @@ buildscript {
 }
 
 dependencies {
-    compile "com.android.support:support-v4:23.1.0"
-    compile "com.android.support:support-v13:23.1.0"
+    compile 'com.android.support:support-v4:23.1.0'
+    compile 'com.android.support:support-v13:23.1.0'
     compile project(':openCVLibrary310')
     compile 'com.android.support:appcompat-v7:23.0.0'
     compile 'com.android.support:design:23.0.0'
@@ -48,7 +48,7 @@ android {
         // call regular ndk-build(.cmd) script from app directory
         task ndkBuild(type: Exec) {
             if (Os.isFamily(Os.FAMILY_WINDOWS)) {
-                commandLine 'C:/Users/Calasada/AppData/Local/Android/Sdk/ndk-bundle/ndk-build.cmd', '-C', file('src/main').absolutePath
+                commandLine 'C:/Users/Cole/AppData/Local/Android/sdk/ndk-bundle/ndk-build.cmd', '-C', file('src/main').absolutePath
             } else {
                 def ndkDir = android.ndkDirectory.getAbsolutePath()
                 commandLine ndkDir + "/ndk-build", '-C', file('src/main').absolutePath
