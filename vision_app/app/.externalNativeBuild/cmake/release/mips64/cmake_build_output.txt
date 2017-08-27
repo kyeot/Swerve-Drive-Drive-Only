@@ -3,7 +3,7 @@
 -- Detecting C compiler ABI info
 -- Detecting C compiler ABI info - done
 -- Detecting C compile features
--- Detecting C compile features - failed
+-- Detecting C compile features - done
 -- Check for working CXX compiler: C:/Users/Cole/AppData/Local/Android/sdk/ndk-bundle/toolchains/llvm/prebuilt/windows-x86_64/bin/clang++.exe
 -- Check for working CXX compiler: C:/Users/Cole/AppData/Local/Android/sdk/ndk-bundle/toolchains/llvm/prebuilt/windows-x86_64/bin/clang++.exe -- works
 -- Detecting CXX compiler ABI info

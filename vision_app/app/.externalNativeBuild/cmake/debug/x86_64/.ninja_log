@@ -1,4 +1,14 @@
 # ninja log v5
-0	41	0	CMakeFiles/JNIPart.dir/src/main/jni/jni.c.o	7ee4ed47289197be
-1	856	0	CMakeFiles/JNIPart.dir/src/main/jni/image_processor.cpp.o	b2f201e93c273952
-857	946	0	../../../../build/intermediates/cmake/debug/obj/x86_64/libJNIPart.so	2424c072f261cde6
+1	43	0	CMakeFiles/JNIPart.dir/src/main/jni/jni.c.o	7ee4ed47289197be
+0	5678	0	CMakeFiles/JNIPart.dir/src/main/jni/image_processor.cpp.o	b2f201e93c273952
+5679	6196	0	../../../../build/intermediates/cmake/debug/obj/x86_64/libJNIPart.so	2424c072f261cde6
+2	1217	0	CMakeFiles/JNIPart.dir/src/main/jni/image_processor.cpp.o	b2f201e93c273952
+1217	1383	0	../../../../build/intermediates/cmake/debug/obj/x86_64/libJNIPart.so	2424c072f261cde6
+3	52	0	CMakeFiles/JNIPart.dir/src/main/jni/jni.c.o	7ee4ed47289197be
+2	957	0	CMakeFiles/JNIPart.dir/src/main/jni/image_processor.cpp.o	b2f201e93c273952
+957	1053	0	../../../../build/intermediates/cmake/debug/obj/x86_64/libJNIPart.so	2424c072f261cde6
+4	178	0	CMakeFiles/JNIPart.dir/src/main/jni/jni.c.o	7ee4ed47289197be
+3	1116	0	CMakeFiles/JNIPart.dir/src/main/jni/image_processor.cpp.o	b2f201e93c273952
+1116	1586	0	../../../../build/intermediates/cmake/debug/obj/x86_64/libJNIPart.so	2424c072f261cde6
+2	49	0	CMakeFiles/JNIPart.dir/src/main/jni/jni.c.o	7ee4ed47289197be
+49	348	0	../../../../build/intermediates/cmake/debug/obj/x86_64/libJNIPart.so	2424c072f261cde6

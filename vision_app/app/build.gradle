@@ -25,6 +25,7 @@ android {
     buildToolsVersion '25.0.0'
 
     defaultConfig {
+        applicationId "com.team2783.vision"
         minSdkVersion 21
         targetSdkVersion 23
         ndk {
@@ -47,35 +48,32 @@ android {
 
         // call regular ndk-build(.cmd) script from app directory
         task ndkBuild(type: Exec) {
-            if (Os.isFamily(Os.FAMILY_WINDOWS)) {
-                commandLine 'C:/Users/Cole/AppData/Local/Android/sdk/ndk-bundle/ndk-build.cmd', '-C', file('src/main').absolutePath
-            } else {
-                def ndkDir = android.ndkDirectory.getAbsolutePath()
-                commandLine ndkDir + "/ndk-build", '-C', file('src/main').absolutePath
+            def ndkDir = project.android.ndkDirectory
+            def ndkBuildExecutable = new File(ndkDir, 'ndk-build.cmd')
+            commandLine ndkBuildExecutable, '-C', file('src/main').absolutePath
+        }
+
+        signingConfigs {
+            debug {
+                storeFile file("src/main/debug_keystore.jks")
+                storePassword "1234Five"
+                keyAlias "debug"
+                keyPassword "1234Five"
             }
         }
-    }
 
-    signingConfigs {
-        debug {
-            storeFile file("src/main/debug_keystore.jks")
-            storePassword "1234Five"
-            keyAlias "debug"
-            keyPassword "1234Five"
+        tasks.withType(JavaCompile) {
+            compileTask -> compileTask.dependsOn ndkBuild
         }
-    }
 
-    tasks.withType(JavaCompile) {
-        compileTask -> compileTask.dependsOn ndkBuild
-    }
+        externalNativeBuild {
 
-    externalNativeBuild {
+            // Encapsulates your CMake build configurations.
+            cmake {
 
-        // Encapsulates your CMake build configurations.
-        cmake {
-
-            // Provides a relative path to your CMake build script.
-            path "CMakeLists.txt"
+                // Provides a relative path to your CMake build script.
+                path "CMakeLists.txt"
+            }
         }
     }
 }
