@@ -35,7 +35,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.support.v4.app.ActivityCompat;
 
-import com.team2783.vision.R;
 import com.team2783.vision.comm.RobotConnectionStateListener;
 import com.team2783.vision.comm.RobotConnectionStatusBroadcastReceiver;
 
@@ -514,7 +513,7 @@ public class VisionTrackerActivity extends Activity implements RobotConnectionSt
     private void whitelistLockTasks() {
         DevicePolicyManager manager =
                 (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
-        ComponentName componentName = ChezyDeviceAdminReceiver.getComponentName(this);
+        ComponentName componentName = VisionDeviceAdminReceiver.getComponentName(this);
 
         if (manager.isDeviceOwnerApp(getPackageName())) {
             manager.setLockTaskPackages(componentName, new String[]{getPackageName()});
@@ -524,7 +523,7 @@ public class VisionTrackerActivity extends Activity implements RobotConnectionSt
     private void enableDeviceAdmin() {
         DevicePolicyManager manager =
                 (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
-        ComponentName componentName = ChezyDeviceAdminReceiver.getComponentName(this);
+        ComponentName componentName = VisionDeviceAdminReceiver.getComponentName(this);
 
         if(!manager.isAdminActive(componentName)) {
             Intent intent = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
