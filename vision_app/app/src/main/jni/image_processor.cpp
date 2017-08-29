@@ -140,7 +140,7 @@ std::vector<TargetInfo> processImpl(int w, int h, int texOut, DisplayMode mode,
       }
       // Filter based on fullness
       const double kMinFullness = .2;
-      const double kMaxFullness = .5;
+      const double kMaxFullness = .9;
       double original_contour_area = cv::contourArea(contour);
       double poly_area = cv::contourArea(poly);
       double fullness = original_contour_area / poly_area;

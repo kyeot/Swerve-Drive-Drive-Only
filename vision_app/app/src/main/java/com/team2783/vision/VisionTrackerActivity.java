@@ -443,7 +443,7 @@ public class VisionTrackerActivity extends Activity implements RobotConnectionSt
     public void robotConnected() {
         Log.i("MainActivity", "Robot Connected");
         mView.setRobotConnection(AppContext.getRobotConnection());
-        connectionStateView.setBackgroundColor(ContextCompat.getColor(this, R.color.cheesy_poof_blue));
+        connectionStateView.setBackgroundColor(ContextCompat.getColor(this, R.color.kyeot_blue));
         connectionStateText.setVisibility(View.GONE);
         stopBadConnectionAnimation();
     }
