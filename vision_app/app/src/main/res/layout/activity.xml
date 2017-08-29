@@ -9,16 +9,31 @@
         android:layout_height="match_parent"
         android:id="@+id/my_gl_surface_view" />
 
+    <TextView
+        android:id="@+id/watermark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_marginRight="10dp"
+        android:layout_weight="10"
+        android:fontFamily="roboto"
+        android:text="2783"
+        android:textColor="@color/kyeot_blue_transparent"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        android:visibility="visible" />
+
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <View
             android:id="@+id/connectionState"
             android:layout_width="fill_parent"
             android:layout_height="25dp"
             android:background="@android:color/holo_red_light" />
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -53,8 +68,8 @@
                     android:id="@+id/lockButton"
                     android:layout_width="60dp"
                     android:layout_height="50dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginLeft="60dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginLeft="20dp"
                     android:layout_weight=".1"
                     android:background="@android:color/transparent"
                     android:cropToPadding="false"
@@ -70,6 +85,15 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/battery_low"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="BATTERY LOW "
+                android:textColor="@color/holo_red_light"
+                android:textSize="22sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/chargingIcon"
@@ -130,27 +154,12 @@
         android:id="@+id/connectionStateText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:text="Disconnected"
-        android:textAlignment="center"
         android:textAllCaps="true"
         android:textColor="@color/kyeot_blue"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:gravity="center" />
-
-    <TextView
-        android:id="@+id/watermark"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
-        android:layout_marginRight="10dp"
-        android:layout_weight="10"
-        android:fontFamily="roboto"
-        android:text="2783"
-        android:textColor="@color/kyeot_blue_transparent"
-        android:textSize="40sp"
-        android:textStyle="bold"
-        android:visibility="visible" />
+        android:textSize="22sp"
+        android:textStyle="bold" />
 
 
 </FrameLayout>

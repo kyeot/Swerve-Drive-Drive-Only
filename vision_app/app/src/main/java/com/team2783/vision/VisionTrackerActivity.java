@@ -56,6 +56,7 @@ public class VisionTrackerActivity extends Activity implements RobotConnectionSt
     private TextView mBatteryText;
     private TextView mChargingIcon;
     private Preferences m_prefs;
+    private TextView mBattery_low;
 
     private View connectionStateView;
     private RobotConnectionStatusBroadcastReceiver rbr;
@@ -234,7 +235,9 @@ public class VisionTrackerActivity extends Activity implements RobotConnectionSt
         mPrefsButton = (Button) findViewById(R.id.hsvEditButton);
         mBatteryText = (TextView) findViewById(R.id.battery_text);
         mChargingIcon = (TextView) findViewById(R.id.chargingIcon);
+        mBattery_low = (TextView) findViewById(R.id.battery_low);
         connectionStateText = (TextView) findViewById(R.id.connectionStateText);
+
 
         updateBatteryText();
 
@@ -552,12 +555,17 @@ public class VisionTrackerActivity extends Activity implements RobotConnectionSt
         int status = batteryStatus.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
         boolean isCharging = status == BatteryManager.BATTERY_STATUS_CHARGING ||
                 status == BatteryManager.BATTERY_STATUS_FULL;
-        if(batteryPercentage < 30) {
-            mBatteryText.setTextColor(Color.parseColor("#ffff4444"));
-        }
-        mBatteryText.setText(Integer.toString((int)batteryPercentage) + "%");
         mChargingIcon.setVisibility(isCharging ? View.VISIBLE : View.GONE);
-        mBatteryText.setTextColor(Color.parseColor("#FF669900"));
+        mBatteryText.setTextColor(isCharging ? Color.parseColor("#FF669900") : Color.parseColor("#FFFFFFFF"));
+        mBatteryText.setText(Integer.toString((int)batteryPercentage) + "%");
+        boolean isLow = batteryPercentage < 30;
+        //mBatteryText.setTextColor(isLow ? Color.parseColor("#FFFF4444"));
+        mBattery_low.setVisibility(isLow ? View.VISIBLE : View.INVISIBLE);
+        if(batteryPercentage < 30) {
+            mBatteryText.setTextColor(Color.parseColor("#FFFF4444"));
+        }
+
+
     }
 
     private void updateProcModeText() {
