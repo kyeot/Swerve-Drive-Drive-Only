@@ -71,13 +71,16 @@
                 android:layout_height="0dp"
                 android:layout_weight="1" />
 
-            <ImageView
+            <TextView
                 android:id="@+id/chargingIcon"
                 android:layout_width="wrap_content"
-                android:layout_height="30dp"
+                android:layout_height="wrap_content"
+                android:color="@android:color/holo_green_dark"
                 android:paddingRight="5dp"
-                android:paddingTop="5dp"
-                android:src="@android:drawable/ic_lock_idle_charging" />
+                android:text="Charging"
+                android:textColor="@android:color/holo_green_dark"
+                android:textSize="22sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/battery_text"
@@ -88,14 +91,8 @@
                 android:paddingRight="5dp"
                 android:paddingTop="5dp"
                 android:text="\?\?%"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:layout_marginLeft="-20dp"
-                android:paddingTop="7dp"
-                android:src="@drawable/battery" />
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/viewSelectButton"

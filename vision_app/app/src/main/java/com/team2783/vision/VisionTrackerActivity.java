@@ -54,7 +54,7 @@ public class VisionTrackerActivity extends Activity implements RobotConnectionSt
     private Button mPrefsButton, mViewTypeButton;
     private ImageButton mLockButton;
     private TextView mBatteryText;
-    private ImageView mChargingIcon;
+    private TextView mChargingIcon;
     private Preferences m_prefs;
 
     private View connectionStateView;
@@ -233,7 +233,7 @@ public class VisionTrackerActivity extends Activity implements RobotConnectionSt
         mViewTypeButton = (Button) findViewById(R.id.viewSelectButton);
         mPrefsButton = (Button) findViewById(R.id.hsvEditButton);
         mBatteryText = (TextView) findViewById(R.id.battery_text);
-        mChargingIcon = (ImageView) findViewById(R.id.chargingIcon);
+        mChargingIcon = (TextView) findViewById(R.id.chargingIcon);
         connectionStateText = (TextView) findViewById(R.id.connectionStateText);
 
         updateBatteryText();
@@ -552,8 +552,12 @@ public class VisionTrackerActivity extends Activity implements RobotConnectionSt
         int status = batteryStatus.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
         boolean isCharging = status == BatteryManager.BATTERY_STATUS_CHARGING ||
                 status == BatteryManager.BATTERY_STATUS_FULL;
+        if(batteryPercentage < 30) {
+            mBatteryText.setTextColor(Color.parseColor("#ffff4444"));
+        }
         mBatteryText.setText(Integer.toString((int)batteryPercentage) + "%");
         mChargingIcon.setVisibility(isCharging ? View.VISIBLE : View.GONE);
+        mBatteryText.setTextColor(Color.parseColor("#FF669900"));
     }
 
     private void updateProcModeText() {
