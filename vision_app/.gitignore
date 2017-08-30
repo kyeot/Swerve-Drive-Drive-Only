@@ -35,7 +35,6 @@ app/.externalNativeBuild/
 captures/
 
 # OpenCV and JNI cruft
-app/src/main/jniLibs
 app/src/main/libs
 app/src/main/obj
 
