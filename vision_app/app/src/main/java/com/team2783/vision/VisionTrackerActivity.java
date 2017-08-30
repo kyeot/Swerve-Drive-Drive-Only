@@ -11,10 +11,12 @@ import android.content.*;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.media.MediaPlayer;
 import android.os.BatteryManager;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.text.Layout;
 import android.util.Log;
 import android.util.Pair;
 import android.view.Gravity;
@@ -374,7 +376,6 @@ public class VisionTrackerActivity extends Activity implements RobotConnectionSt
         View view = getLayoutInflater().inflate(R.layout.hsv_bottom_sheet, null);
         LinearLayout container = (LinearLayout) view.findViewById(R.id.popup_window);
         container.getBackground().setAlpha(20);
-
 
         final Dialog mBottomSheetDialog = new Dialog(VisionTrackerActivity.this, R.style.MaterialDialogSheet);
         mBottomSheetDialog.setContentView(view);

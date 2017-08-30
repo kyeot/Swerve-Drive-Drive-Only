@@ -3,6 +3,7 @@ package com.team2783.vision;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.graphics.drawable.GradientDrawable;
 import android.preference.PreferenceManager;
 import android.util.Pair;
 
@@ -31,7 +32,6 @@ public class Preferences {
     private int getInt(String key, int defaultValue) {
         return m_prefs.getInt(key, defaultValue);
     }
-
     public void setThresholdHRange(int min, int max) {
         setInt(m_context.getString(R.string.threshold_h_min_key), min);
         setInt(m_context.getString(R.string.threshold_h_max_key), max);
@@ -48,7 +48,10 @@ public class Preferences {
         setInt(m_context.getString(R.string.threshold_v_min_key), min);
         setInt(m_context.getString(R.string.threshold_v_max_key), max);
         m_v_ranges = new Pair<>(min, max);
+
     }
+
+
 
     public Pair<Integer, Integer> getThresholdHRange() {
         if (m_h_ranges == null) {

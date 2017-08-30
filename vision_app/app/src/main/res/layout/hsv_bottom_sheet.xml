@@ -11,6 +11,16 @@
 
 
     <LinearLayout
+        android:id="@+id/GradientLayout"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:background="@drawable/hsvgradient"
+        android:orientation="horizontal"
+        >
+
+    </LinearLayout>
+
+    <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
