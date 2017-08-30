@@ -88,12 +88,13 @@
 
             <TextView
                 android:id="@+id/battery_low"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="82dp"
+                android:layout_height="89dp"
                 android:text="BATTERY LOW "
                 android:textColor="@color/holo_red_light"
                 android:textSize="22sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_weight="0.28" />
 
             <TextView
                 android:id="@+id/chargingIcon"
