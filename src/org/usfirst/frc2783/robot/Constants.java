@@ -26,8 +26,7 @@ public class Constants {
 	public static final double cameraXOffset = 0.0;
 	public static final double cameraYOffset = 0.0;
 	public static final double cameraZOffset = 0.0;
-	public static final double cameraYawOffset = 0.0;
-	public static final double cameraPitchOffset = 0.0;
+	public static final double cameraPitchOffset = 30.0;
 	public static final double cameraRollOffset = 0.0;
 	
 	public static final double goalHeight = 89.0;

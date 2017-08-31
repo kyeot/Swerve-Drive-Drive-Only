@@ -8,6 +8,8 @@ import org.usfirst.frc2783.util.Transform;
 import org.usfirst.frc2783.util.Vector;
 import org.usfirst.frc2783.vision.TargetInfo;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 /**
  * Singleton class used to get useful Transformations of things tracked on the field,
  *  i.e. the robot or vision targets
@@ -32,7 +34,6 @@ public class FieldTransform {
 	FieldTransform() {
 		cameraToRobot = new Vector(Constants.cameraXOffset, 
 										Constants.cameraYOffset);
-		camYaw = new Bearing(Constants.cameraYawOffset);
 		camPitch = new Bearing(Constants.cameraPitchOffset);
 		camHeight = Constants.cameraZOffset;
 		camToGoal = Constants.goalHeight - camHeight;
@@ -46,27 +47,27 @@ public class FieldTransform {
 		return getRobotPose().getTranslation().add(cameraToRobot);
 	}
 	
-	public List<Vector> getRobotToTargets() {
+	public List<Vector> getFieldToTargets() {
 		List<Vector> v = new ArrayList<Vector>();
 		if(!targets.isEmpty()) {
 			for(TargetInfo t : targets) {
-                // Compensate for camera yaw
-                double xyaw = t.getX() * camYaw.cos() + t.getY() * camYaw.sin();
-                double yyaw = t.getY() * camYaw.cos() - t.getX() * camYaw.sin();
-                double zyaw = t.getZ();
-
-                // Compensate for camera pitch
-                double xr = zyaw * camPitch.sin() + xyaw * camPitch.cos();
-                double yr = yyaw;
-                double zr = zyaw * camPitch.cos() - xyaw * camPitch.sin();
-
-                // find intersection with the goal
-                if (zr > 0) {
-                    double scaling =  camToGoal / zr;
-                    double distance = Math.hypot(xr, yr) * scaling;
-                    Bearing angle = new Bearing(new Vector(xr, yr));
-                    v.add(getFieldToCamera()
-                            .add(new Vector(distance * angle.cos(), distance * angle.sin())));
+				double x = t.getX();
+				double y = t.getY();
+				double z = t.getZ();
+				
+				//Rotate target direction to compensate for camera pitch (rotation matrix)
+				double xr = z * camPitch.sin() + x * camPitch.cos();
+                double yr = y;
+                double zr = z * camPitch.cos() - x * camPitch.sin();
+                
+                if(zr > 0) {
+                	double s = camToGoal / zr;
+                	double dist = Math.hypot(xr, yr) * s;
+                	SmartDashboard.putString("DB/String 0", "Distance to Target: " + Double.toString(dist));
+                	Bearing angle = new Bearing(new Vector(xr, yr));
+                	Vector targetToCam = new Vector(angle.cos()*dist, angle.sin()*dist);
+                	SmartDashboard.putString("DB/String 1", "Angle to Target: " + Double.toString(new Bearing(targetToCam).getTheta()));
+                	v.add(getFieldToCamera().add(targetToCam));
                 }
 			}
 		}
