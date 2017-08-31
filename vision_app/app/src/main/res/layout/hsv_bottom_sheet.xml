@@ -10,14 +10,6 @@
     android:orientation="vertical">
 
 
-    <ImageView
-        android:id="@+id/GradientImage"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        >
-
-    </ImageView>
-
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -114,27 +106,13 @@
             android:id="@+id/vSeekBar" />
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <Button
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/update_gradient"
-            style="@style/Widget.AppCompat.Button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.38"
-            android:text="Update Gradient" />
-
-        <Button
-            android:id="@+id/restoreDefaultsButton"
-            style="@style/Widget.AppCompat.Button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:layout_weight="0.38"
-            android:text="Restore Defaults" />
-    </LinearLayout>
+        android:text="Restore Defaults"
+        android:id="@+id/restoreDefaultsButton"
+        android:layout_gravity="center_horizontal"
+        style="@style/Widget.AppCompat.Button"
+        />
 
 </LinearLayout>

@@ -11,7 +11,12 @@ import android.content.*;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.LinearGradient;
+import android.graphics.Shader;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.RectShape;
 import android.media.MediaPlayer;
 import android.os.BatteryManager;
 import android.os.Bundle;
@@ -65,6 +70,7 @@ public class VisionTrackerActivity extends Activity implements RobotConnectionSt
     private RobotEventBroadcastReceiver rer;
     private Timer mUpdateViewTimer;
     private Long mLastSelfieLaunch = 0L;
+    float hmin = 40, smin = 100, vmin = 30, hmax = 80, smax = 255, vmax = 255;
 
     private boolean mIsRunning;
 
@@ -377,6 +383,8 @@ public class VisionTrackerActivity extends Activity implements RobotConnectionSt
         LinearLayout container = (LinearLayout) view.findViewById(R.id.popup_window);
         container.getBackground().setAlpha(20);
 
+
+
         final Dialog mBottomSheetDialog = new Dialog(VisionTrackerActivity.this, R.style.MaterialDialogSheet);
         mBottomSheetDialog.setContentView(view);
         mBottomSheetDialog.setCancelable(true);
@@ -388,9 +396,14 @@ public class VisionTrackerActivity extends Activity implements RobotConnectionSt
         setSeekBar(hSeekBar, getHRange());
         hSeekBar.setOnRangeSeekBarChangeListener(new RangeSeekBar.OnRangeSeekBarChangeListener<Integer>() {
             @Override
-            public void onRangeSeekBarValuesChanged(RangeSeekBar<?> rangeSeekBar, Integer min, Integer max) {
-                Log.i("H", min + " " + max);
-                m_prefs.setThresholdHRange(min, max);
+            public void onRangeSeekBarValuesChanged(RangeSeekBar<?> rangeSeekBar, Integer htmin, Integer htmax) {
+                Log.i("H", htmin + " " + htmax);
+                m_prefs.setThresholdHRange(htmin, htmax);
+                hmax = htmax;
+                hmin = htmin;
+
+
+
             }
         });
 
@@ -398,9 +411,13 @@ public class VisionTrackerActivity extends Activity implements RobotConnectionSt
         setSeekBar(sSeekBar, getSRange());
         sSeekBar.setOnRangeSeekBarChangeListener(new RangeSeekBar.OnRangeSeekBarChangeListener<Integer>() {
             @Override
-            public void onRangeSeekBarValuesChanged(RangeSeekBar<?> rangeSeekBar, Integer min, Integer max) {
-                Log.i("S", min + " " + max);
-                m_prefs.setThresholdSRange(min, max);
+            public void onRangeSeekBarValuesChanged(RangeSeekBar<?> rangeSeekBar, Integer stmin, Integer stmax) {
+                Log.i("S", stmin + " " + stmax);
+                m_prefs.setThresholdSRange(stmin, stmax);
+                smax = stmax;
+                smin = stmin;
+
+
             }
         });
 
@@ -408,11 +425,17 @@ public class VisionTrackerActivity extends Activity implements RobotConnectionSt
         setSeekBar(vSeekBar, getVRange());
         vSeekBar.setOnRangeSeekBarChangeListener(new RangeSeekBar.OnRangeSeekBarChangeListener<Integer>() {
             @Override
-            public void onRangeSeekBarValuesChanged(RangeSeekBar<?> rangeSeekBar, Integer min, Integer max) {
-                Log.i("V", min + " " + max);
-                m_prefs.setThresholdVRange(min, max);
+            public void onRangeSeekBarValuesChanged(RangeSeekBar<?> rangeSeekBar, Integer vtmin, Integer vtmax) {
+                Log.i("V", vtmin + " " + vtmax);
+                m_prefs.setThresholdVRange(vtmin, vtmax);
+                vmax = vtmax;
+                vmin = vtmin;
+
+
+
             }
         });
+
 
         Button restoreButton = (Button) view.findViewById(R.id.restoreDefaultsButton);
         restoreButton.setOnClickListener(new View.OnClickListener() {
@@ -424,6 +447,9 @@ public class VisionTrackerActivity extends Activity implements RobotConnectionSt
                 setSeekBar(vSeekBar, getVRange());
             }
         });
+
+
+
     }
 
     private static void setSeekBar(RangeSeekBar<Integer> bar, Pair<Integer, Integer> values) {
