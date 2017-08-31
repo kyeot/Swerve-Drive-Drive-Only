@@ -11,17 +11,10 @@ import android.content.*;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.graphics.LinearGradient;
-import android.graphics.Shader;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.RectShape;
 import android.media.MediaPlayer;
 import android.os.BatteryManager;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.text.Layout;
 import android.util.Log;
 import android.util.Pair;
 import android.view.Gravity;
@@ -37,7 +30,6 @@ import android.view.animation.LinearInterpolator;
 import android.view.animation.ScaleAnimation;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.support.v4.app.ActivityCompat;
@@ -71,6 +63,8 @@ public class VisionTrackerActivity extends Activity implements RobotConnectionSt
     private Timer mUpdateViewTimer;
     private Long mLastSelfieLaunch = 0L;
     float hmin = 40, smin = 100, vmin = 30, hmax = 80, smax = 255, vmax = 255;
+    int t = 0;
+    public MediaPlayer mp;
 
     private boolean mIsRunning;
 
@@ -245,6 +239,7 @@ public class VisionTrackerActivity extends Activity implements RobotConnectionSt
         mChargingIcon = (TextView) findViewById(R.id.chargingIcon);
         mBattery_low = (TextView) findViewById(R.id.battery_low);
         connectionStateText = (TextView) findViewById(R.id.connectionStateText);
+        mp = MediaPlayer.create(this, R.raw.developers);
 
 
         updateBatteryText();
@@ -598,6 +593,23 @@ public class VisionTrackerActivity extends Activity implements RobotConnectionSt
     private void updateProcModeText() {
         mProcMode.setText("Proc Mode: "
                 + VisionTrackerGLSurfaceView.PROC_MODE_NAMES[mView.getProcessingMode()]);
+    }
+    public void playDevelopers(View v) {
+        t = t + 1;
+        if (t == 10) {
+            mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    mp.reset();
+                    mp.release();
+                }
+            });
+            mp.start();
+        }
+        if (mp.isPlaying() && t == 11) {
+            mp.pause();
+            t = 0;
+        }
     }
 
     public void playAirhorn() {
