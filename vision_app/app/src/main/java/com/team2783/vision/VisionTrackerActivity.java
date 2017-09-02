@@ -595,6 +595,7 @@ public class VisionTrackerActivity extends Activity implements RobotConnectionSt
                 + VisionTrackerGLSurfaceView.PROC_MODE_NAMES[mView.getProcessingMode()]);
     }
     public void playDevelopers(View v) {
+        mp = MediaPlayer.create(this, R.raw.developers);
         t = t + 1;
         if (t == 10) {
             mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
@@ -602,13 +603,16 @@ public class VisionTrackerActivity extends Activity implements RobotConnectionSt
                 public void onCompletion(MediaPlayer mp) {
                     mp.reset();
                     mp.release();
+                    t = 0;
                 }
             });
             mp.start();
         }
-        if (mp.isPlaying() && t == 11) {
-            mp.pause();
-            t = 0;
+        if (mp != null) {
+            if (mp.isPlaying() && t == 11) {
+                mp.pause();
+                t = 0;
+            }
         }
     }
 
