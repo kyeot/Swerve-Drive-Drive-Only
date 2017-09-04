@@ -31,6 +31,8 @@ public class VisionTrackerGLSurfaceView extends BetterCameraGLSurfaceView implem
     protected int frameCounter;
     protected long lastNanoTime;
     TextView mFpsText = null;
+    TextView mYvector = null;
+    TextView mZvector = null;
     private RobotConnection mRobotConnection;
     private Preferences m_prefs;
 
@@ -137,11 +139,29 @@ public class VisionTrackerGLSurfaceView extends BetterCameraGLSurfaceView implem
             NativePart.TargetsInfo.Target target = targetsInfo.targets[i];
 
             // Convert to a homogeneous 3d vector with x = 1
-            double y = -(target.centroidX - kCenterCol) / getFocalLengthPixels();
-            double z = (target.centroidY - kCenterRow) / getFocalLengthPixels();
+           final double y = -(target.centroidX - kCenterCol) / getFocalLengthPixels();
+           final double z = (target.centroidY - kCenterRow) / getFocalLengthPixels();
             Log.i(LOGTAG, "Target at: " + y + ", " + z);
             visionUpdate.addCameraTargetInfo(
                     new CameraTargetInfo(y, z));
+            if (mYvector != null|| mZvector != null) {
+                Runnable vectorUpdater = new Runnable() {
+                    public void run() {
+                        mYvector.setText("Y Vector: " + y);
+                        mZvector.setText("Z Vector: " + z);
+                    }
+                };
+                new Handler(Looper.getMainLooper()).post(vectorUpdater);
+            } else {
+                mYvector = (TextView) ((Activity) getContext()).findViewById(R.id.y_vector_textview);
+                mZvector = (TextView) ((Activity) getContext()).findViewById(R.id.z_vector_textview);
+            }
+
+            //mYvector = (TextView) findViewById(R.id.y_vector_textview);
+            //mZvector = (TextView) findViewById(R.id.z_vector_textview);
+            //mYvector.setText("Y Vector:" + y);
+            //mZvector.setText("Z Vector:" + z);
+
         }
 
         if (mRobotConnection != null) {

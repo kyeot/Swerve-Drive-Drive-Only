@@ -58,6 +58,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Processing mode:" />
+                <TextView
+                    android:id="@+id/y_vector_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Y Vector:"/>
+                <TextView
+                    android:id="@+id/z_vector_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Z Vector:"/>
 
                 <View
                     android:layout_width="0dp"
