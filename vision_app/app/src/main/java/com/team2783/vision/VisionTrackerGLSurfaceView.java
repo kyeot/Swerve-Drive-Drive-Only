@@ -33,6 +33,8 @@ public class VisionTrackerGLSurfaceView extends BetterCameraGLSurfaceView implem
     TextView mFpsText = null;
     TextView mYvector = null;
     TextView mZvector = null;
+    TextView mAngle = null;
+    TextView mDist = null;
     private RobotConnection mRobotConnection;
     private Preferences m_prefs;
 
@@ -144,24 +146,30 @@ public class VisionTrackerGLSurfaceView extends BetterCameraGLSurfaceView implem
             Log.i(LOGTAG, "Target at: " + y + ", " + z);
             visionUpdate.addCameraTargetInfo(
                     new CameraTargetInfo(y, z));
-            if (mYvector != null|| mZvector != null) {
+            double xr=(z*Math.sin(20))+(Math.cos(20));
+            double yr = y;
+            double zr =(z*Math.cos(20))-(Math.sin(20));
+
+            final double dist = Math.hypot(xr, yr)*(82/zr);
+            final double angle = (Math.atan2(yr, xr));
+
+            if (mYvector != null || mZvector != null || mAngle != null || mDist != null) {
                 Runnable vectorUpdater = new Runnable() {
                     public void run() {
                         mYvector.setText("Y Vector: " + y);
                         mZvector.setText("Z Vector: " + z);
+                        mDist.setText("Distance: " + dist);
+                        mAngle.setText("Angle: " + angle);
+
                     }
                 };
                 new Handler(Looper.getMainLooper()).post(vectorUpdater);
             } else {
                 mYvector = (TextView) ((Activity) getContext()).findViewById(R.id.y_vector_textview);
                 mZvector = (TextView) ((Activity) getContext()).findViewById(R.id.z_vector_textview);
+                mAngle = (TextView) ((Activity) getContext()).findViewById(R.id.angle_textview);
+                mDist = (TextView) ((Activity) getContext()).findViewById(R.id.dist_textview);
             }
-
-            //mYvector = (TextView) findViewById(R.id.y_vector_textview);
-            //mZvector = (TextView) findViewById(R.id.z_vector_textview);
-            //mYvector.setText("Y Vector:" + y);
-            //mZvector.setText("Z Vector:" + z);
-
         }
 
         if (mRobotConnection != null) {
