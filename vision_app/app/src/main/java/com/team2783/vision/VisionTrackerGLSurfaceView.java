@@ -146,12 +146,9 @@ public class VisionTrackerGLSurfaceView extends BetterCameraGLSurfaceView implem
             Log.i(LOGTAG, "Target at: " + y + ", " + z);
             visionUpdate.addCameraTargetInfo(
                     new CameraTargetInfo(y, z));
-            double xr=(z*Math.sin(20))+(Math.cos(20));
-            double yr = y;
-            double zr =(z*Math.cos(20))-(Math.sin(20));
 
-            final double dist = Math.hypot(xr, yr)*(82/zr);
-            final double angle = (Math.atan2(yr, xr));
+            final double dist = Math.hypot(1,y)*(82/z);
+            final double angle = (Math.atan2(1,y));
 
             if (mYvector != null || mZvector != null || mAngle != null || mDist != null) {
                 Runnable vectorUpdater = new Runnable() {
