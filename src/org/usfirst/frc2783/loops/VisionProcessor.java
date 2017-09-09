@@ -40,6 +40,7 @@ public class VisionProcessor implements Loop, VisionUpdateReceiver {
             update_ = null;
         }
         fieldTransform.addVisionTargets(update.getTargets());
+        fieldTransform.getFieldToTargets();
     }
 
     @Override

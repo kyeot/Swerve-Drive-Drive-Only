@@ -34,7 +34,7 @@ public class FieldTransform {
 	FieldTransform() {
 		cameraToRobot = new Vector(Constants.cameraXOffset, 
 										Constants.cameraYOffset);
-		camPitch = new Bearing(Constants.cameraPitchOffset);
+		camPitch = new Bearing(-Constants.cameraPitchOffset);
 		camHeight = Constants.cameraZOffset;
 		camToGoal = Constants.goalHeight - camHeight;
 	}
@@ -55,6 +55,9 @@ public class FieldTransform {
 				double y = t.getY();
 				double z = t.getZ();
 				
+				SmartDashboard.putString("DB/String 2", Double.toString(z));
+				SmartDashboard.putString("DB/String 3", Double.toString(y));
+				
 				//Rotate target direction to compensate for camera pitch (rotation matrix)
 				double xr = z * camPitch.sin() + x * camPitch.cos();
                 double yr = y;
@@ -63,10 +66,10 @@ public class FieldTransform {
                 if(zr > 0) {
                 	double s = camToGoal / zr;
                 	double dist = Math.hypot(xr, yr) * s;
-                	SmartDashboard.putString("DB/String 0", "Distance to Target: " + Double.toString(dist));
+                	SmartDashboard.putString("DB/String 0", Double.toString(dist));
                 	Bearing angle = new Bearing(new Vector(xr, yr));
                 	Vector targetToCam = new Vector(angle.cos()*dist, angle.sin()*dist);
-                	SmartDashboard.putString("DB/String 1", "Angle to Target: " + Double.toString(new Bearing(targetToCam).getTheta()));
+                	SmartDashboard.putString("DB/String 1", Double.toString(new Bearing(targetToCam).getTheta()));
                 	v.add(getFieldToCamera().add(targetToCam));
                 }
 			}

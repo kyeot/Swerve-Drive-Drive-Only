@@ -32,7 +32,7 @@ public class Vector {
 	}
 	
 	public Bearing dir() {
-		return new Bearing(Math.toDegrees(Math.atan2(a,b)));
+		return new Bearing(Math.toDegrees(Math.atan2(b,a)));
 	}
 	
 	public double getA() {
