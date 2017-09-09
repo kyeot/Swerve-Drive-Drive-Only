@@ -17,6 +17,9 @@ public class NavSensor {
 		return gyro;
 	}
 	
+	AHRS navSensor;
+	double offset = 0;
+	
 	NavSensor() {
 		try {
 	         navSensor = new AHRS(SPI.Port.kMXP);
@@ -24,9 +27,6 @@ public class NavSensor {
 	         DriverStation.reportError("Error instantiating navX MXP:  " + ex.getMessage(), true);
 	     }
 	}
-	
-	AHRS navSensor;
-	double offset = 0;
 	
 	public double getAngle(boolean reversed) {
     	if(reversed) {
@@ -36,13 +36,23 @@ public class NavSensor {
     	}
     }
 	
-	public double getRawAngle() {
-		return navSensor.getAngle();
-	}
-	
 	public void resetGyroNorth(double angle, double north) {
     	navSensor.reset();
     	offset = angle - north;
     }
+	
+	public double getRawAngle() {
+		return navSensor.getYaw();
+	}
+	
+	public double getRawRoll() {
+		return navSensor.getRoll();
+	}
+	
+	public double getRawPitch() {
+		return navSensor.getPitch();
+	}
+	
+	
 
 }
