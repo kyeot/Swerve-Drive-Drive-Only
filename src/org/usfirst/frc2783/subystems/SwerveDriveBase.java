@@ -25,7 +25,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * @author 2783
  */
 public class SwerveDriveBase extends Subsystem {
-	
+
 	SwerveModule frMod;
 	SwerveModule flMod;
 	SwerveModule rrMod;
@@ -55,7 +55,6 @@ public class SwerveDriveBase extends Subsystem {
 		
 		PIDOutputClass pidOut;
 		PIDController pidCont;
-		
 		
 		double lastAngle;
 		
