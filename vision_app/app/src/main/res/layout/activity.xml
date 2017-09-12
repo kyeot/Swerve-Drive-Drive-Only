@@ -68,16 +68,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Z Vector:"/>
-                <TextView
-                    android:id="@+id/dist_textview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Distance:"/>
-                <TextView
-                    android:id="@+id/angle_textview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Angle:"/>
 
                 <View
                     android:layout_width="0dp"

@@ -147,16 +147,11 @@ public class VisionTrackerGLSurfaceView extends BetterCameraGLSurfaceView implem
             visionUpdate.addCameraTargetInfo(
                     new CameraTargetInfo(y, z));
 
-            final double dist = Math.hypot(1,y)*(82/z);
-            final double angle = (Math.atan2(1,y));
-
-            if (mYvector != null || mZvector != null || mAngle != null || mDist != null) {
+            if (mYvector != null || mZvector != null) {
                 Runnable vectorUpdater = new Runnable() {
                     public void run() {
                         mYvector.setText("Y Vector: " + y);
                         mZvector.setText("Z Vector: " + z);
-                        mDist.setText("Distance: " + dist);
-                        mAngle.setText("Angle: " + angle);
 
                     }
                 };
@@ -164,8 +159,6 @@ public class VisionTrackerGLSurfaceView extends BetterCameraGLSurfaceView implem
             } else {
                 mYvector = (TextView) ((Activity) getContext()).findViewById(R.id.y_vector_textview);
                 mZvector = (TextView) ((Activity) getContext()).findViewById(R.id.z_vector_textview);
-                mAngle = (TextView) ((Activity) getContext()).findViewById(R.id.angle_textview);
-                mDist = (TextView) ((Activity) getContext()).findViewById(R.id.dist_textview);
             }
         }
 
