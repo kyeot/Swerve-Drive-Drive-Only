@@ -1,5 +1,6 @@
 package org.usfirst.frc2783.subystems;
 
+import org.usfirst.frc2783.commands.UpdateGimbal;
 import org.usfirst.frc2783.robot.Constants;
 import org.usfirst.frc2783.util.NavSensor;
 
@@ -15,7 +16,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Gimbal extends Subsystem {
 
-    NavSensor gyro = NavSensor.getInstance();
+    public static NavSensor gyro = NavSensor.getInstance();
     
     Servo pitchServo;
     Servo rollServo;
@@ -33,7 +34,7 @@ public class Gimbal extends Subsystem {
     
     public void stabilizeToGyro() {
     	//Negative or Positive?
-    	pitchServo.setAngle(gyro.getRawPitch()+(90+defaultPitch));
+    	pitchServo.setAngle((gyro.getRawPitch())+(45+defaultPitch));
     }
 
     public void initDefaultCommand() {
