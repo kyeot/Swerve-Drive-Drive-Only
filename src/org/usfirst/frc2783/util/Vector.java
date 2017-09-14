@@ -21,7 +21,7 @@ public class Vector {
 		this.b = Math.cos(dir) * mag;
 	}
 	
-	public Vector add(Vector v) {
+	public Vector translate(Vector v) {
 		double c = a + v.getA();
 		double d = b + v.getB();
 		return new Vector(c,d);
