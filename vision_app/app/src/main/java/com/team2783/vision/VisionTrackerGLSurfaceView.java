@@ -49,7 +49,7 @@ public class VisionTrackerGLSurfaceView extends BetterCameraGLSurfaceView implem
         settings.width = kWidth;
         settings.camera_settings = new HashMap<>();
         settings.camera_settings.put(CaptureRequest.CONTROL_MODE, CaptureRequest.CONTROL_MODE_OFF);
-        settings.camera_settings.put(CaptureRequest.CONTROL_VIDEO_STABILIZATION_MODE, CaptureRequest.CONTROL_VIDEO_STABILIZATION_MODE_OFF);
+        settings.camera_settings.put(CaptureRequest.CONTROL_VIDEO_STABILIZATION_MODE, CaptureRequest.CONTROL_VIDEO_STABILIZATION_MODE_ON);
         settings.camera_settings.put(CaptureRequest.LENS_OPTICAL_STABILIZATION_MODE, CaptureRequest.LENS_OPTICAL_STABILIZATION_MODE_OFF);
         settings.camera_settings.put(CaptureRequest.SENSOR_EXPOSURE_TIME, 1000000L);
         settings.camera_settings.put(CaptureRequest.LENS_FOCUS_DISTANCE, .2f);
@@ -146,20 +146,12 @@ public class VisionTrackerGLSurfaceView extends BetterCameraGLSurfaceView implem
             Log.i(LOGTAG, "Target at: " + y + ", " + z);
             visionUpdate.addCameraTargetInfo(
                     new CameraTargetInfo(y, z));
-            double xr=(z*Math.sin(20))+(Math.cos(20));
-            double yr = y;
-            double zr =(z*Math.cos(20))-(Math.sin(20));
 
-            final double dist = Math.hypot(xr, yr)*(82/zr);
-            final double angle = (Math.atan2(yr, xr));
-
-            if (mYvector != null || mZvector != null || mAngle != null || mDist != null) {
+            if (mYvector != null || mZvector != null) {
                 Runnable vectorUpdater = new Runnable() {
                     public void run() {
                         mYvector.setText("Y Vector: " + y);
                         mZvector.setText("Z Vector: " + z);
-                        mDist.setText("Distance: " + dist);
-                        mAngle.setText("Angle: " + angle);
 
                     }
                 };
@@ -167,8 +159,6 @@ public class VisionTrackerGLSurfaceView extends BetterCameraGLSurfaceView implem
             } else {
                 mYvector = (TextView) ((Activity) getContext()).findViewById(R.id.y_vector_textview);
                 mZvector = (TextView) ((Activity) getContext()).findViewById(R.id.z_vector_textview);
-                mAngle = (TextView) ((Activity) getContext()).findViewById(R.id.angle_textview);
-                mDist = (TextView) ((Activity) getContext()).findViewById(R.id.dist_textview);
             }
         }
 
