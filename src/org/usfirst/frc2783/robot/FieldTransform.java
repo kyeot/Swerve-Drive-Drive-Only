@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.usfirst.frc2783.util.Bearing;
+import org.usfirst.frc2783.util.NavSensor;
 import org.usfirst.frc2783.util.Transform;
 import org.usfirst.frc2783.util.Vector;
 import org.usfirst.frc2783.vision.TargetInfo;
@@ -23,28 +24,31 @@ public class FieldTransform {
 		return fieldTransform;
 	}
 	
+	NavSensor gyro = NavSensor.getInstance();
+	
 	List<TargetInfo> targets;
 	
-	Vector cameraToRobot;
+	Transform cameraToRobot;
 	Bearing camYaw;
 	Bearing camPitch;
 	double camHeight;
 	double camToGoal;
 	
 	FieldTransform() {
-		cameraToRobot = new Vector(Constants.cameraXOffset, 
-										Constants.cameraYOffset);
+		cameraToRobot = new Transform(Constants.cameraXOffset, 
+										Constants.cameraYOffset,
+										Constants.cameraYawOffset);
 		camPitch = new Bearing(-Constants.cameraPitchOffset);
 		camHeight = Constants.cameraZOffset;
 		camToGoal = Constants.goalHeight - camHeight;
 	}
 	
 	public Transform getRobotPose() {
-		return new Transform(0.0,0.0,0.0);
+		return new Transform(0.0,0.0,-gyro.getAngle(false));
 	}
 	
-	public Vector getFieldToCamera() {
-		return getRobotPose().getTranslation().add(cameraToRobot);
+	public Transform getFieldToCamera() {
+		return getRobotPose().transform(cameraToRobot);
 	}
 	
 	public List<Vector> getFieldToTargets() {
@@ -54,9 +58,6 @@ public class FieldTransform {
 				double x = t.getX();
 				double y = t.getY();
 				double z = t.getZ();
-				
-				SmartDashboard.putString("DB/String 2", Double.toString(z));
-				SmartDashboard.putString("DB/String 3", Double.toString(y));
 				
 				//Rotate target direction to compensate for camera pitch (rotation matrix)
 				double xr = z * camPitch.sin() + x * camPitch.cos();
@@ -70,7 +71,10 @@ public class FieldTransform {
                 	Bearing angle = new Bearing(new Vector(xr, yr));
                 	Vector targetToCam = new Vector(angle.cos()*dist, angle.sin()*dist);
                 	SmartDashboard.putString("DB/String 1", Double.toString(new Bearing(targetToCam).getTheta()));
-                	v.add(getFieldToCamera().add(targetToCam));
+                	v.add(getFieldToCamera().getTranslation().translate(targetToCam));
+                	
+        			SmartDashboard.putString("DB/String 0", Double.toString(getFieldToCamera().getTranslation().translate(targetToCam.rotateBy(getFieldToCamera().getRotation())).dir().getTheta()));
+
                 }
 			}
 		}

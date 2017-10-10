@@ -18,7 +18,7 @@ public class Bearing {
 		theta = v.dir().getTheta();
 	}
 	
-	public Bearing add(Bearing b) {
+	public Bearing rotate(Bearing b) {
 		return new Bearing((this.theta+b.getTheta())%360);
 	}
 	
