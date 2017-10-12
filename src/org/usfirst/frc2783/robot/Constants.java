@@ -32,6 +32,10 @@ public class Constants {
 	public static final double goalHeight = 81.6;
 	
 	public static final int kDriverControllerId = 0;
+	public static final int kGunnerControllerId = 1;
+	
+	public static final int kGearRollerId = 5;
+	public static final int kGearHolderId = 4;
 	
 	public static final int kFrontLeftWheelId = 2;
 	public static final int kFrontRightWheelId = 0;

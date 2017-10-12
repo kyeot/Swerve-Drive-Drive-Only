@@ -6,15 +6,14 @@ import java.io.IOException;
 import org.usfirst.frc2783.loops.LogData;
 import org.usfirst.frc2783.loops.Looper;
 import org.usfirst.frc2783.loops.VisionProcessor;
+import org.usfirst.frc2783.subystems.ActiveGearBase;
 import org.usfirst.frc2783.subystems.SwerveDriveBase;
+import org.usfirst.frc2783.util.LimitSwitch;
 import org.usfirst.frc2783.util.Logger;
 import org.usfirst.frc2783.vision.VisionServer;
 
-import com.kauailabs.navx.frc.AHRS;
-
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
@@ -29,9 +28,18 @@ public class Robot extends IterativeRobot {
     VisionServer mVisionServer = VisionServer.getInstance();
     
     public static SwerveDriveBase swerveBase = new SwerveDriveBase();
+    public static ActiveGearBase activeGearBase = new ActiveGearBase();
+    
+    public LimitSwitch gearChecker;
+	public LimitSwitch holderPos;
+	public static LimitSwitch[] limitSwitches;
     
     public void robotInit() {
         oi = new OI();
+        
+        gearChecker = new LimitSwitch(1, false);
+		holderPos = new LimitSwitch(0, false);
+		limitSwitches = new LimitSwitch[]{gearChecker, holderPos};
         
         mVisionServer.addVisionUpdateReceiver(VisionProcessor.getInstance());
         
