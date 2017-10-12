@@ -14,8 +14,10 @@ public class OI {
 	
 	AxisButton gearLift = new AxisButton(gunner, 5);
 	AxisButton gearHolder = new AxisButton(gunner, 1);
+	AxisButton Climber = new AxisButton(gunner, 3);
 
     public OI() {
+    	
     }
 
 }

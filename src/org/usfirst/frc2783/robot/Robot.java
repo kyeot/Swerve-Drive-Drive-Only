@@ -7,6 +7,7 @@ import org.usfirst.frc2783.loops.LogData;
 import org.usfirst.frc2783.loops.Looper;
 import org.usfirst.frc2783.loops.VisionProcessor;
 import org.usfirst.frc2783.subystems.ActiveGearBase;
+import org.usfirst.frc2783.subystems.ClimberBase;
 import org.usfirst.frc2783.subystems.SwerveDriveBase;
 import org.usfirst.frc2783.util.LimitSwitch;
 import org.usfirst.frc2783.util.Logger;
@@ -29,6 +30,7 @@ public class Robot extends IterativeRobot {
     
     public static SwerveDriveBase swerveBase = new SwerveDriveBase();
     public static ActiveGearBase activeGearBase = new ActiveGearBase();
+    public static ClimberBase climberBase = new ClimberBase();
     
     public LimitSwitch gearChecker;
 	public LimitSwitch holderPos;
