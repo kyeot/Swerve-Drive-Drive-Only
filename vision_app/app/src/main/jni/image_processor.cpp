@@ -140,8 +140,8 @@ std::vector<TargetInfo> processImpl(int w, int h, int texOut, DisplayMode mode,
         continue;
       }
       // Filter based on fullness
-      const double kMinFullness = .2; //should be .2, adjust to 0 for testing with emulator
-      const double kMaxFullness = .9; //should be .9, adjust to 1 for testing with emulator
+      const double kMinFullness = .45; //should be .2, adjust to 0 for testing with emulator
+      const double kMaxFullness = .95; //should be .9, adjust to 1 for testing with emulator
       double original_contour_area = cv::contourArea(contour);
       double poly_area = cv::contourArea(poly);
       double fullness = original_contour_area / poly_area;
