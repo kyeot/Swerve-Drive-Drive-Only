@@ -23,8 +23,8 @@ public class Transform {
 	}
 	
 	public Transform transform(Transform t) {
-		Vector tr = this.translation.add(t.getTranslation());
-		Bearing be = this.rotation.add(t.getRotation()); 
+		Vector tr = this.translation.translate(t.getTranslation());
+		Bearing be = this.rotation.rotate(t.getRotation()); 
 		return new Transform(tr, be);
 	}
 	

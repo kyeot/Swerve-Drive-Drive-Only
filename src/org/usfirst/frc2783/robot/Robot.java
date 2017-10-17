@@ -10,11 +10,8 @@ import org.usfirst.frc2783.subystems.SwerveDriveBase;
 import org.usfirst.frc2783.util.Logger;
 import org.usfirst.frc2783.vision.VisionServer;
 
-import com.kauailabs.navx.frc.AHRS;
-
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 

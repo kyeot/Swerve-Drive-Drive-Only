@@ -25,11 +25,12 @@ public class Constants {
 	
 	public static final double cameraXOffset = 0.0;
 	public static final double cameraYOffset = 0.0;
-	public static final double cameraZOffset = 0.0;
-	public static final double cameraPitchOffset = 30.0;
+	public static final double cameraZOffset = 3.5;
+	public static final double cameraPitchOffset = 20.0;
 	public static final double cameraRollOffset = 0.0;
+	public static final double cameraYawOffset = 90.0;
 	
-	public static final double goalHeight = 89.0;
+	public static final double goalHeight = 81.6;
 	
 	public static final int kDriverControllerId = 0;
 	
@@ -51,5 +52,7 @@ public class Constants {
 	public static final int kRearLeftEncoderB = 5;
 	public static final int kRearRightEncoderA = 0;
 	public static final int kRearRightEncoderB = 1;
+
+	
 
 }

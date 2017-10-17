@@ -286,8 +286,6 @@ public class SwerveDriveBase extends Subsystem {
     		rrSpd /= max;
     	}
     	
-    	SmartDashboard.putString("DB/String 0", Double.toString(frAng));
-    	
     	//Set Wheel Speeds and Angles
     	frMod.setModule(frAng, frSpd);
     	flMod.setModule(flAng, flSpd);
