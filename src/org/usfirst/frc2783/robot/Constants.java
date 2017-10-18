@@ -37,6 +37,8 @@ public class Constants {
 	public static final int kGearRollerId = 5;
 	public static final int kGearHolderId = 4;
 	
+	public static final int kClimberMotorId = 4;
+	
 	public static final int kFrontLeftWheelId = 2;
 	public static final int kFrontRightWheelId = 0;
 	public static final int kRearLeftWheelId = 3;

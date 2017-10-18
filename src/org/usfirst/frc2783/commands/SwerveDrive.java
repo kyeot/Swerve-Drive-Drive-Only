@@ -122,6 +122,12 @@ public class SwerveDrive extends Command {
     		rotValue *= 2;
     	}
     	
+    	if(controlType.getDockingModeButton()) {
+    		fbValue *= 0.5;
+    		rlValue *= 0.5;
+    		rotValue *= 0.5;
+    	}
+    	
     	//If the X button is pressed resets the Swerve Modules
     	if(controlType.getZeroModulesButton()) {
     		Robot.swerveBase.setZero();
@@ -139,13 +145,7 @@ public class SwerveDrive extends Command {
     		swerveController.move(fbValue, rlValue, rotValue);
     	}
     	
-    	if(controlType.getDockingModeButton()) {
-    		System.out.println("Docking Mode");
-    		
-    		swerveController.update(false);
-    	} else {
-    		swerveController.update(true);
-    	}
+    	swerveController.update(true);
     	
     }
 

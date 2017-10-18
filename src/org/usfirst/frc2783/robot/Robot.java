@@ -32,16 +32,12 @@ public class Robot extends IterativeRobot {
     public static ActiveGearBase activeGearBase = new ActiveGearBase();
     public static ClimberBase climberBase = new ClimberBase();
     
-    public LimitSwitch gearChecker;
-	public LimitSwitch holderPos;
-	public static LimitSwitch[] limitSwitches;
+    public static LimitSwitch gearChecker = new LimitSwitch(1, false);
+	public static LimitSwitch holderPos = new LimitSwitch(0, false);
+	public static LimitSwitch[] limitSwitches = new LimitSwitch[]{gearChecker, holderPos};
     
     public void robotInit() {
         oi = new OI();
-        
-        gearChecker = new LimitSwitch(1, false);
-		holderPos = new LimitSwitch(0, false);
-		limitSwitches = new LimitSwitch[]{gearChecker, holderPos};
         
         mVisionServer.addVisionUpdateReceiver(VisionProcessor.getInstance());
         

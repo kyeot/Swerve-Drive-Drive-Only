@@ -26,8 +26,9 @@ public class ActiveGearBase extends Subsystem {
 	}
 	
 	public void spinRoller(double speed){
-		if(Robot.limitSwitches[0].get() && speed > 0) {
+		if(Robot.limitSwitches[0].get() && speed < 0) {
 			speed = 0;
+			
 		}
 		
 		gearRoller.set(speed);

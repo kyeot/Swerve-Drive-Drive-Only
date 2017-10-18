@@ -48,7 +48,7 @@ public class ActiveGearDrive extends Command {
     	} else {
     		Robot.activeGearBase.spinRoller(0);
     	}
-    	
+ 	
     	if(Math.abs(liftValue) > .12){
     		Robot.activeGearBase.setLifterSpeedVbus(liftValue);
     	} else {
