@@ -12,6 +12,8 @@ import java.util.Optional;
 /**
  * VisionUpdate contains the various attributes outputted by the vision system,
  * namely a list of targets and the timestamp at which it was captured.
+ * 
+ * @author 254
  */
 public class VisionUpdate {
     protected boolean valid = false;

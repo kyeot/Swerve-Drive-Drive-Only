@@ -1,5 +1,5 @@
-# CheezDroid
-Android-based Vision System
+# 2783 Vision
+Android-based Vision System (based on Team 254's implementation)
 
 ## To install OpenCV
 * Download http://sourceforge.net/projects/opencvlibrary/files/opencv-android/3.1.0/OpenCV-3.1.0-android-sdk.zip/download
@@ -9,11 +9,11 @@ Android-based Vision System
 
 ## To provision a device for robot use
 * Enable device admin
-1. Settings App > Security > Device Administrators > Click box 'on' for CheezDroid
+1. Settings App > Security > Device Administrators > Click box 'on' for 2783 Vision
 
 * Enable device owner
 1. adb shell
-2. dpm set-device-owner com.team254.cheezdroid/.ChezyDeviceAdminReceiver
+2. dpm set-device-owner com.team2783.vision/.ChezyDeviceAdminReceiver
 
 ## How to Install ADB on the RoboRIO
 

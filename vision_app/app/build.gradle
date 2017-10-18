@@ -12,19 +12,18 @@ buildscript {
 }
 
 dependencies {
-    compile "com.android.support:support-v4:23.1.0"
-    compile "com.android.support:support-v13:23.1.0"
-    compile project(':openCVLibrary310')
-    compile 'com.android.support:appcompat-v7:23.0.0'
+    compile 'com.android.support:support-v13:23.1.0'
+    compile project(':openCVLibrary330')
     compile 'com.android.support:design:23.0.0'
     compile 'org.florescu.android.rangeseekbar:rangeseekbar-library:0.3.0'
 }
 
 android {
     compileSdkVersion 23
-    buildToolsVersion '25.0.0'
+    buildToolsVersion '25.0.3'
 
     defaultConfig {
+        applicationId "com.team2783.vision"
         minSdkVersion 21
         targetSdkVersion 23
         ndk {
@@ -47,35 +46,32 @@ android {
 
         // call regular ndk-build(.cmd) script from app directory
         task ndkBuild(type: Exec) {
-            if (Os.isFamily(Os.FAMILY_WINDOWS)) {
-                commandLine 'C:/Users/Calasada/AppData/Local/Android/Sdk/ndk-bundle/ndk-build.cmd', '-C', file('src/main').absolutePath
-            } else {
-                def ndkDir = android.ndkDirectory.getAbsolutePath()
-                commandLine ndkDir + "/ndk-build", '-C', file('src/main').absolutePath
+            def ndkDir = project.android.ndkDirectory
+            def ndkBuildExecutable = new File(ndkDir, 'ndk-build.cmd')
+            commandLine ndkBuildExecutable, '-C', file('src/main').absolutePath
+        }
+
+        signingConfigs {
+            debug {
+                storeFile file("src/main/debug_keystore.jks")
+                storePassword "1234Five"
+                keyAlias "debug"
+                keyPassword "1234Five"
             }
         }
-    }
 
-    signingConfigs {
-        debug {
-            storeFile file("src/main/debug_keystore.jks")
-            storePassword "1234Five"
-            keyAlias "debug"
-            keyPassword "1234Five"
+        tasks.withType(JavaCompile) {
+            compileTask -> compileTask.dependsOn ndkBuild
         }
-    }
 
-    tasks.withType(JavaCompile) {
-        compileTask -> compileTask.dependsOn ndkBuild
-    }
+        externalNativeBuild {
 
-    externalNativeBuild {
+            // Encapsulates your CMake build configurations.
+            cmake {
 
-        // Encapsulates your CMake build configurations.
-        cmake {
-
-            // Provides a relative path to your CMake build script.
-            path "CMakeLists.txt"
+                // Provides a relative path to your CMake build script.
+                path "CMakeLists.txt"
+            }
         }
     }
 }

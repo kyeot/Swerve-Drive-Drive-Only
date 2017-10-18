@@ -1,10 +1,9 @@
 package org.usfirst.frc2783.loops;
 
+import org.usfirst.frc2783.util.Logger;
+import org.usfirst.frc2783.robot.FieldTransform;
 import org.usfirst.frc2783.vision.VisionUpdate;
 import org.usfirst.frc2783.vision.VisionUpdateReceiver;
-
-import edu.wpi.first.wpilibj.RobotState;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * This function adds vision updates (from the Nexus smartphone) to a list in
@@ -12,11 +11,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * code to determine the best goal to shoot at and prune old Goal tracks is in
  * GoalTracker.java
  * 
- * @see GoalTracker.java
+ * @author 254
  */
 public class VisionProcessor implements Loop, VisionUpdateReceiver {
     static VisionProcessor instance_ = new VisionProcessor();
     VisionUpdate update_ = null;
+    FieldTransform fieldTransform = FieldTransform.getInstance();
 
     public static VisionProcessor getInstance() {
         return instance_;
@@ -39,7 +39,8 @@ public class VisionProcessor implements Loop, VisionUpdateReceiver {
             update = update_;
             update_ = null;
         }
-        
+        fieldTransform.addVisionTargets(update.getTargets());
+        fieldTransform.getFieldToTargets();
     }
 
     @Override
@@ -49,6 +50,7 @@ public class VisionProcessor implements Loop, VisionUpdateReceiver {
 
     @Override
     public synchronized void gotUpdate(VisionUpdate update) {
+    	Logger.log("INFO", "gotUpdate");
         update_ = update;
     }
 

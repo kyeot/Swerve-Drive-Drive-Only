@@ -7,6 +7,12 @@ import java.util.Date;
 
 import org.usfirst.frc2783.robot.Robot;
 
+/**
+ * Used for logging important messages, text written to file found 
+ * on roborio at /home/lvuser/log.txt
+ * 
+ * @author 2783
+ */
 public class Logger {
 	
 	public static void debug(String msg) {

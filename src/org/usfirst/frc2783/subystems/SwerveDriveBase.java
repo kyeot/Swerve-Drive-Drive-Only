@@ -4,6 +4,7 @@ import org.usfirst.frc2783.commands.SwerveDrive;
 import org.usfirst.frc2783.commands.SwerveDrive.ControlType;
 import org.usfirst.frc2783.robot.Constants;
 import org.usfirst.frc2783.robot.Robot;
+import org.usfirst.frc2783.util.NavSensor;
 
 import com.ctre.CANTalon;
 
@@ -15,21 +16,25 @@ import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- *
+ * Contains all swerve-related methods,
+ * includes the SwerveModule subclass which uses a pid to set the module to a desired angle
+ * 
+ * @author 2783
  */
 public class SwerveDriveBase extends Subsystem {
 	
-	public SwerveModule frMod;
-	public SwerveModule flMod;
-	public SwerveModule rrMod;
-	public SwerveModule rlMod;
+	SwerveModule frMod;
+	SwerveModule flMod;
+	SwerveModule rrMod;
+	SwerveModule rlMod;
 	
-	private double angleOffset = 0;
+	NavSensor gyro = NavSensor.getInstance();
 	
 	//Class for controlling PIDOutput
-	public class PIDOutputClass implements PIDOutput {
+	class PIDOutputClass implements PIDOutput {
 		private VictorSP motor;
 		
 		public PIDOutputClass(VictorSP motor) {
@@ -71,7 +76,7 @@ public class SwerveDriveBase extends Subsystem {
 						);
 			
 			pidCont = new PIDController(
-							Constants.kSwerveP, Constants.kSwerveI, Constants.kSwerveD,
+							Constants.kSwerveModP, Constants.kSwerveModI, Constants.kSwerveModD,
 							enc,
 							pidOut
 						);
@@ -239,7 +244,7 @@ public class SwerveDriveBase extends Subsystem {
     	//Swerve Math Taken from: https://www.chiefdelphi.com/media/papers/2426
     	
     	if(fieldOriented) {
-	    	double curAngle = getGyroAngle(true);
+	    	double curAngle = gyro.getAngle(true);
 	    	double temp = fbMot*(cosDeg(curAngle)) + rlMot*(sinDeg(curAngle));
 	    	rlMot = fbMot*(sinDeg(curAngle)) + -(rlMot*(cosDeg(curAngle)));
 	    	fbMot = temp;
@@ -254,17 +259,17 @@ public class SwerveDriveBase extends Subsystem {
     	double C = fbMot - rotMot*(W/R);
     	double D = fbMot + rotMot*(W/R);
     	
-    	double frSpd = Math.sqrt((B*B) + (D*D));
-    	double flSpd = Math.sqrt((B*B) + (C*C));
-    	double rlSpd = Math.sqrt((A*A) + (C*C));
-    	double rrSpd = Math.sqrt((A*A) + (D*D));
+    	double frSpd = Math.sqrt((A*A) + (C*C));
+    	double flSpd = Math.sqrt((A*A) + (D*D));
+    	double rlSpd = Math.sqrt((B*B) + (D*D));
+    	double rrSpd = Math.sqrt((B*B) + (C*C));
     	
     	double t = 180/Math.PI;
     	
-    	double frAng = Math.atan2(B, D)*t;
-    	double flAng = Math.atan2(B, C)*t;
-    	double rlAng = Math.atan2(A, C)*t;
-    	double rrAng = Math.atan2(A, D)*t;
+    	double frAng = Math.atan2(A, C)*t;
+    	double flAng = Math.atan2(A, D)*t;
+    	double rlAng = Math.atan2(B, D)*t;
+    	double rrAng = Math.atan2(B, C)*t;
     	 
     	double max = frSpd;
     	if(max < flSpd) max = flSpd;
@@ -296,20 +301,6 @@ public class SwerveDriveBase extends Subsystem {
     			rotation,
     			fieldOriented);
     	
-    }
-    
-    //Returns the Gyro Angle
-    public double getGyroAngle(boolean reversed) {
-    	if(reversed) {
-    		return ((Robot.getNavSensor().getAngle()+180.0)%360) - angleOffset;
-    	} else {
-    		return Robot.getNavSensor().getAngle()%360 - angleOffset;
-    	}
-    }
-    
-    public void resetGyroNorth(double angle, double north) {
-    	Robot.getNavSensor().reset();
-    	angleOffset = angle - north;
     }
     
     //Sets all module's angles to 0

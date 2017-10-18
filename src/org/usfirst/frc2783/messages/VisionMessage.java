@@ -4,6 +4,8 @@ import org.json.simple.JSONObject;
 
 /**
  * An abstract class used for messages about the vision subsystem.
+ * 
+ * @author 254
  */
 public abstract class VisionMessage {
 

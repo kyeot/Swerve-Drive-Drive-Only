@@ -100,11 +100,12 @@ std::vector<TargetInfo> processImpl(int w, int h, int texOut, DisplayMode mode,
       const double kMinTargetWidth = 20;
       const double kMaxTargetWidth = 300;
       const double kMinTargetHeight = 10;
-      const double kMaxTargetHeight = 100;
+      const double kMaxTargetHeight = 100; //should be 100, adjust to 121 for testing in emulator
       if (target.width < kMinTargetWidth || target.width > kMaxTargetWidth ||
           target.height < kMinTargetHeight ||
           target.height > kMaxTargetHeight) {
         LOGD("Rejecting target due to size");
+          //LOGD("invalid target size %.2lf, %.2lf", target.width, target.height); 
         rejected_targets.push_back(std::move(target));
         continue;
       }
@@ -139,8 +140,8 @@ std::vector<TargetInfo> processImpl(int w, int h, int texOut, DisplayMode mode,
         continue;
       }
       // Filter based on fullness
-      const double kMinFullness = .2;
-      const double kMaxFullness = .8;
+      const double kMinFullness = .45; //should be .2, adjust to 0 for testing with emulator
+      const double kMaxFullness = .95; //should be .9, adjust to 1 for testing with emulator
       double original_contour_area = cv::contourArea(contour);
       double poly_area = cv::contourArea(poly);
       double fullness = original_contour_area / poly_area;
@@ -207,13 +208,13 @@ static void ensureJniRegistered(JNIEnv *env) {
   }
   sFieldsRegistered = true;
   jclass targetsInfoClass =
-      env->FindClass("com/team254/cheezdroid/NativePart$TargetsInfo");
+      env->FindClass("com/team2783/vision/NativePart$TargetsInfo");
   sNumTargetsField = env->GetFieldID(targetsInfoClass, "numTargets", "I");
   sTargetsField = env->GetFieldID(
       targetsInfoClass, "targets",
-      "[Lcom/team254/cheezdroid/NativePart$TargetsInfo$Target;");
+      "[Lcom/team2783/vision/NativePart$TargetsInfo$Target;");
   jclass targetClass =
-      env->FindClass("com/team254/cheezdroid/NativePart$TargetsInfo$Target");
+      env->FindClass("com/team2783/vision/NativePart$TargetsInfo$Target");
 
   sCentroidXField = env->GetFieldID(targetClass, "centroidX", "D");
   sCentroidYField = env->GetFieldID(targetClass, "centroidY", "D");

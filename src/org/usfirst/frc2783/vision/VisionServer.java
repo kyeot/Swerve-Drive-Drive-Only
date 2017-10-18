@@ -26,6 +26,7 @@ import edu.wpi.first.wpilibj.Timer;
  * creating new VisionServer instances.
  * 
  * @see VisionUpdate.java
+ * @author 254
  */
 
 public class VisionServer extends CrashTrackingRunnable {
@@ -77,7 +78,7 @@ public class VisionServer extends CrashTrackingRunnable {
                 }
             }
         }
-
+        
         public void handleMessage(VisionMessage message, double timestamp) {
             if ("targets".equals(message.getType())) {
                 VisionUpdate update = VisionUpdate.generateFromJsonString(timestamp, message.getMessage());
@@ -91,6 +92,7 @@ public class VisionServer extends CrashTrackingRunnable {
             if ("heartbeat".equals(message.getType())) {
                 send(HeartbeatMessage.getInstance());
             }
+            Logger.info("gotUpdate");
         }
 
         public boolean isAlive() {

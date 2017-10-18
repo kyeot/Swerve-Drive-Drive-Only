@@ -17,21 +17,27 @@
         android:padding="5dp">
 
         <TextView
+            android:id="@+id/hLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="H"
-            android:id="@+id/hLabel"
             android:paddingRight="10dp"
-            android:paddingTop="23dp" />
+            android:paddingTop="23dp"
+            android:text="H"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/kyeot_blue" />
 
         <org.florescu.android.rangeseekbar.RangeSeekBar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             rsb:absoluteMaxValue="255"
             rsb:absoluteMinValue="0"
-            rsb:textAboveThumbsColor="@android:color/holo_blue_dark"
+            rsb:textAboveThumbsColor="@color/primary_material_light"
             rsb:showLabels="false"
+            rsb:barHeight="3dp"
+            rsb:thumbDisabled="@drawable/custom_slider_thumb"
+            rsb:thumbNormal="@drawable/custom_slider_thumb"
+            rsb:thumbPressed="@drawable/custom_slider_thumb"
+            rsb:activeColor="#143E5C"
             android:layout_gravity="center_vertical"
             android:id="@+id/hSeekBar" />
     </LinearLayout>
@@ -43,21 +49,27 @@
         android:padding="5dp">
 
         <TextView
+            android:id="@+id/sLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="S"
-            android:id="@+id/sLabel"
             android:paddingRight="10dp"
-            android:paddingTop="23dp" />
+            android:paddingTop="23dp"
+            android:text="S"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/kyeot_blue" />
 
         <org.florescu.android.rangeseekbar.RangeSeekBar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             rsb:absoluteMaxValue="255"
             rsb:absoluteMinValue="0"
-            rsb:textAboveThumbsColor="@android:color/holo_blue_dark"
+            rsb:textAboveThumbsColor="@color/primary_material_light"
             rsb:showLabels="false"
+            rsb:barHeight="3dp"
+            rsb:thumbDisabled="@drawable/custom_slider_thumb"
+            rsb:thumbNormal="@drawable/custom_slider_thumb"
+            rsb:thumbPressed="@drawable/custom_slider_thumb"
+            rsb:activeColor="#143E5C"
             android:layout_gravity="center_vertical"
             android:id="@+id/sSeekBar" />
     </LinearLayout>
@@ -69,21 +81,27 @@
         android:padding="5dp">
 
         <TextView
+            android:id="@+id/vLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="V"
-            android:id="@+id/vLabel"
             android:paddingRight="10dp"
-            android:paddingTop="23dp" />
+            android:paddingTop="23dp"
+            android:text="V"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/kyeot_blue" />
 
         <org.florescu.android.rangeseekbar.RangeSeekBar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             rsb:absoluteMaxValue="255"
             rsb:absoluteMinValue="0"
-            rsb:textAboveThumbsColor="@android:color/holo_blue_dark"
+            rsb:textAboveThumbsColor="@color/primary_material_light"
             rsb:showLabels="false"
+            rsb:barHeight="3dp"
+            rsb:thumbDisabled="@drawable/custom_slider_thumb"
+            rsb:thumbNormal="@drawable/custom_slider_thumb"
+            rsb:thumbPressed="@drawable/custom_slider_thumb"
+            rsb:activeColor="#143E5C"
             android:layout_gravity="center_vertical"
             android:id="@+id/vSeekBar" />
     </LinearLayout>
@@ -93,6 +111,8 @@
         android:layout_height="wrap_content"
         android:text="Restore Defaults"
         android:id="@+id/restoreDefaultsButton"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        style="@style/Widget.AppCompat.Button"
+        />
 
 </LinearLayout>

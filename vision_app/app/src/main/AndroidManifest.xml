@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.team254.cheezdroid"
-    android:versionCode="1"
-    android:versionName="1.0" >
+    package="com.team2783.vision"
+    android:versionCode="2"
+    android:versionName="1.1" >
 
     <uses-sdk
         android:minSdkVersion="21"
@@ -16,13 +16,14 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
-        android:name=".AppContext"
+        android:name="com.team2783.vision.AppContext"
+        android:label="2783 Vision"
         android:allowBackup="true"
         android:icon="@mipmap/icon"
         android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
         <activity
-            android:name=".VisionTrackerActivity"
-            android:label="@string/app_name"
+            android:name="com.team2783.vision.VisionTrackerActivity"
+            android:label="2783 Vision"
             android:screenOrientation="landscape"
             android:configChanges="keyboardHidden|orientation"
             android:exported="true">
@@ -32,12 +33,12 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".SelfieActivity"
+        <activity android:name="com.team2783.vision.SelfieActivity"
             android:screenOrientation="landscape"
             android:configChanges="keyboardHidden|orientation" />
 
         <receiver
-            android:name=".ChezyDeviceAdminReceiver"
+            android:name="com.team2783.vision.VisionDeviceAdminReceiver"
             android:description="@string/device_admin_description"
             android:label="@string/device_admin_label"
             android:permission="android.permission.BIND_DEVICE_ADMIN">
