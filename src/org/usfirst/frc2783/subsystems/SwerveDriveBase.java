@@ -1,10 +1,10 @@
-package org.usfirst.frc2783.subystems;
+package org.usfirst.frc2783.subsystems;
 
 import org.usfirst.frc2783.commands.SwerveDrive;
 import org.usfirst.frc2783.commands.SwerveDrive.ControlType;
 import org.usfirst.frc2783.robot.Constants;
-import org.usfirst.frc2783.robot.Robot;
 import org.usfirst.frc2783.util.NavSensor;
+import org.usfirst.frc2783.subsystems.Substructure;
 
 import com.ctre.CANTalon;
 
@@ -16,7 +16,6 @@ import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Contains all swerve-related methods,
@@ -24,7 +23,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * 
  * @author 2783
  */
-public class SwerveDriveBase extends Subsystem {
+public class SwerveDriveBase extends Subsystem implements Substructure {
 	
 	SwerveModule frMod;
 	SwerveModule flMod;

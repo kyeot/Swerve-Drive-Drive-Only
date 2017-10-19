@@ -1,4 +1,4 @@
-package org.usfirst.frc2783.subystems;
+package org.usfirst.frc2783.subsystems;
 
 import org.usfirst.frc2783.robot.Constants;
 import org.usfirst.frc2783.robot.Robot;
