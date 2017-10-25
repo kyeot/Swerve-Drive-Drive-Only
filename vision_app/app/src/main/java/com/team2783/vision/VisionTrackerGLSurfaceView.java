@@ -43,10 +43,10 @@ public class VisionTrackerGLSurfaceView extends BetterCameraGLSurfaceView implem
     static final double kCenterRow = ((double) kHeight) / 2.0 - .5;
     static NativePart.TargetsInfo.Target target1;
     static NativePart.TargetsInfo.Target target2;
-    static final double separationMin = 0;  //****ADD VALUE FOR THIS****
-    static final double separationMax = 0;  //****ADD VALUE FOR THIS****
-    static final double yDeltaMin = 0;      //Min should always be 0 because that means the centroids of the two targets have the same y value.
-    static final double yDeltaMax = 0;      //****ADD VALUE FOR THIS****
+    static final double separationMin = 16.5; //8.25 inches is the distance between the two tape centers
+    static final double separationMax = 495;  //****ADD MEASURED VALUE FOR THIS****
+    static final double yDeltaMin = 0;        //Min should always be 0 because that means the centroids of the two targets have the same y value.
+    static final double yDeltaMax = 10;       //****ADD MEASURED VALUE FOR THIS***
 
     static BetterCamera2Renderer.Settings getCameraSettings() {
         BetterCamera2Renderer.Settings settings = new BetterCamera2Renderer.Settings();

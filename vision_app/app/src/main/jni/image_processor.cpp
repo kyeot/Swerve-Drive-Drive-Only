@@ -97,10 +97,10 @@ std::vector<TargetInfo> processImpl(int w, int h, int texOut, DisplayMode mode,
 
       // Filter based on size
       // Keep in mind width/height are in imager terms...
-      const double kMinTargetWidth = 20;
-      const double kMaxTargetWidth = 300;
-      const double kMinTargetHeight = 10;
-      const double kMaxTargetHeight = 340; //should be 100, adjust to 121 for testing in emulator
+      const double kMinTargetWidth = 4;       //2 inches wide
+      const double kMaxTargetWidth = 120;
+      const double kMinTargetHeight = 10;     //5 inches long
+      const double kMaxTargetHeight = 300;    //adjust to 121 for testing in emulator
       if (target.width < kMinTargetWidth || target.width > kMaxTargetWidth ||
           target.height < kMinTargetHeight ||
           target.height > kMaxTargetHeight) {
