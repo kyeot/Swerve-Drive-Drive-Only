@@ -43,12 +43,10 @@ public class VisionTrackerGLSurfaceView extends BetterCameraGLSurfaceView implem
     static final double kCenterRow = ((double) kHeight) / 2.0 - .5;
     static NativePart.TargetsInfo.Target target1;
     static NativePart.TargetsInfo.Target target2;
-    static boolean everyOther = false;
-    static boolean everyOtherSet = false;
-    static double seperation;
-    static double seperationMin;
-    static double seperationMax;
-    static double seperatedCentroidX;
+    static final double separationMin = 0;  //****ADD VALUE FOR THIS****
+    static final double separationMax = 0;  //****ADD VALUE FOR THIS****
+    static final double yDeltaMin = 0;      //****ADD VALUE FOR THIS****
+    static final double yDeltaMax = 0;      //****ADD VALUE FOR THIS****
 
     static BetterCamera2Renderer.Settings getCameraSettings() {
         BetterCamera2Renderer.Settings settings = new BetterCamera2Renderer.Settings();
@@ -144,67 +142,65 @@ public class VisionTrackerGLSurfaceView extends BetterCameraGLSurfaceView implem
 
         VisionUpdate visionUpdate = new VisionUpdate(image_timestamp);
         Log.i(LOGTAG, "Num targets = " + targetsInfo.numTargets);
-        for (int i = 0; i < targetsInfo.numTargets; ++i) {
-            NativePart.TargetsInfo.Target target = targetsInfo.targets[i];
-            everyOtherSet = false;
-            if (!everyOther) {
-                target1 = targetsInfo.targets[i];
-            } else if (everyOther) {
-                target2 = targetsInfo.targets[i];
-            }
-            if (target1 != null && target2 != null){
-                seperation = target1.centroidX - target2.centroidX;
-                Log.i(LOGTAG, "Distance between targets: " + (seperation));
-                /*if (seperation > seperationMin && seperation < seperationMax){
-                    if (target1.centroidX < target2.centroidX){
-                        seperatedCentroidX = target1.centroidX + (seperation/2);
-                    } else if (target1.centroidX > target2.centroidX){
-                        seperatedCentroidX = target2.centroidX + (seperation/2);
+        double separation = 0;
+        double yDelta = 0;
+        double separatedCentroidX = 0;
+        double separatedCentroidY = 0;
+        boolean centroidValid = false;
+        for (int x = 0; x < targetsInfo.numTargets; x++) {                      //sets target to be checked
+            NativePart.TargetsInfo.Target target = targetsInfo.targets[x];
+            for (int i = x + 1; i < targetsInfo.numTargets; i++) {                      //checks target against all other targets (excluding previous numbers that have already been checked with it)
+                NativePart.TargetsInfo.Target targetArray = targetsInfo.targets[i];
+                if (target.centroidX < targetArray.centroidX) {
+                    separation = targetArray.centroidX - target.centroidX;
+                    separatedCentroidX = target.centroidX + (separation / 2);            //maybe average centroid x values instead of adding half the separation to the lower one
+                } else if (target.centroidX > targetArray.centroidX) {
+                    separation = target.centroidX - targetArray.centroidX;
+                    separatedCentroidX = targetArray.centroidX + (separation / 2);
+                }
+                Log.i(LOGTAG, "Distance between targets: " + separation);
+                if (separation >= separationMin && separation <= separationMax) {
+                    if (target.centroidY < targetArray.centroidY) {
+                        yDelta = targetArray.centroidY - target.centroidY;
+                    } else if (target.centroidY > targetArray.centroidY) {
+                        yDelta = target.centroidY - targetArray.centroidY;
                     }
+                    if (yDelta >= yDeltaMin && yDelta <= yDeltaMax) {
+                        separatedCentroidY = (target.centroidY + targetArray.centroidY) / 2;      //centroid y value is the average of the two valid targets y value
+                        centroidValid = true;
+                        break;
+                    }
+                }
+            }
+            if (centroidValid){               //breaks the for loop when valid centroid for targets is found
+                break;
+            }
+        }
+                if (centroidValid) {            //makes sure that vector and robot transmission of centroid only happens when there is a valid centroid found
                     // Convert to a homogeneous 3d vector with x = 1
-                    final double y = -(seperatedCentroidX - kCenterCol) / getFocalLengthPixels();
-                    final double z = (target.centroidY - kCenterRow) / getFocalLengthPixels();
+                    final double y = -(separatedCentroidX - kCenterCol) / getFocalLengthPixels();
+                    final double z = (separatedCentroidY - kCenterRow) / getFocalLengthPixels();
                     Log.i(LOGTAG, "Target at: " + y + ", " + z);
                     visionUpdate.addCameraTargetInfo(
                             new CameraTargetInfo(y, z));
-                }*/
-            }
 
-
-
-            // Convert to a homogeneous 3d vector with x = 1
-           final double y = -(target.centroidX - kCenterCol) / getFocalLengthPixels();
-           final double z = (target.centroidY - kCenterRow) / getFocalLengthPixels();
-            Log.i(LOGTAG, "Target at: " + y + ", " + z);
-            visionUpdate.addCameraTargetInfo(
-                    new CameraTargetInfo(y, z));
-
-            if (mYvector != null || mZvector != null) {
-                Runnable vectorUpdater = new Runnable() {
-                    public void run() {
-                        mYvector.setText("Y Vector: " + y);
-                        mZvector.setText("Z Vector: " + z);
-
+                    if (mYvector != null || mZvector != null) {
+                        Runnable vectorUpdater = new Runnable() {
+                            public void run() {
+                                mYvector.setText("Y Vector: " + y);
+                                mZvector.setText("Z Vector: " + z);
+                            }
+                        };
+                        new Handler(Looper.getMainLooper()).post(vectorUpdater);
+                    } else {
+                        mYvector = (TextView) ((Activity) getContext()).findViewById(R.id.y_vector_textview);
+                        mZvector = (TextView) ((Activity) getContext()).findViewById(R.id.z_vector_textview);
                     }
-                };
-                new Handler(Looper.getMainLooper()).post(vectorUpdater);
-            } else {
-                mYvector = (TextView) ((Activity) getContext()).findViewById(R.id.y_vector_textview);
-                mZvector = (TextView) ((Activity) getContext()).findViewById(R.id.z_vector_textview);
-            }
-            if (everyOther && !everyOtherSet){
-                everyOther = false;
-                everyOtherSet = true;
-            } else if (!everyOther && !everyOtherSet){
-                everyOther = true;
-                everyOtherSet = true;
-            }
-        }
-
-        if (mRobotConnection != null) {
-            TargetUpdateMessage update = new TargetUpdateMessage(visionUpdate, System.nanoTime());
-            mRobotConnection.send(update);
-        }
+                    if (mRobotConnection != null) {
+                        TargetUpdateMessage update = new TargetUpdateMessage(visionUpdate, System.nanoTime());
+                        mRobotConnection.send(update);
+                    }
+                }
         return true;
     }
 
