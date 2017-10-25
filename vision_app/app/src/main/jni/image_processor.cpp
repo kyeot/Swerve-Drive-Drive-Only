@@ -100,12 +100,12 @@ std::vector<TargetInfo> processImpl(int w, int h, int texOut, DisplayMode mode,
       const double kMinTargetWidth = 20;
       const double kMaxTargetWidth = 300;
       const double kMinTargetHeight = 10;
-      const double kMaxTargetHeight = 100; //should be 100, adjust to 121 for testing in emulator
+      const double kMaxTargetHeight = 340; //should be 100, adjust to 121 for testing in emulator
       if (target.width < kMinTargetWidth || target.width > kMaxTargetWidth ||
           target.height < kMinTargetHeight ||
           target.height > kMaxTargetHeight) {
-        LOGD("Rejecting target due to size");
-          //LOGD("invalid target size %.2lf, %.2lf", target.width, target.height); 
+        LOGD("Rejecting target due to size. H: %.2lf | W: %.2lf",
+          target.height, target.width);
         rejected_targets.push_back(std::move(target));
         continue;
       }
@@ -140,15 +140,16 @@ std::vector<TargetInfo> processImpl(int w, int h, int texOut, DisplayMode mode,
         continue;
       }
       // Filter based on fullness
-      const double kMinFullness = .2; //should be .2, adjust to 0 for testing with emulator
-      const double kMaxFullness = .9; //should be .9, adjust to 1 for testing with emulator
+      const double kMinFullness = 0; //should be .45, adjust to 0 for testing with emulator
+      const double kMaxFullness = 1; //should be .95, adjust to 1 for testing with emulator
       double original_contour_area = cv::contourArea(contour);
       double poly_area = cv::contourArea(poly);
       double fullness = original_contour_area / poly_area;
       if (fullness < kMinFullness || fullness > kMaxFullness) {
-        LOGD("Rejected target due to fullness");
+        LOGD("Rejecting target due to fullness : %.2lf", fullness);
         rejected_targets.push_back(std::move(target));
         continue;
+
       }
 
       // We found a target

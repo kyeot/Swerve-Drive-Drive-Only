@@ -1,6 +1,5 @@
 package com.team2783.vision;
 
-import com.team2783.vision.R;
 import com.team2783.vision.comm.CameraTargetInfo;
 import com.team2783.vision.comm.RobotConnection;
 import com.team2783.vision.comm.VisionUpdate;
@@ -42,6 +41,14 @@ public class VisionTrackerGLSurfaceView extends BetterCameraGLSurfaceView implem
     static final int kWidth = 640;
     static final double kCenterCol = ((double) kWidth) / 2.0 - .5;
     static final double kCenterRow = ((double) kHeight) / 2.0 - .5;
+    static NativePart.TargetsInfo.Target target1;
+    static NativePart.TargetsInfo.Target target2;
+    static boolean everyOther = false;
+    static boolean everyOtherSet = false;
+    static double seperation;
+    static double seperationMin;
+    static double seperationMax;
+    static double seperatedCentroidX;
 
     static BetterCamera2Renderer.Settings getCameraSettings() {
         BetterCamera2Renderer.Settings settings = new BetterCamera2Renderer.Settings();
@@ -49,8 +56,8 @@ public class VisionTrackerGLSurfaceView extends BetterCameraGLSurfaceView implem
         settings.width = kWidth;
         settings.camera_settings = new HashMap<>();
         settings.camera_settings.put(CaptureRequest.CONTROL_MODE, CaptureRequest.CONTROL_MODE_OFF);
-        settings.camera_settings.put(CaptureRequest.CONTROL_VIDEO_STABILIZATION_MODE, CaptureRequest.CONTROL_VIDEO_STABILIZATION_MODE_ON);
-        settings.camera_settings.put(CaptureRequest.LENS_OPTICAL_STABILIZATION_MODE, CaptureRequest.LENS_OPTICAL_STABILIZATION_MODE_OFF);
+        settings.camera_settings.put(CaptureRequest.CONTROL_VIDEO_STABILIZATION_MODE, CaptureRequest.CONTROL_VIDEO_STABILIZATION_MODE_OFF);
+        settings.camera_settings.put(CaptureRequest.LENS_OPTICAL_STABILIZATION_MODE, CaptureRequest.LENS_OPTICAL_STABILIZATION_MODE_ON);
         settings.camera_settings.put(CaptureRequest.SENSOR_EXPOSURE_TIME, 1000000L);
         settings.camera_settings.put(CaptureRequest.LENS_FOCUS_DISTANCE, .2f);
         return settings;
@@ -139,6 +146,31 @@ public class VisionTrackerGLSurfaceView extends BetterCameraGLSurfaceView implem
         Log.i(LOGTAG, "Num targets = " + targetsInfo.numTargets);
         for (int i = 0; i < targetsInfo.numTargets; ++i) {
             NativePart.TargetsInfo.Target target = targetsInfo.targets[i];
+            everyOtherSet = false;
+            if (!everyOther) {
+                target1 = targetsInfo.targets[i];
+            } else if (everyOther) {
+                target2 = targetsInfo.targets[i];
+            }
+            if (target1 != null && target2 != null){
+                seperation = target1.centroidX - target2.centroidX;
+                Log.i(LOGTAG, "Distance between targets: " + (seperation));
+                /*if (seperation > seperationMin && seperation < seperationMax){
+                    if (target1.centroidX < target2.centroidX){
+                        seperatedCentroidX = target1.centroidX + (seperation/2);
+                    } else if (target1.centroidX > target2.centroidX){
+                        seperatedCentroidX = target2.centroidX + (seperation/2);
+                    }
+                    // Convert to a homogeneous 3d vector with x = 1
+                    final double y = -(seperatedCentroidX - kCenterCol) / getFocalLengthPixels();
+                    final double z = (target.centroidY - kCenterRow) / getFocalLengthPixels();
+                    Log.i(LOGTAG, "Target at: " + y + ", " + z);
+                    visionUpdate.addCameraTargetInfo(
+                            new CameraTargetInfo(y, z));
+                }*/
+            }
+
+
 
             // Convert to a homogeneous 3d vector with x = 1
            final double y = -(target.centroidX - kCenterCol) / getFocalLengthPixels();
@@ -159,6 +191,13 @@ public class VisionTrackerGLSurfaceView extends BetterCameraGLSurfaceView implem
             } else {
                 mYvector = (TextView) ((Activity) getContext()).findViewById(R.id.y_vector_textview);
                 mZvector = (TextView) ((Activity) getContext()).findViewById(R.id.z_vector_textview);
+            }
+            if (everyOther && !everyOtherSet){
+                everyOther = false;
+                everyOtherSet = true;
+            } else if (!everyOther && !everyOtherSet){
+                everyOther = true;
+                everyOtherSet = true;
             }
         }
 
