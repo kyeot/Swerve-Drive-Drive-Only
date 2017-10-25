@@ -45,7 +45,7 @@ public class VisionTrackerGLSurfaceView extends BetterCameraGLSurfaceView implem
     static NativePart.TargetsInfo.Target target2;
     static final double separationMin = 0;  //****ADD VALUE FOR THIS****
     static final double separationMax = 0;  //****ADD VALUE FOR THIS****
-    static final double yDeltaMin = 0;      //****ADD VALUE FOR THIS****
+    static final double yDeltaMin = 0;      //Min should always be 0 because that means the centroids of the two targets have the same y value.
     static final double yDeltaMax = 0;      //****ADD VALUE FOR THIS****
 
     static BetterCamera2Renderer.Settings getCameraSettings() {
@@ -149,11 +149,11 @@ public class VisionTrackerGLSurfaceView extends BetterCameraGLSurfaceView implem
         boolean centroidValid = false;
         for (int x = 0; x < targetsInfo.numTargets; x++) {                      //sets target to be checked
             NativePart.TargetsInfo.Target target = targetsInfo.targets[x];
-            for (int i = x + 1; i < targetsInfo.numTargets; i++) {                      //checks target against all other targets (excluding previous numbers that have already been checked with it)
+            for (int i = x + 1; i < targetsInfo.numTargets; i++) {                      //checks target against all other targets while not checking the same pair of targets twice
                 NativePart.TargetsInfo.Target targetArray = targetsInfo.targets[i];
                 if (target.centroidX < targetArray.centroidX) {
                     separation = targetArray.centroidX - target.centroidX;
-                    separatedCentroidX = target.centroidX + (separation / 2);            //maybe average centroid x values instead of adding half the separation to the lower one
+                    separatedCentroidX = target.centroidX + (separation / 2);            //maybe average centroid x values instead of adding half the separation to the lower one?
                 } else if (target.centroidX > targetArray.centroidX) {
                     separation = target.centroidX - targetArray.centroidX;
                     separatedCentroidX = targetArray.centroidX + (separation / 2);
@@ -176,7 +176,7 @@ public class VisionTrackerGLSurfaceView extends BetterCameraGLSurfaceView implem
                 break;
             }
         }
-                if (centroidValid) {            //makes sure that vector and robot transmission of centroid only happens when there is a valid centroid found
+                if (centroidValid) {            //makes sure that vector calculation and transmission only happens when there is a valid centroid found
                     // Convert to a homogeneous 3d vector with x = 1
                     final double y = -(separatedCentroidX - kCenterCol) / getFocalLengthPixels();
                     final double z = (separatedCentroidY - kCenterRow) / getFocalLengthPixels();
