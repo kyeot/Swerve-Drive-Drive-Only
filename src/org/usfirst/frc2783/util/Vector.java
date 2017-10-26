@@ -21,10 +21,15 @@ public class Vector {
 		this.b = Math.cos(dir) * mag;
 	}
 	
-	public Vector add(Vector v) {
+	public Vector translate(Vector v) {
 		double c = a + v.getA();
 		double d = b + v.getB();
 		return new Vector(c,d);
+	}
+	
+	public Vector rotateBy(Bearing r) {
+		return new Vector((a*r.cos())-(b*r.sin()), (a*r.sin())+(b*r.cos()));
+				
 	}
 	
 	public double mag() {
