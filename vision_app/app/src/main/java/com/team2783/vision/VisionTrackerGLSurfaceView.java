@@ -41,8 +41,6 @@ public class VisionTrackerGLSurfaceView extends BetterCameraGLSurfaceView implem
     static final int kWidth = 640;
     static final double kCenterCol = ((double) kWidth) / 2.0 - .5;
     static final double kCenterRow = ((double) kHeight) / 2.0 - .5;
-    static NativePart.TargetsInfo.Target target1;
-    static NativePart.TargetsInfo.Target target2;
     static final double separationMin = 16.5; //8.25 inches is the distance between the two tape centers
     static final double separationMax = 495;  //****ADD MEASURED VALUE FOR THIS****
     static final double yDeltaMin = 0;        //Min should always be 0 because that means the centroids of the two targets have the same y value.
@@ -142,65 +140,60 @@ public class VisionTrackerGLSurfaceView extends BetterCameraGLSurfaceView implem
 
         VisionUpdate visionUpdate = new VisionUpdate(image_timestamp);
         Log.i(LOGTAG, "Num targets = " + targetsInfo.numTargets);
-        double separation = 0;
+        double xDelta = 0;
         double yDelta = 0;
         double separatedCentroidX = 0;
         double separatedCentroidY = 0;
         boolean centroidValid = false;
-        for (int x = 0; x < targetsInfo.numTargets; x++) {                      //sets target to be checked
-            NativePart.TargetsInfo.Target target = targetsInfo.targets[x];
-            for (int i = x + 1; i < targetsInfo.numTargets; i++) {                      //checks target against all other targets while not checking the same pair of targets twice
-                NativePart.TargetsInfo.Target targetArray = targetsInfo.targets[i];
-                if (target.centroidX < targetArray.centroidX) {
-                    separation = targetArray.centroidX - target.centroidX;
-                    separatedCentroidX = target.centroidX + (separation / 2);            //maybe average centroid x values instead of adding half the separation to the lower one?
-                } else if (target.centroidX > targetArray.centroidX) {
-                    separation = target.centroidX - targetArray.centroidX;
-                    separatedCentroidX = targetArray.centroidX + (separation / 2);
-                }
-                Log.i(LOGTAG, "Distance between targets: " + separation);
-                if (separation >= separationMin && separation <= separationMax) {
-                    if (target.centroidY < targetArray.centroidY) {
-                        yDelta = targetArray.centroidY - target.centroidY;
-                    } else if (target.centroidY > targetArray.centroidY) {
-                        yDelta = target.centroidY - targetArray.centroidY;
-                    }
-                    if (yDelta >= yDeltaMin && yDelta <= yDeltaMax) {
-                        separatedCentroidY = (target.centroidY + targetArray.centroidY) / 2;      //centroid y value is the average of the two valid targets y value
-                        centroidValid = true;
-                        break;
-                    }
+
+        for (int x = 0; x < targetsInfo.numTargets; x++) {                      //Sets target to be checked
+            NativePart.TargetsInfo.Target target1 = targetsInfo.targets[x];
+
+            for (int i = x + 1; i < targetsInfo.numTargets; i++) {                      //Checks target against all other targets while not checking the same pair of targets twice
+                NativePart.TargetsInfo.Target target2 = targetsInfo.targets[i];
+
+                xDelta = Math.abs(target1.centroidX - target2.centroidX);
+                yDelta = Math.abs(target1.centroidY - target2.centroidY);
+
+                Log.i(LOGTAG, "Distance between targets: " + xDelta);
+
+                if ((xDelta >= separationMin && xDelta <= separationMax) && (yDelta >= yDeltaMin && yDelta <= yDeltaMax)) {
+                    separatedCentroidY = (target1.centroidY + target2.centroidY) / 2;      //Centroid y value is the average of the two valid targets y value
+                    separatedCentroidX = (target1.centroidX + target2.centroidX) / 2;      //Centroid x value is the average of the two valid targets x value
+
+                    centroidValid = true;
+                    break;
                 }
             }
-            if (centroidValid){               //breaks the for loop when valid centroid for targets is found
+            if (centroidValid){               //Breaks the for loop when valid centroid for targets is found
                 break;
             }
         }
-                if (centroidValid) {            //makes sure that vector calculation and transmission only happens when there is a valid centroid found
-                    // Convert to a homogeneous 3d vector with x = 1
-                    final double y = -(separatedCentroidX - kCenterCol) / getFocalLengthPixels();
-                    final double z = (separatedCentroidY - kCenterRow) / getFocalLengthPixels();
-                    Log.i(LOGTAG, "Target at: " + y + ", " + z);
-                    visionUpdate.addCameraTargetInfo(
-                            new CameraTargetInfo(y, z));
+        if (centroidValid) {            //Makes sure that vector calculation and transmission only happens when there is a valid centroid found
+            // Convert to a homogeneous 3d vector with x = 1
+            final double y = -(separatedCentroidX - kCenterCol) / getFocalLengthPixels();
+            final double z = (separatedCentroidY - kCenterRow) / getFocalLengthPixels();
+            Log.i(LOGTAG, "Target at: " + y + ", " + z);
+            visionUpdate.addCameraTargetInfo(
+                    new CameraTargetInfo(y, z));
 
-                    if (mYvector != null || mZvector != null) {
-                        Runnable vectorUpdater = new Runnable() {
-                            public void run() {
-                                mYvector.setText("Y Vector: " + y);
-                                mZvector.setText("Z Vector: " + z);
-                            }
-                        };
-                        new Handler(Looper.getMainLooper()).post(vectorUpdater);
-                    } else {
-                        mYvector = (TextView) ((Activity) getContext()).findViewById(R.id.y_vector_textview);
-                        mZvector = (TextView) ((Activity) getContext()).findViewById(R.id.z_vector_textview);
+            if (mYvector != null || mZvector != null) {
+                Runnable vectorUpdater = new Runnable() {
+                    public void run() {
+                        mYvector.setText("Y Vector: " + y);
+                        mZvector.setText("Z Vector: " + z);
                     }
-                    if (mRobotConnection != null) {
-                        TargetUpdateMessage update = new TargetUpdateMessage(visionUpdate, System.nanoTime());
-                        mRobotConnection.send(update);
-                    }
-                }
+                };
+                new Handler(Looper.getMainLooper()).post(vectorUpdater);
+            } else {
+                mYvector = (TextView) ((Activity) getContext()).findViewById(R.id.y_vector_textview);
+                mZvector = (TextView) ((Activity) getContext()).findViewById(R.id.z_vector_textview);
+            }
+            if (mRobotConnection != null) {
+                TargetUpdateMessage update = new TargetUpdateMessage(visionUpdate, System.nanoTime());
+                mRobotConnection.send(update);
+            }
+        }
         return true;
     }
 
