@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Singleton class which can control swerve from anywhere in the code.
@@ -89,6 +90,8 @@ public class SwerveController {
 	public void setPose(Bearing b) {
 		posePid.setSetpoint(b.getTheta());
 		posePid.enable();
+		
+		SmartDashboard.putString("DB/String 2", Double.toString(posePid.getError()));
 	}
 	
 	public void update(boolean fieldOriented) {

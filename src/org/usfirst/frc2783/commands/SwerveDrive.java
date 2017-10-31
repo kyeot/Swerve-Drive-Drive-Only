@@ -4,6 +4,7 @@ import org.usfirst.frc2783.robot.FieldTransform;
 import org.usfirst.frc2783.robot.OI;
 import org.usfirst.frc2783.robot.Robot;
 import org.usfirst.frc2783.subystems.SwerveController;
+import org.usfirst.frc2783.util.Bearing;
 import org.usfirst.frc2783.util.NavSensor;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -140,7 +141,7 @@ public class SwerveDrive extends Command {
     	
     	if(controlType.getVisionButton()) {
     		swerveController.slide(fbValue, rlValue);
-    		swerveController.setPose(fieldTransform.getFieldToTargets().get(0).dir());
+    		swerveController.setPose(new Bearing(90));
     	} else {
     		swerveController.move(fbValue, rlValue, rotValue);
     	}
