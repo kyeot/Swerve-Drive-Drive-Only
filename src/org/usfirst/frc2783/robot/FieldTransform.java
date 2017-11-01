@@ -71,7 +71,7 @@ public class FieldTransform {
                 	Bearing angle = new Bearing(new Vector(xr, yr));
                 	Vector targetToCam = new Vector(angle.cos()*dist, angle.sin()*dist);
                 	SmartDashboard.putString("DB/String 1", Double.toString(new Bearing(targetToCam).getTheta()));
-                	v.add(getFieldToCamera().getTranslation().translate(targetToCam));
+                	v.add(getFieldToCamera().getTranslation().translate(targetToCam.rotateBy(getFieldToCamera().getRotation())));
                 	
         			SmartDashboard.putString("DB/String 0", Double.toString(getFieldToCamera().getTranslation().translate(targetToCam.rotateBy(getFieldToCamera().getRotation())).dir().getTheta()));
 

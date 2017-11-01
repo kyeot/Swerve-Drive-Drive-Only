@@ -23,14 +23,14 @@ public class Constants {
 	
 	public static final int kAndroidAppTcpPort = 8254;
 	
-	public static final double cameraXOffset = 0.0;
-	public static final double cameraYOffset = 0.0;
-	public static final double cameraZOffset = 3.5;
-	public static final double cameraPitchOffset = 20.0;
+	public static final double cameraXOffset = 0.25;
+	public static final double cameraYOffset = 13.0;
+	public static final double cameraZOffset = 2.75;
+	public static final double cameraPitchOffset = 0.0;
 	public static final double cameraRollOffset = 0.0;
-	public static final double cameraYawOffset = 90.0;
+	public static final double cameraYawOffset = 0.0;
 	
-	public static final double goalHeight = 81.6;
+	public static final double goalHeight = 8;
 	
 	public static final int kDriverControllerId = 0;
 	public static final int kGunnerControllerId = 1;
