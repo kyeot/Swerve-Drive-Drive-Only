@@ -15,16 +15,16 @@ public class Constants {
 	
 	public static final double kSwerveP = 0.04;
 	public static final double kSwerveI = 0.00;
-	public static final double kSwerveD = 0.1;
+	public static final double kSwerveD = 0.15;
 	
 	public static final double kAngleToEncoderTick = 0.875;
 	
 	public static final double kEventDelay = 4;
 	
-	public static final int kAndroidAppTcpPort = 8254;
+	public static final int kAndroidAppTcpPort = 8254;	
 	
-	public static final double cameraXOffset = 0.25;
-	public static final double cameraYOffset = 13.0;
+	public static final double cameraXOffset = 13;
+	public static final double cameraYOffset = -0.25;
 	public static final double cameraZOffset = 2.75;
 	public static final double cameraPitchOffset = 0.0;
 	public static final double cameraRollOffset = 0.0;

@@ -1,6 +1,7 @@
 package org.usfirst.frc2783.subystems;
 
 import org.usfirst.frc2783.robot.Constants;
+import org.usfirst.frc2783.robot.OI;
 import org.usfirst.frc2783.robot.Robot;
 import org.usfirst.frc2783.util.Bearing;
 import org.usfirst.frc2783.util.NavSensor;
@@ -26,7 +27,7 @@ public class SwerveController {
 	class SwervePoseOut implements PIDOutput {
 		@Override
 		public void pidWrite(double output) {
-			rot = output;
+			rot = -output;
 		}
 	}
 	
@@ -49,7 +50,9 @@ public class SwerveController {
 
 		@Override
 		public double pidGet() {
-			return gyro.getAngle(true);
+			SmartDashboard.putString("DB/String 9", "Gyro Angle: " + Double.toString(Math.floor(-gyro.getAngle(false))));
+
+			return -gyro.getAngle(false);
 		}
 		
 	}
@@ -60,7 +63,9 @@ public class SwerveController {
 	double rl;
 	double rot;
 	
-	PIDController posePid;
+	double angle = 0;
+	
+	public static PIDController posePid;
 	SwervePoseOut posePidOut;
 	GyroSource posePidSource;
 	
@@ -88,10 +93,14 @@ public class SwerveController {
 	}
 	
 	public void setPose(Bearing b) {
-		posePid.setSetpoint(b.getTheta());
+		if(!posePid.isEnabled()) {
+			this.angle = b.getTheta();
+		}
+		posePid.setSetpoint(angle);
 		posePid.enable();
-		
-		SmartDashboard.putString("DB/String 2", Double.toString(posePid.getError()));
+		SmartDashboard.putString("DB/String 7", "Setpoint: " + Double.toString(Math.floor(b.getTheta())));
+		//
+		SmartDashboard.putString("DB/String 8", "Pid Error: " + Double.toString(Math.floor(posePid.getError())));
 	}
 	
 	public void update(boolean fieldOriented) {

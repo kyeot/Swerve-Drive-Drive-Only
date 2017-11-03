@@ -71,10 +71,11 @@ public class FieldTransform {
                 	Bearing angle = new Bearing(new Vector(xr, yr));
                 	Vector targetToCam = new Vector(angle.cos()*dist, angle.sin()*dist);
                 	SmartDashboard.putString("DB/String 1", Double.toString(new Bearing(targetToCam).getTheta()));
-                	v.add(getFieldToCamera().getTranslation().translate(targetToCam.rotateBy(getFieldToCamera().getRotation())));
+                	v.add(getFieldToCamera().getTranslation().translate(targetToCam.rotateBy(cameraToRobot.getRotation())).rotateBy(getRobotPose().getRotation()));
                 	
-        			SmartDashboard.putString("DB/String 0", Double.toString(getFieldToCamera().getTranslation().translate(targetToCam.rotateBy(getFieldToCamera().getRotation())).dir().getTheta()));
-
+                	
+        			SmartDashboard.putString("DB/String 5", "Angle to Target: " + Double.toString(Math.floor(getFieldToCamera().getTranslation().translate(targetToCam.rotateBy(cameraToRobot.getRotation())).rotateBy(getRobotPose().getRotation()).dir().getTheta())));
+        			SmartDashboard.putString("DB/String 6", "Angle to Gyro: " + Double.toString(Math.floor(getRobotPose().getRotation().getTheta())));
                 }
 			}
 		}

@@ -3,6 +3,7 @@ package org.usfirst.frc2783.robot;
 import java.io.File;
 import java.io.IOException;
 
+import org.usfirst.frc2783.commands.autonomous.LeftGear;
 import org.usfirst.frc2783.loops.LogData;
 import org.usfirst.frc2783.loops.Looper;
 import org.usfirst.frc2783.loops.VisionProcessor;
@@ -15,8 +16,11 @@ import org.usfirst.frc2783.vision.VisionServer;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -27,6 +31,8 @@ public class Robot extends IterativeRobot {
     public static Looper looper = new Looper();
     
     VisionServer mVisionServer = VisionServer.getInstance();
+   
+	public static Command autonomous;
     
     public static SwerveDriveBase swerveBase = new SwerveDriveBase();
     public static ActiveGearBase activeGearBase = new ActiveGearBase();
@@ -35,6 +41,8 @@ public class Robot extends IterativeRobot {
     public static LimitSwitch gearChecker = new LimitSwitch(1, false);
 	public static LimitSwitch holderPos = new LimitSwitch(0, false);
 	public static LimitSwitch[] limitSwitches = new LimitSwitch[]{gearChecker, holderPos};
+
+	public static NetworkTable smartDashTable;
     
     public void robotInit() {
         oi = new OI();
@@ -45,6 +53,12 @@ public class Robot extends IterativeRobot {
         looper.addLoop(VisionProcessor.getInstance());
         Logger.info("Starting Loops");
         looper.startLoops();
+        
+    	this.smartDashTable = NetworkTable.getTable("SmartDashboard");
+		//this.visionControl = NetworkTable.getTable("Usage");
+		
+		String[] autonomousList = {"Left Side Gear"};
+        this.smartDashTable.putStringArray("Auto List", autonomousList);
         
         File logFile = new File("/home/lvuser/log.txt");
         try {
@@ -63,6 +77,22 @@ public class Robot extends IterativeRobot {
 
     public void autonomousInit() {
     	Logger.info("Starting Autonomous");
+    	
+	String autoSelected = SmartDashboard.getString("Auto Selector", "None");
+    	
+		switch(autoSelected) {
+			case "Left Side Gear":
+				autonomous = new LeftGear();
+				break;
+			case "None":
+			default:
+				autonomous = null;
+				break;
+		} 
+		
+    	if(autonomous != null) {
+    		autonomous.start();
+    	}
     }
     
     public void autonomousPeriodic() {

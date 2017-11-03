@@ -139,6 +139,7 @@ public class SwerveDrive extends Command {
     		gyro.resetGyroNorth(0, 0);
     	}
     	
+    	
     	if(controlType.getVisionButton()) {
     		swerveController.slide(fbValue, rlValue);
     		if(!FieldTransform.fieldTransform.getFieldToTargets().isEmpty()){
