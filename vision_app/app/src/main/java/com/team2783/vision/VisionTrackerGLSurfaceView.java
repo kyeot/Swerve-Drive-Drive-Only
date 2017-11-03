@@ -32,8 +32,6 @@ public class VisionTrackerGLSurfaceView extends BetterCameraGLSurfaceView implem
     TextView mFpsText = null;
     TextView mYvector = null;
     TextView mZvector = null;
-    TextView mAngle = null;
-    TextView mDist = null;
     private RobotConnection mRobotConnection;
     private Preferences m_prefs;
 
@@ -41,8 +39,8 @@ public class VisionTrackerGLSurfaceView extends BetterCameraGLSurfaceView implem
     static final int kWidth = 640;
     static final double kCenterCol = ((double) kWidth) / 2.0 - .5;
     static final double kCenterRow = ((double) kHeight) / 2.0 - .5;
-    static final double separationMin = 16.5; //8.25 inches is the distance between the two tape centers
-    static final double separationMax = 495;  //****ADD MEASURED VALUE FOR THIS****
+    static final double xDeltaMin = 16.5; //8.25 inches is the distance between the two tape centers
+    static final double xDeltaMax = 495;  //****ADD MEASURED VALUE FOR THIS****
     static final double yDeltaMin = 0;        //Min should always be 0 because that means the centroids of the two targets have the same y value.
     static final double yDeltaMax = 10;       //****ADD MEASURED VALUE FOR THIS***
 
@@ -140,8 +138,8 @@ public class VisionTrackerGLSurfaceView extends BetterCameraGLSurfaceView implem
 
         VisionUpdate visionUpdate = new VisionUpdate(image_timestamp);
         Log.i(LOGTAG, "Num targets = " + targetsInfo.numTargets);
-        double xDelta = 0;
-        double yDelta = 0;
+        double xDelta;
+        double yDelta;
         double separatedCentroidX = 0;
         double separatedCentroidY = 0;
         boolean centroidValid = false;
@@ -154,10 +152,8 @@ public class VisionTrackerGLSurfaceView extends BetterCameraGLSurfaceView implem
 
                 xDelta = Math.abs(target1.centroidX - target2.centroidX);
                 yDelta = Math.abs(target1.centroidY - target2.centroidY);
-
                 Log.i(LOGTAG, "Distance between targets: " + xDelta);
-
-                if ((xDelta >= separationMin && xDelta <= separationMax) && (yDelta >= yDeltaMin && yDelta <= yDeltaMax)) {
+                if ((xDelta >= xDeltaMin && xDelta <= xDeltaMax) && (yDelta >= yDeltaMin && yDelta <= yDeltaMax)) {
                     separatedCentroidY = (target1.centroidY + target2.centroidY) / 2;      //Centroid y value is the average of the two valid targets y value
                     separatedCentroidX = (target1.centroidX + target2.centroidX) / 2;      //Centroid x value is the average of the two valid targets x value
 
