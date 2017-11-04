@@ -8,6 +8,7 @@ package org.usfirst.frc2783.robot;
 public class Constants {
 	
 	public static final double kPeriod = 0.01;
+	public static final double kAutoPeriod = 0.01;
 	
 	public static final double kSwerveModP = 0.022;
 	public static final double kSwerveModI = 0.04; 
@@ -57,7 +58,5 @@ public class Constants {
 	public static final int kRearLeftEncoderB = 5;
 	public static final int kRearRightEncoderA = 0;
 	public static final int kRearRightEncoderB = 1;
-
-	
 
 }

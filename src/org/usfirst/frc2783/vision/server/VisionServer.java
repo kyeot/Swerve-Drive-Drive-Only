@@ -132,6 +132,12 @@ public class VisionServer extends CrashTrackingRunnable {
                 }
             }
         }
+
+		@Override
+		public void logCrash() {
+			// TODO Auto-generated method stub
+			
+		}
     }
 
     /**
@@ -225,6 +231,12 @@ public class VisionServer extends CrashTrackingRunnable {
                 }
             }
         }
+
+		@Override
+		public void logCrash() {
+			// TODO Auto-generated method stub
+			
+		}
     }
 
     private double getTimestamp() {
@@ -234,4 +246,10 @@ public class VisionServer extends CrashTrackingRunnable {
             return Timer.getFPGATimestamp();
         }
     }
+
+	@Override
+	public void logCrash() {
+		// TODO Auto-generated method stub
+		
+	}
 }
