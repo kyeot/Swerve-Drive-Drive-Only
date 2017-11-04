@@ -39,10 +39,10 @@ public class VisionTrackerGLSurfaceView extends BetterCameraGLSurfaceView implem
     static final int kWidth = 640;
     static final double kCenterCol = ((double) kWidth) / 2.0 - .5;
     static final double kCenterRow = ((double) kHeight) / 2.0 - .5;
-    static final double xDeltaMin = 16.5; //8.25 inches is the distance between the two tape centers
-    static final double xDeltaMax = 495;  //****ADD MEASURED VALUE FOR THIS****
+    static final double xDeltaMin = 20; //8.25 inches is the distance between the two tape centers
+    static final double xDeltaMax = 350;
     static final double yDeltaMin = 0;        //Min should always be 0 because that means the centroids of the two targets have the same y value.
-    static final double yDeltaMax = 10;       //****ADD MEASURED VALUE FOR THIS***
+    static final double yDeltaMax = 1.5;
 
     static BetterCamera2Renderer.Settings getCameraSettings() {
         BetterCamera2Renderer.Settings settings = new BetterCamera2Renderer.Settings();
@@ -152,7 +152,8 @@ public class VisionTrackerGLSurfaceView extends BetterCameraGLSurfaceView implem
 
                 xDelta = Math.abs(target1.centroidX - target2.centroidX);
                 yDelta = Math.abs(target1.centroidY - target2.centroidY);
-                Log.i(LOGTAG, "Distance between targets: " + xDelta);
+                Log.i(LOGTAG, "Target Pair xDelta: " + xDelta);
+                Log.i(LOGTAG, "Target Pair yDelta: " + yDelta);
                 if ((xDelta >= xDeltaMin && xDelta <= xDeltaMax) && (yDelta >= yDeltaMin && yDelta <= yDeltaMax)) {
                     separatedCentroidY = (target1.centroidY + target2.centroidY) / 2;      //Centroid y value is the average of the two valid targets y value
                     separatedCentroidX = (target1.centroidX + target2.centroidX) / 2;      //Centroid x value is the average of the two valid targets x value

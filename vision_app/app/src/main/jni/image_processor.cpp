@@ -69,10 +69,12 @@ std::vector<TargetInfo> processImpl(int w, int h, int texOut, DisplayMode mode,
     convex_contour.clear();
     cv::convexHull(contour, convex_contour, false);
     poly.clear();
-    cv::approxPolyDP(convex_contour, poly, 20, true);
-      LOGD("Poly.size() : %.2lf", (double)poly.size());
-    if (poly.size() == 4 && cv::isContourConvex(poly)) {   //adjust poly.size from 4 to lower to get it to run on the small gear vision targets
+    //turns out that the 5 in this method controls if things have contours drawn at range. Lower values make it less accurate but able to contour smaller vision targets.
+    cv::approxPolyDP(convex_contour, poly, 3, true);
+    //LOGD("Poly.size() : %.2lf", (double)poly.size());
+    if (poly.size() == 4 && cv::isContourConvex(poly)) {
       TargetInfo target;
+      LOGD("If statement passed");
       int min_x = std::numeric_limits<int>::max();
       int max_x = std::numeric_limits<int>::min();
       int min_y = std::numeric_limits<int>::max();
@@ -99,10 +101,12 @@ std::vector<TargetInfo> processImpl(int w, int h, int texOut, DisplayMode mode,
 
       // Filter based on size
       // Keep in mind width/height are in imager terms...
-      const double kMinTargetWidth = 2;       //2 inches wide
+      const double kMinTargetWidth = 4;       //2 inches wide
       const double kMaxTargetWidth = 120;
-      const double kMinTargetHeight = 2;     //5 inches long (these are just reference measurements, not related to value)
+      const double kMinTargetHeight = 10;     //5 inches long (these are just reference measurements, not related to value)
       const double kMaxTargetHeight = 300;
+        LOGD("Target size H: %.2lf | W: %.2lf",
+             target.height, target.width);
       if (target.width < kMinTargetWidth || target.width > kMaxTargetWidth ||
           target.height < kMinTargetHeight ||
           target.height > kMaxTargetHeight) {
@@ -113,7 +117,7 @@ std::vector<TargetInfo> processImpl(int w, int h, int texOut, DisplayMode mode,
       }
       // Filter based on shape
       const double kNearlyHorizontalSlope = 1 / 1.25;
-      const double kNearlyVerticalSlope = 1.25;        //adjust these somehow to make it only look for rectangles (not sure if needed)
+      const double kNearlyVerticalSlope = 1.25;
       int num_nearly_horizontal_slope = 0;
       int num_nearly_vertical_slope = 0;
       bool last_edge_vertical = false;
@@ -143,19 +147,14 @@ std::vector<TargetInfo> processImpl(int w, int h, int texOut, DisplayMode mode,
       }
 
       //Filter based on fullness
-      const double kMinFullness = .45; //.45
-      const double kMaxFullness = .95; //.95
+      const double kMinFullness = .8;
+      const double kMaxFullness = 1.6;
 
-        /*This compares the contour area reported by OpenCV with the area of the polygon drawn from the contours.
-        I think this is where the code breaks. I believe that OpenCV is having a hard time calculating the
-        area due to the target being so small. The theory is that the contours on the small targets aren't closed properly
-        because of how small they are somehow (due to being far away). As such, the contourArea calculation just sorta dies
-        instead of providing an actual value or working. This means that all of the C++ code stops here instead of continuing.
-        This would explain why red target parts are never drawn around the small targets at all.
-        */
+        //This compares the contour area reported by OpenCV with the area of the polygon drawn from the contour points.
       double original_contour_area = cv::contourArea(contour);
       double poly_area = cv::contourArea(poly);
       double fullness = original_contour_area / poly_area;
+        LOGD("Target fullness : %.2lf", fullness);
       if (fullness < kMinFullness || fullness > kMaxFullness) {
         LOGD("Rejecting target due to fullness : %.2lf", fullness);
         rejected_targets.push_back(std::move(target));
