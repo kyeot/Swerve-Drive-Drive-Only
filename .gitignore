@@ -42,3 +42,4 @@ vision_app/app/.externalNativeBuild/cmake/debug/armeabi-v7a/rules.ninja
 vision_app/app/.externalNativeBuild/cmake/debug/arm64-v8a/.ninja_log
 vision_app/app/.externalNativeBuild/cmake/debug/arm64-v8a/.ninja_deps
 *.iml
+/bin/

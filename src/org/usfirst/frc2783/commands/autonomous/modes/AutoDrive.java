@@ -1,65 +1,63 @@
 package org.usfirst.frc2783.commands.autonomous.modes;
 
-import org.usfirst.frc2783.robot.Robot;
+import java.util.UUID;
 
-import edu.wpi.first.wpilibj.Utility;
-import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc2783.subystems.SwerveController;
+import org.usfirst.frc2783.util.Logger;
+import org.usfirst.frc2783.util.Timer;
+import org.usfirst.frc2783.util.Vector;
 
-/**
- *
- */
-public abstract class AutoDrive extends Command {
+public class AutoDrive implements Action {
 
-	private double angle;
-	private double speed;
-	private double rotMot;
-	private boolean fieldOriented;
-	private long commandStartedAt;
-	private double runTime;
+	private String id;
 	
-    public AutoDrive(double angle, double speed, double rotMot, boolean fieldOriented, double runTime) {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-    	requires(Robot.swerveBase);
-    	this.angle = angle;
-    	this.speed = speed;
-    	this.rotMot = rotMot;
-    	this.fieldOriented = fieldOriented;
-    	
-    	//Run Time is in Seconds
-    	this.runTime = runTime;  	
-    	
-    }
+	Timer timer;
+	
+	double ang;
+	double vel;
+	double rot;
+	
+	public AutoDrive(double ang, double vel, double rot, double time) {
+		id = "AutoDrive:" + UUID.randomUUID().toString();
+		
+		this.ang = ang;
+		this.vel = vel;
+		this.rot = rot;
+		
+		timer = new Timer(time);
+	}
+	
+	@Override
+	public void start() {
+		timer.start();
+	}
+	
+	@Override
+	public void perform() {
+		SwerveController.getInstance().move(new Vector(ang, vel, true), rot);
+		SwerveController.getInstance().update(true);
+	}
+	
+	@Override
+	public boolean done() {
+		return timer.ring();
+	}
 
-    // Called just before this Command runs the first time
-    protected void initialize() {
-    	commandStartedAt = Utility.getFPGATime();
-       }
+	@Override
+	public void finish() {
+	}
+	
+	
+	@Override
+	public boolean fail() {
+		return false;
+	}
+	
+	public String getId() {
+		return id;
+	}
 
-    // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    	Robot.swerveBase.polarSwerveDrive(angle, speed, rotMot, fieldOriented);
-    	
-    	
-    }
+	
 
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-    	//Run command for 6 seconds
-        return (Utility.getFPGATime() > (runTime * 1000000 + commandStartedAt) || (finish()));
-    }
-
-    // Called once after isFinished returns true
-    protected void end() {
-    	commandStartedAt = 0;
-    	Robot.swerveBase.swerveDrive(0, 0, 0, false);
-    	
-    }
-
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
-    }
-    
-    public abstract boolean finish();
+	
 }

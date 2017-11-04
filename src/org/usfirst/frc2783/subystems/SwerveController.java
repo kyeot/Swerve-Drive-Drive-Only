@@ -1,10 +1,11 @@
 package org.usfirst.frc2783.subystems;
 
 import org.usfirst.frc2783.robot.Constants;
-import org.usfirst.frc2783.robot.OI;
 import org.usfirst.frc2783.robot.Robot;
 import org.usfirst.frc2783.util.Bearing;
+import org.usfirst.frc2783.util.Logger;
 import org.usfirst.frc2783.util.NavSensor;
+import org.usfirst.frc2783.util.Vector;
 
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
@@ -87,8 +88,8 @@ public class SwerveController {
 		this.rot = rot;
 	}
 	
-	public void move(double fb, double rl, double rot) {
-		slide(fb, rl);
+	public void move(Vector dir, double rot) {
+		slide(dir.getA(), dir.getB());
 		rotate(rot);
 	}
 	
@@ -99,8 +100,11 @@ public class SwerveController {
 		posePid.setSetpoint(angle);
 		posePid.enable();
 		SmartDashboard.putString("DB/String 7", "Setpoint: " + Double.toString(Math.floor(b.getTheta())));
-		//
 		SmartDashboard.putString("DB/String 8", "Pid Error: " + Double.toString(Math.floor(posePid.getError())));
+	}
+	
+	public boolean poseWithinRange(double range) {
+		return Math.abs(posePid.getError()) < range;
 	}
 	
 	public void update(boolean fieldOriented) {

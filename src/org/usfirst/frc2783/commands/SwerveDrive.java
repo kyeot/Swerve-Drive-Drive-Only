@@ -6,6 +6,7 @@ import org.usfirst.frc2783.robot.Robot;
 import org.usfirst.frc2783.subystems.SwerveController;
 import org.usfirst.frc2783.util.Bearing;
 import org.usfirst.frc2783.util.NavSensor;
+import org.usfirst.frc2783.util.Vector;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -147,7 +148,7 @@ public class SwerveDrive extends Command {
     		}
     		
     	} else {
-    		swerveController.move(fbValue, rlValue, rotValue);
+    		swerveController.move(new Vector(fbValue, rlValue), rotValue);
     	}
     	
     	swerveController.update(true);
