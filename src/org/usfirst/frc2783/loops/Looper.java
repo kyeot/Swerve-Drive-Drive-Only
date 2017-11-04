@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import org.usfirst.frc2783.robot.Constants;
 import org.usfirst.frc2783.util.CrashTrackingRunnable;
+import org.usfirst.frc2783.util.Logger;
 
 import edu.wpi.first.wpilibj.Notifier;
 
@@ -22,6 +23,11 @@ public class Looper {
 			for(Loop l : loops) {
 				l.onLoop();
 			}
+		}
+		
+		@Override
+		public void logCrash() {
+			Logger.error("Exception caught in Loops");
 		}
 	};
 	
