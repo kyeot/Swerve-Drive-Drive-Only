@@ -69,9 +69,9 @@ std::vector<TargetInfo> processImpl(int w, int h, int texOut, DisplayMode mode,
     convex_contour.clear();
     cv::convexHull(contour, convex_contour, false);
     poly.clear();
+    //turns out that the 5 in this method controls if things have contours drawn at range. Lower values make it less accurate but able to contour smaller vision targets.
     cv::approxPolyDP(convex_contour, poly, 3, true);
-      //turns out that the 5 in this method controls if things have contours drawn at range. Lower values make it less accurate but able to contour smaller vision targets.
-      //LOGD("Poly.size() : %.2lf", (double)poly.size());
+    //LOGD("Poly.size() : %.2lf", (double)poly.size());
     if (poly.size() == 4 && cv::isContourConvex(poly)) {
       TargetInfo target;
       LOGD("If statement passed");
@@ -117,7 +117,7 @@ std::vector<TargetInfo> processImpl(int w, int h, int texOut, DisplayMode mode,
       }
       // Filter based on shape
       const double kNearlyHorizontalSlope = 1 / 1.25;
-      const double kNearlyVerticalSlope = 1.25;        //adjust these somehow to make it only look for rectangles (not sure if needed)
+      const double kNearlyVerticalSlope = 1.25;
       int num_nearly_horizontal_slope = 0;
       int num_nearly_vertical_slope = 0;
       bool last_edge_vertical = false;
@@ -147,7 +147,7 @@ std::vector<TargetInfo> processImpl(int w, int h, int texOut, DisplayMode mode,
       }
 
       //Filter based on fullness
-      const double kMinFullness = .45; //.45
+      const double kMinFullness = .8;
       const double kMaxFullness = 1.6;
 
         //This compares the contour area reported by OpenCV with the area of the polygon drawn from the contour points.
