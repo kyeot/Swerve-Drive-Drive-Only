@@ -7,7 +7,7 @@ import org.usfirst.frc2783.util.Bearing;
 import org.usfirst.frc2783.util.NavSensor;
 import org.usfirst.frc2783.util.Transform;
 import org.usfirst.frc2783.util.Vector;
-import org.usfirst.frc2783.vision.TargetInfo;
+import org.usfirst.frc2783.vision.server.TargetInfo;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -35,12 +35,12 @@ public class FieldTransform {
 	double camToGoal;
 	
 	FieldTransform() {
-		cameraToRobot = new Transform(Constants.cameraXOffset, 
-										Constants.cameraYOffset,
-										Constants.cameraYawOffset);
-		camPitch = new Bearing(-Constants.cameraPitchOffset);
-		camHeight = Constants.cameraZOffset;
-		camToGoal = Constants.goalHeight - camHeight;
+		cameraToRobot = new Transform(Constants.kCameraXOffset, 
+										Constants.kCameraYOffset,
+										Constants.kCameraYawOffset);
+		camPitch = new Bearing(-Constants.kCameraPitchOffset);
+		camHeight = Constants.kCameraZOffset;
+		camToGoal = Constants.kGoalHeight - camHeight;
 	}
 	
 	public Transform getRobotPose() {

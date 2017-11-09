@@ -1,9 +1,8 @@
 package org.usfirst.frc2783.loops;
 
-import org.usfirst.frc2783.util.Logger;
 import org.usfirst.frc2783.robot.FieldTransform;
-import org.usfirst.frc2783.vision.VisionUpdate;
-import org.usfirst.frc2783.vision.VisionUpdateReceiver;
+import org.usfirst.frc2783.vision.server.VisionUpdate;
+import org.usfirst.frc2783.vision.server.VisionUpdateReceiver;
 
 /**
  * This function adds vision updates (from the Nexus smartphone) to a list in
@@ -50,7 +49,6 @@ public class VisionProcessor implements Loop, VisionUpdateReceiver {
 
     @Override
     public synchronized void gotUpdate(VisionUpdate update) {
-    	Logger.log("INFO", "gotUpdate");
         update_ = update;
     }
 

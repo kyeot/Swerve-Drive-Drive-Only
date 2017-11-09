@@ -1,4 +1,4 @@
-package org.usfirst.frc2783.vision;
+package org.usfirst.frc2783.vision.server;
 
 /**
  * A basic interface for classes that get VisionUpdates. Classes that implement

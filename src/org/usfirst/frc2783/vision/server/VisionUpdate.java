@@ -1,13 +1,13 @@
-package org.usfirst.frc2783.vision;
+package org.usfirst.frc2783.vision.server;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 /**
  * VisionUpdate contains the various attributes outputted by the vision system,

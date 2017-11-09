@@ -8,7 +8,7 @@ import org.usfirst.frc2783.loops.Looper;
 import org.usfirst.frc2783.loops.VisionProcessor;
 import org.usfirst.frc2783.subystems.SwerveDriveBase;
 import org.usfirst.frc2783.util.Logger;
-import org.usfirst.frc2783.vision.VisionServer;
+import org.usfirst.frc2783.vision.server.VisionServer;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
