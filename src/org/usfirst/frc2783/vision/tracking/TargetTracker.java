@@ -17,10 +17,10 @@ public class TargetTracker {
 	
 	public void register(Timestamp timestamp, Vector target) {
 		history.put(timestamp, target);
-		updateTargets();
+		update();
 	}
 	
-	public void updateTargets() {
+	public void update() {
 		if(isAlive()) {
 			for(Timestamp t : history.keySet()) {
 				if(t.getAge() > Constants.kTargetMaxAge) {

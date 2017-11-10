@@ -10,6 +10,10 @@ public class Timestamp {
 		this.t = t;
 	}
 	
+	public static Timestamp setNewTime() {
+		return new Timestamp(Utility.getFPGATime());
+	}
+	
 	public double getTime() {
 		return t;
 	}

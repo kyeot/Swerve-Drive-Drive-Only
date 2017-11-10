@@ -1,8 +1,12 @@
 package org.usfirst.frc2783.loops;
 
 import org.usfirst.frc2783.robot.FieldTransform;
+import org.usfirst.frc2783.util.Bearing;
+import org.usfirst.frc2783.util.NavSensor;
+import org.usfirst.frc2783.util.Timestamp;
 import org.usfirst.frc2783.vision.server.VisionUpdate;
 import org.usfirst.frc2783.vision.server.VisionUpdateReceiver;
+import org.usfirst.frc2783.vision.tracking.GyroTracker;
 
 import edu.wpi.first.wpilibj.Utility;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -19,6 +23,8 @@ public class VisionProcessor implements Loop, VisionUpdateReceiver {
     static VisionProcessor instance_ = new VisionProcessor();
     VisionUpdate update_ = null;
     FieldTransform fieldTransform = FieldTransform.getInstance();
+    
+    public GyroTracker gyroHistory = new GyroTracker();
 
     public static VisionProcessor getInstance() {
         return instance_;
@@ -43,8 +49,9 @@ public class VisionProcessor implements Loop, VisionUpdateReceiver {
         }
         SmartDashboard.putString("DB/String 4", "Timestamp: " + Double.toString(Utility.getFPGATime() - update.getCapturedAtTimestamp()));
         
-        fieldTransform.addVisionTargets(update.getTargets());
-        fieldTransform.getFieldToTargets();
+        gyroHistory.register(Timestamp.setNewTime(), new Bearing(-NavSensor.getInstance().getAngle(false)));
+        
+        fieldTransform.addVisionTargets(update.getTargets(), update.getCapturedAtTimestamp());
     }
 
     @Override
