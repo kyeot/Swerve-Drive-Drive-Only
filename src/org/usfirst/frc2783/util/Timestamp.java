@@ -2,24 +2,30 @@ package org.usfirst.frc2783.util;
 
 import edu.wpi.first.wpilibj.Utility;
 
-public class Timestamp {
+public class Timestamp implements Comparable<Timestamp>{
 
-	double t;
+	Double t;
 	
 	public Timestamp(double t) {
 		this.t = t;
 	}
 	
 	public static Timestamp setNewTime() {
-		return new Timestamp(Utility.getFPGATime());
+		return new Timestamp(Utility.getFPGATime()*10E-7);
 	}
 	
-	public double getTime() {
+	public Double getTime() {
 		return t;
 	}
 	
-	public double getAge() {
-		return Utility.getFPGATime() - t;
+	public Double getAge() {
+		return Utility.getFPGATime()*10E-7 - t;
+	}
+
+	@Override
+	public int compareTo(Timestamp o) {
+		// TODO Auto-generated method stub
+		return o.getAge().compareTo(this.t);
 	}
 	
 }

@@ -2,14 +2,12 @@ package org.usfirst.frc2783.robot;
 
 import java.util.List;
 
-import org.usfirst.frc2783.loops.VisionProcessor;
 import org.usfirst.frc2783.util.Bearing;
 import org.usfirst.frc2783.util.NavSensor;
 import org.usfirst.frc2783.util.Timestamp;
 import org.usfirst.frc2783.util.Transform;
 import org.usfirst.frc2783.util.Vector;
 import org.usfirst.frc2783.vision.server.TargetInfo;
-import org.usfirst.frc2783.vision.tracking.GyroTracker;
 import org.usfirst.frc2783.vision.tracking.TargetTracker;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -32,8 +30,7 @@ public class FieldTransform {
 	List<TargetInfo> targets;
 	double targetsTimestamp;
 	
-	TargetTracker targetHistory;
-	GyroTracker gyroHistory;
+	public TargetTracker targetHistory;
 	
 	Transform cameraToRobot;
 	Bearing camYaw;
@@ -48,19 +45,20 @@ public class FieldTransform {
 		camPitch = new Bearing(-Constants.kCameraPitchOffset);
 		camHeight = Constants.kCameraZOffset;
 		camToGoal = Constants.kGoalHeight - camHeight;
-		
 		targetHistory = new TargetTracker();
-		gyroHistory = new GyroTracker();
 	}
 	
 	public Transform getRobotPose(Timestamp t) {
-		return new Transform(0.0,0.0,VisionProcessor.getInstance().gyroHistory.getAngleAtTime(t).getTheta());
+		return new Transform(0.0,0.0,gyro.getAngleAtTime(t).getTheta());
 	}
 	
 	public Transform getFieldToCamera(Timestamp t) {
 		return getRobotPose(t).transform(new Transform(cameraToRobot.getTranslation().rotateBy(getRobotPose(t).getRotation()), cameraToRobot.getRotation()));
 	}
 	
+	/**
+	 * Updates the target history stored 
+	 */
 	public void trackLatestTarget() {
 		if(!targets.isEmpty()) {
 			TargetInfo t = targets.get(0);
@@ -80,16 +78,16 @@ public class FieldTransform {
             	Vector targetToCam = new Vector(angle.cos()*dist, angle.sin()*dist);
             	
             	Timestamp time = new Timestamp(targetsTimestamp);
-            	targetHistory.register(time, getFieldToCamera(time).getTranslation().translate(targetToCam).rotateBy(getFieldToCamera(time).getRotation()));
+            	targetHistory.register(time, getFieldToCamera(time).getTranslation().translate(targetToCam.rotateBy(getFieldToCamera(time).getRotation())));
             	
             	SmartDashboard.putString("DB/String 0", "Angle to Robot: " + Math.floor(targetHistory.getLatestTarget().dir().getTheta()));
 			}
 		}
 	}
 	
-	public void addVisionTargets(List<TargetInfo> t, double time) {
-		targets = t;
-		targetsTimestamp = time;
+	public void addVisionTargets(List<TargetInfo> targets, double time) {
+		this.targets = targets;
+		this.targetsTimestamp = time;
 	}
 
 }

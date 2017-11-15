@@ -1,12 +1,20 @@
 package org.usfirst.frc2783.util;
 
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.TreeMap;
+
+import org.usfirst.frc2783.robot.Constants;
+
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.Utility;
 
 /**
- * Singleton class for getting the angle read by the gyro sensor mounted on the roborio
+ * Singleton class for getting the angle read by the gyro sensor mounted on the roborio,
+ * can also store a history of poses in a Map class
  *
  * @author 2783
  */
@@ -16,6 +24,8 @@ public class NavSensor {
 	public static NavSensor getInstance() {
 		return gyro;
 	}
+	
+	Map<Double, Bearing> history = new TreeMap<Double, Bearing>();
 	
 	NavSensor() {
 		try {
@@ -30,9 +40,9 @@ public class NavSensor {
 	
 	public double getAngle(boolean reversed) {
     	if(reversed) {
-    		return (navSensor.getAngle()+180.0)%360 - offset;
+    		return 360-((((navSensor.getAngle()+180.0)%360)+360)%360);
     	} else {
-    		return navSensor.getAngle()%360 - offset;
+    		return 360-(((navSensor.getAngle()%360)+360)%360);
     	}
     }
 	

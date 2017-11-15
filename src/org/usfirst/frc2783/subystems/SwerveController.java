@@ -26,7 +26,7 @@ public class SwerveController {
 	class SwervePoseOut implements PIDOutput {
 		@Override
 		public void pidWrite(double output) {
-			rot = output;
+			rot = -output;
 		}
 	}
 	
@@ -49,7 +49,7 @@ public class SwerveController {
 
 		@Override
 		public double pidGet() {
-			return gyro.getAngle(true);
+			return gyro.getAngle(false);
 		}
 		
 	}
@@ -70,6 +70,8 @@ public class SwerveController {
 		posePid = new PIDController(Constants.kSwerveP, Constants.kSwerveI, Constants.kSwerveD, 
 										posePidSource, 
 										posePidOut);
+		posePid.setInputRange(0, 360);
+		posePid.setContinuous();
 	}
 	
 	public void slide(double fb, double rl) {

@@ -31,6 +31,6 @@ public class Bearing {
 	}
 	
 	public double getTheta() {
-		return theta;
+		return ((theta%360)+360)%360;
 	}
 }
