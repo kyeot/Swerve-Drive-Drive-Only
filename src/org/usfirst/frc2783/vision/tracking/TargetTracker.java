@@ -8,30 +8,47 @@ import org.usfirst.frc2783.robot.Constants;
 import org.usfirst.frc2783.util.Timestamp;
 import org.usfirst.frc2783.util.Vector;
 
+import edu.wpi.first.wpilibj.Utility;
+
 public class TargetTracker {
 
-	Map<Timestamp, Vector> history = new TreeMap<>();
+	Map<Double, Vector> history = new TreeMap<>();
 	
 	public TargetTracker() {
 	}
 	
 	public void register(Timestamp timestamp, Vector target) {
-		history.put(timestamp, target);
+		history.put(timestamp.getTime(), target);
 		update();
 	}
 	
+	/**
+	 * Removes targets whose age are larger than the Constant
+	 * 
+	 * @see Constants.java
+	 */
 	public void update() {
 		if(isAlive()) {
-			for(Timestamp t : history.keySet()) {
-				if(t.getAge() > Constants.kTargetMaxAge) {
-					history.remove(t);
+			ArrayList<Double> toRemove = new ArrayList<Double>();
+			for(Double t : history.keySet()) {
+				double age = Utility.getFPGATime()*10E-7 - t;
+				if(age > Constants.kTargetMaxAge) {
+					toRemove.add(t);
 				}
 			}
+			history.keySet().removeAll(toRemove);
 		}
 	}
 	
+	/** 
+	 * Returns the most recently registered target to the history.
+	 */
 	public Vector getLatestTarget() {
-		return history.get(history.keySet().toArray()[0]);
+		if(!history.isEmpty()) {
+			return history.get(history.keySet().toArray()[history.size()-1]);
+		} else {
+			return null;
+		}
 	}
 	
 	/**
@@ -52,6 +69,8 @@ public class TargetTracker {
 	/**
 	 * Returns a stability value between 0-1
 	 * (Team 254's idea)
+	 * 
+	 * @see Constants.java
 	 */
 	public double getStability() {
 		return Math.min(1, history.size() / (Constants.kCameraFrameRate * Constants.kTargetMaxAge)); //if theres more frames than targets in the history, its not a stable target
@@ -59,14 +78,6 @@ public class TargetTracker {
 	
 	public boolean isAlive() {
 		return !history.isEmpty();
-	}
-	
-	ArrayList<Double> getTimeArray() {
-		ArrayList<Double> times = new ArrayList<Double>();
-		for(Timestamp t : history.keySet()) {
-			times.add(t.getTime());
-		}
-		return times;
 	}
 	
 }
