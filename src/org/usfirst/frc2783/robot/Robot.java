@@ -8,6 +8,7 @@ import org.usfirst.frc2783.loops.Looper;
 import org.usfirst.frc2783.loops.VisionProcessor;
 import org.usfirst.frc2783.subystems.SwerveDriveBase;
 import org.usfirst.frc2783.util.Logger;
+import org.usfirst.frc2783.util.NavSensor;
 import org.usfirst.frc2783.vision.server.VisionServer;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -36,6 +37,8 @@ public class Robot extends IterativeRobot {
         looper.addLoop(VisionProcessor.getInstance());
         Logger.info("Starting Loops");
         looper.startLoops();
+        
+        NavSensor.getInstance().updateHistory();
         
         File logFile = new File("/home/lvuser/log.txt");
         try {

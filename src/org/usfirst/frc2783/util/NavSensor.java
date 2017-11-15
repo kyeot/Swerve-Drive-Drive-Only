@@ -54,5 +54,32 @@ public class NavSensor {
     	navSensor.reset();
     	offset = angle - north;
     }
+	
+	public void updateHistory() {
+		history.put(Timestamp.setNewTime().getTime(), new Bearing(getAngle(false)));
+		ArrayList<Double> toRemove = new ArrayList<Double>();
+		for(Double t : history.keySet()) {
+			double age = Utility.getFPGATime()*10E-7 - t;
+			if(age > Constants.kGyroMaxAge) {
+				toRemove.add(t);
+			}
+		}
+		history.keySet().removeAll(toRemove);
+	}
+	
+	public Bearing getAngleAtTime(Timestamp time) {
+		if(history.get(time.getTime()) != null) {
+			return history.get(time.getTime());
+		} else {
+			boolean comparison = false;
+			for(Double t : history.keySet()) {
+				comparison = t-time.getTime() > 0;
+				if(comparison) {
+					return history.get(t);
+				}
+			}
+			return null;
+		}
+	}
 
 }
