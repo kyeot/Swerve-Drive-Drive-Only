@@ -13,9 +13,9 @@ public class Constants {
 	public static final double kSwerveModI = 0.04; 
 	public static final double kSwerveModD = 0.025;
 	
-	public static final double kSwerveP = 0.001;
-	public static final double kSwerveI = 0.001;
-	public static final double kSwerveD = 0.001;
+	public static final double kSwerveP = 0.04;
+	public static final double kSwerveI = 0.00;
+	public static final double kSwerveD = 0.15;
 	
 	public static final double kAngleToEncoderTick = 0.875;
 	
@@ -26,14 +26,16 @@ public class Constants {
 	public static final double kCameraFrameRate = 30;
 	public static final double kTargetMaxAge = 0.3; //seconds
 	
-	public static final double kCameraXOffset = 0.0;
-	public static final double kCameraYOffset = 0.0;
-	public static final double kCameraZOffset = 3.5;
-	public static final double kCameraPitchOffset = 20.0;
-	public static final double kCameraRollOffset = 0.0;
-	public static final double kCameraYawOffset = 90.0;
+	public static final double kGyroMaxAge = 0.4;
 	
-	public static final double kGoalHeight = 81.6;
+	public static final double kCameraXOffset = 13;
+	public static final double kCameraYOffset = 0.25;
+	public static final double kCameraZOffset = 3;
+	public static final double kCameraPitchOffset = 0.0;
+	public static final double kCameraRollOffset = 0.0;
+	public static final double kCameraYawOffset = 0.0;
+	
+	public static final double kGoalHeight = 8;
 	
 	public static final int kDriverControllerId = 0;
 	
