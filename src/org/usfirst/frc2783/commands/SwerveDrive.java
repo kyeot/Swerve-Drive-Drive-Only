@@ -133,8 +133,11 @@ public class SwerveDrive extends Command {
     	}
     	
     	if(controlType.getVisionButton()) {
-    		swerveController.slide(fbValue, rlValue);
-//    		swerveController.setPose(fieldTransform.getFieldToTargets().get(0).dir());
+//    		swerveController.slide(fbValue, rlValue);
+    		if(fieldTransform.targetHistory.getLatestTarget() != null) {
+        		swerveController.setPose(fieldTransform.targetHistory.getSmoothTarget().dir());
+
+    		}
     	} else {
     		swerveController.move(fbValue, rlValue, rotValue);
     	}
