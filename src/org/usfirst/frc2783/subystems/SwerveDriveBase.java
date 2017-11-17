@@ -243,8 +243,8 @@ public class SwerveDriveBase extends Subsystem {
     	
     	if(fieldOriented) {
 	    	double curAngle = gyro.getAngle(true);
-	    	double temp = fbMot*(cosDeg(curAngle)) + rlMot*(sinDeg(curAngle));
-	    	rlMot = fbMot*(sinDeg(curAngle)) + -(rlMot*(cosDeg(curAngle)));
+	    	double temp = (-fbMot)*(cosDeg(curAngle)) + rlMot*(sinDeg(curAngle));
+	    	rlMot = rlMot*(cosDeg(curAngle)) + -((-fbMot)*(sinDeg(curAngle)));
 	    	fbMot = temp;
     	}
     	

@@ -40,7 +40,7 @@ public class NavSensor {
 	
 	public double getAngle(boolean reversed) {
     	if(reversed) {
-    		return 360-((((navSensor.getAngle()+180.0)%360)+360)%360);
+    		return 360-((((navSensor.getAngle()+180.0)%360)+360)%360); //deals with negative angles, java 8 simply keeps the sign when modulating negative values.
     	} else {
     		return 360-(((navSensor.getAngle()%360)+360)%360);
     	}
