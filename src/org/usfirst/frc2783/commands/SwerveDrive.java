@@ -111,7 +111,7 @@ public class SwerveDrive extends Command {
     	}
     	
     	//Makes it so if the right stick is barely moved at all it doesn't move at all
-    	if (rotValue > -.2 && rotValue < .2){
+    	if (rotValue > -0.2 && rotValue < .2){
     		rotValue = 0.0;
     	}
     	
@@ -120,6 +120,12 @@ public class SwerveDrive extends Command {
     		fbValue *= 2;
     		rlValue *= 2;
     		rotValue *= 2;
+    	}
+    	
+    	if(controlType.getDockingModeButton()) {
+    		fbValue *= 0.5;
+    		rlValue *= 0.5;
+    		rotValue *= 0.5;
     	}
     	
     	//If the X button is pressed resets the Swerve Modules
@@ -133,7 +139,7 @@ public class SwerveDrive extends Command {
     	}
     	
     	if(controlType.getVisionButton()) {
-//    		swerveController.slide(fbValue, rlValue);
+    		swerveController.slide(fbValue, rlValue);
     		if(fieldTransform.targetHistory.getLatestTarget() != null) {
         		swerveController.setPose(fieldTransform.targetHistory.getSmoothTarget().dir());
 
@@ -142,13 +148,8 @@ public class SwerveDrive extends Command {
     		swerveController.move(fbValue, rlValue, rotValue);
     	}
     	
-    	if(controlType.getDockingModeButton()) {
-    		System.out.println("Docking Mode");
-    		
-    		swerveController.update(false);
-    	} else {
-    		swerveController.update(true);
-    	}
+    	swerveController.update(true);
+    	
     	
     }
 

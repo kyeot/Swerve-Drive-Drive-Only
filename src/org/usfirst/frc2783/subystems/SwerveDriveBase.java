@@ -242,9 +242,9 @@ public class SwerveDriveBase extends Subsystem {
     	//Swerve Math Taken from: https://www.chiefdelphi.com/media/papers/2426
     	
     	if(fieldOriented) {
-	    	double curAngle = gyro.getAngle(true);
-	    	double temp = fbMot*(cosDeg(curAngle)) + rlMot*(sinDeg(curAngle));
-	    	rlMot = fbMot*(sinDeg(curAngle)) + -(rlMot*(cosDeg(curAngle)));
+	    	double curAngle = gyro.getAngle(false);
+	    	double temp = (-fbMot)*(cosDeg(curAngle)) + rlMot*(sinDeg(curAngle));
+	    	rlMot = rlMot*(cosDeg(curAngle)) + -(-(fbMot)*(sinDeg(curAngle)));
 	    	fbMot = temp;
     	}
     	

@@ -71,6 +71,9 @@ public class FieldTransform {
             double yr = y;
             double zr = z * camPitch.cos() - x * camPitch.sin();
             
+            SmartDashboard.putString("DB/String 2", "zr: " + zr);
+            
+            
             if(zr > 0) {
             	double s = camToGoal / zr;
             	double dist = Math.hypot(xr, yr) * s;
@@ -81,7 +84,8 @@ public class FieldTransform {
             	targetHistory.register(time, getFieldToCamera(time).getTranslation().translate(targetToCam.rotateBy(getFieldToCamera(time).getRotation())));
             	
             	SmartDashboard.putString("DB/String 0", "Angle to Robot: " + Math.floor(targetHistory.getLatestTarget().dir().getTheta()));
-			}
+            	SmartDashboard.putString("DB/String 1", "" + gyro.history.size());
+            }
 		}
 	}
 	

@@ -11,6 +11,7 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Utility;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Singleton class for getting the angle read by the gyro sensor mounted on the roborio,
@@ -25,7 +26,7 @@ public class NavSensor {
 		return gyro;
 	}
 	
-	Map<Double, Bearing> history = new TreeMap<Double, Bearing>();
+	public Map<Double, Bearing> history = new TreeMap<Double, Bearing>();
 	
 	NavSensor() {
 		try {
