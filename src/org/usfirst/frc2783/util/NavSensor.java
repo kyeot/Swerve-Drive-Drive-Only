@@ -26,6 +26,15 @@ public class NavSensor {
 		return gyro;
 	}
 	
+	
+	private boolean isNegative(double possibleNegativeValue) {
+		return possibleNegativeValue < 0;
+	}
+	
+	private double findTerm(int termNumber) {
+		return (double) history.keySet().toArray()[termNumber];
+	}
+	
 	public Map<Double, Bearing> history = new TreeMap<Double, Bearing>();
 	
 	NavSensor() {
@@ -69,17 +78,51 @@ public class NavSensor {
 	}
 	
 	public Bearing getAngleAtTime(Timestamp time) {
-		if(history.get(time.getTime()) != null) {
-			return history.get(time.getTime());
+		
+		//Initial setting of variables
+		double desiredTime = time.getTime();
+		double numberOfTerms = history.keySet().size();
+		double previousTerm = 0;
+		int counter = 0;
+		
+		//Finding middle of set, rounded down to the nearest term
+		double referenceTerm = (numberOfTerms / 2) - ((numberOfTerms / 2) % 1);
+		
+		//Finding reference state
+		boolean referenceState = isNegative(desiredTime - findTerm(0));
+		
+		//Search for closest time to desired time
+		if(history.get(desiredTime) != null) {
+			//Desired time exists in array
+			return history.get(desiredTime);
 		} else {
+			//Desired time does not exist, search for closest time
 			boolean comparison = false;
-			for(Double t : history.keySet()) {
-				comparison = t-time.getTime() > 0;
-				if(comparison) {
-					return history.get(t);
+			
+			//Find closest time by sign changes in halves
+			while(Math.abs(previousTerm - referenceTerm) != 1) {
+				if(referenceState == isNegative(desiredTime - findTerm((int) referenceTerm))) {
+					//Closest time is in upper half of series bounded by relative maxima and minima
+					previousTerm = referenceTerm;
+					referenceTerm = referenceTerm + ((referenceTerm / 2) - ((referenceTerm / 2) % 1));
+					counter++;
+				} else {
+					//Closest time is in lower half of series bounded by relative maxima and minima
+					previousTerm = referenceTerm;
+					referenceTerm = ((referenceTerm / 2) - ((referenceTerm / 2) % 1));
+					counter++;
 				}
 			}
-			return null;
+			//Compare previousTerm and referenceTerm to find the closer time
+			if((Math.abs((findTerm((int) previousTerm) - desiredTime))) >
+			   (Math.abs((findTerm((int) referenceTerm) - desiredTime)))) {
+				return history.get(findTerm((int) referenceTerm));
+				counter++;
+			} else {
+				return history.get(findTerm((int) previousTerm));
+				counter++;
+			}
+			SmartDashboard.putString("DB/String 3", Double.toString(counter));
 		}
 	}
 
