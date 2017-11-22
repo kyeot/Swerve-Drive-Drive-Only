@@ -68,8 +68,15 @@ std::vector<TargetInfo> processImpl(int w, int h, int texOut, DisplayMode mode,
     convex_contour.clear();
     cv::convexHull(contour, convex_contour, false);
     poly.clear();
+<<<<<<< HEAD
     cv::approxPolyDP(convex_contour, poly, 20, true);
     if (poly.size() == 4 && cv::isContourConvex(poly)) {
+=======
+    //turns out that the 5 in this method controls if things have contours drawn at range. Lower values make it less accurate but able to contour smaller vision targets.
+    cv::approxPolyDP(convex_contour, poly, 3, true);
+    LOGD("Poly.size() : %.2lf", (double)poly.size());
+    if ((poly.size() == 4) && cv::isContourConvex(poly)) {
+>>>>>>> c50804f... adjusted vision threshold values for steamworks target
       TargetInfo target;
       int min_x = std::numeric_limits<int>::max();
       int max_x = std::numeric_limits<int>::min();
@@ -97,10 +104,19 @@ std::vector<TargetInfo> processImpl(int w, int h, int texOut, DisplayMode mode,
 
       // Filter based on size
       // Keep in mind width/height are in imager terms...
+<<<<<<< HEAD
       const double kMinTargetWidth = 20;
       const double kMaxTargetWidth = 300;
       const double kMinTargetHeight = 10;
       const double kMaxTargetHeight = 100; //should be 100, adjust to 121 for testing in emulator
+=======
+      const double kMinTargetWidth = 5;       //2 inches wide
+      const double kMaxTargetWidth = 60;
+      const double kMinTargetHeight = 15;     //5 inches long (these are just reference measurements, not related to value)
+      const double kMaxTargetHeight = 130;
+        LOGD("Target size H: %.2lf | W: %.2lf",
+             target.height, target.width);
+>>>>>>> c50804f... adjusted vision threshold values for steamworks target
       if (target.width < kMinTargetWidth || target.width > kMaxTargetWidth ||
           target.height < kMinTargetHeight ||
           target.height > kMaxTargetHeight) {
@@ -139,9 +155,18 @@ std::vector<TargetInfo> processImpl(int w, int h, int texOut, DisplayMode mode,
         rejected_targets.push_back(std::move(target));
         continue;
       }
+<<<<<<< HEAD
       // Filter based on fullness
       const double kMinFullness = .45; //should be .2, adjust to 0 for testing with emulator
       const double kMaxFullness = .95; //should be .9, adjust to 1 for testing with emulator
+=======
+
+      //Filter based on fullness
+      const double kMinFullness = .8;
+      const double kMaxFullness = 1.3;
+
+        //This compares the contour area reported by OpenCV with the area of the polygon drawn from the contour points.
+>>>>>>> c50804f... adjusted vision threshold values for steamworks target
       double original_contour_area = cv::contourArea(contour);
       double poly_area = cv::contourArea(poly);
       double fullness = original_contour_area / poly_area;
