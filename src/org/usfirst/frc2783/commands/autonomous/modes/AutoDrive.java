@@ -2,14 +2,14 @@ package org.usfirst.frc2783.commands.autonomous.modes;
 
 import java.util.UUID;
 
+import org.usfirst.frc2783.robot.Robot;
+import org.usfirst.frc2783.subystems.Superstructure;
 import org.usfirst.frc2783.subystems.SwerveController;
 import org.usfirst.frc2783.util.Logger;
 import org.usfirst.frc2783.util.Timer;
 import org.usfirst.frc2783.util.Vector;
 
-public class AutoDrive implements Action {
-
-	private String id;
+public class AutoDrive extends Action {
 	
 	Timer timer;
 	
@@ -18,7 +18,7 @@ public class AutoDrive implements Action {
 	double rot;
 	
 	public AutoDrive(double ang, double vel, double rot, double time) {
-		id = "AutoDrive:" + UUID.randomUUID().toString();
+		super(Superstructure.getInstance().mArm, "AutoDrive");
 		
 		this.ang = ang;
 		this.vel = vel;
@@ -42,22 +42,4 @@ public class AutoDrive implements Action {
 	public boolean done() {
 		return timer.ring();
 	}
-
-	@Override
-	public void finish() {
-	}
-	
-	
-	@Override
-	public boolean fail() {
-		return false;
-	}
-	
-	public String getId() {
-		return id;
-	}
-
-	
-
-	
 }

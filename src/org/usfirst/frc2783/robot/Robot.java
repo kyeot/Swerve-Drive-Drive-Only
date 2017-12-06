@@ -7,6 +7,7 @@ import org.usfirst.frc2783.commands.autonomous.modes.ActionScheduler;
 import org.usfirst.frc2783.loops.LogData;
 import org.usfirst.frc2783.loops.Looper;
 import org.usfirst.frc2783.loops.VisionProcessor;
+import org.usfirst.frc2783.subystems.Superstructure;
 import org.usfirst.frc2783.subystems.SwerveDriveBase;
 import org.usfirst.frc2783.util.Logger;
 import org.usfirst.frc2783.util.NavSensor;
@@ -14,6 +15,7 @@ import org.usfirst.frc2783.vision.server.VisionServer;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
@@ -27,13 +29,16 @@ public class Robot extends IterativeRobot {
     public static OI oi;
     public static Looper looper = new Looper();
     
-    VisionServer mVisionServer = VisionServer.getInstance();
+    static VisionServer mVisionServer = VisionServer.getInstance();
+    static Controls mControls = Controls.getInstance();
+    static Superstructure mSuperstructure = Superstructure.getInstance();
     
     NetworkTable smartDashTable;
     
 	public static ActionScheduler autoScheduler;
     
     public static SwerveDriveBase swerveBase = new SwerveDriveBase();
+    public static PowerDistributionPanel pdp = new PowerDistributionPanel();
     
     public void robotInit() {
         oi = new OI();
@@ -100,6 +105,15 @@ public class Robot extends IterativeRobot {
     }
 
     public void teleopPeriodic() {
+    	try {
+    		mSuperstructure.setOpenLoop(mControls.getArmRate(), mControls.getRollerRate());
+    		SmartDashboard.putString("DB/String 0", "" + pdp.getCurrent(5));
+    		SmartDashboard.putString("DB/String 1", "" + pdp.getCurrent(15));
+    		
+    	} catch(Throwable t) {
+    		Logger.error("Exception caught in Control Loop");
+    		throw(t);
+    	}
         Scheduler.getInstance().run();
     }
 

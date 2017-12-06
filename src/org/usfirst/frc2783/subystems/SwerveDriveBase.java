@@ -1,7 +1,6 @@
 package org.usfirst.frc2783.subystems;
 
 import org.usfirst.frc2783.commands.SwerveDrive;
-import org.usfirst.frc2783.commands.SwerveDrive.ControlType;
 import org.usfirst.frc2783.robot.Constants;
 import org.usfirst.frc2783.util.NavSensor;
 
@@ -219,7 +218,7 @@ public class SwerveDriveBase extends Subsystem {
 
     //Initiates SwerveDrive as the Default Command
     public void initDefaultCommand() {
-        setDefaultCommand(new SwerveDrive(ControlType.CONTROLLER));
+        setDefaultCommand(new SwerveDrive());
     }
     
     //Small, simple tank drive method

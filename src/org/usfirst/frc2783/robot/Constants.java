@@ -18,6 +18,13 @@ public class Constants {
 	public static final double kSwerveI = 0.00;
 	public static final double kSwerveD = 0.15;
 	
+	public static final double kTurretP = 0.001;
+	public static final double kTurretI = 0.000;
+	public static final double kTurretD = 0.000;
+	
+	public static final double kTurretStowedAngle = 0;
+	public static final double kTurretAngleTolerance = 0;
+	
 	public static final double kAngleToEncoderTick = 0.875;
 	
 	public static final double kEventDelay = 4;
@@ -38,7 +45,23 @@ public class Constants {
 	
 	public static final double kGoalHeight = 8;
 	
+	public static final int kArmPdpPortId = 0;
+	public static final double kArmCurrentLoweredThreshold = 0.1;
+	
 	public static final int kDriverControllerId = 0;
+	public static final int kGunnerControllerId = 1;
+	
+	public static final double kDriverTranslateDeadband = 0.15;
+	public static final double kDriverRotateDeadband = 0.15;
+	
+	public static final double kGunnerArmDeadband = 0.15;
+	public static final double kGunnerRollerDeadband = 0.15;
+	
+	public static final int kRollerMotorId = 5;
+	public static final int kArmMotorId = 4;
+	
+	public static final int kGearCheckSwitchId = 0;
+	public static final int kArmTopSwitchId = 1;
 	
 	public static final int kFrontLeftWheelId = 2;
 	public static final int kFrontRightWheelId = 0;
