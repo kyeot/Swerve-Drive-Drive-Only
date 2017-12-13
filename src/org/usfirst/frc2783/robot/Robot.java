@@ -48,6 +48,7 @@ public class Robot extends IterativeRobot {
         NavSensor.getInstance().resetGyroNorth(180, 0);
         
         looper.addLoop(new LogData());
+        looper.addLoop(mSuperstructure.getLoop());
         looper.addLoop(VisionProcessor.getInstance());
         Logger.info("Starting Loops");
         looper.startLoops();
@@ -70,7 +71,7 @@ public class Robot extends IterativeRobot {
 		}
     }
 
-    public void disabledInit(){
+    public void disabledInit() {	
     	autoScheduler.stop();
     }
 
@@ -106,9 +107,12 @@ public class Robot extends IterativeRobot {
 
     public void teleopPeriodic() {
     	try {
-    		mSuperstructure.setOpenLoop(mControls.getArmRate(), mControls.getRollerRate());
-    		SmartDashboard.putString("DB/String 0", "" + pdp.getCurrent(5));
-    		SmartDashboard.putString("DB/String 1", "" + pdp.getCurrent(15));
+//    		mSuperstructure.setOpenLoop(mControls.getArmRate(), mControls.getRollerRate());
+    		if(Controls.getInstance().getActiveGearDeploy()) {
+    			mSuperstructure.stow();
+    		}
+//    		SmartDashboard.putString("DB/String 0", "" + pdp.getCurrent(5));
+//    		SmartDashboard.putString("DB/String 1", "" + pdp.getCurrent(15));
     		
     	} catch(Throwable t) {
     		Logger.error("Exception caught in Control Loop");

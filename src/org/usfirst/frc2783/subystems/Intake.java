@@ -4,6 +4,7 @@ import org.usfirst.frc2783.commands.autonomous.modes.Action;
 import org.usfirst.frc2783.robot.Constants;
 import org.usfirst.frc2783.util.Timer;
 
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.VictorSP;
 
@@ -80,7 +81,7 @@ public class Intake implements Subsystem {
 	
 	VictorSP mRoller;
 	
-	DigitalInput mGearCheck;
+	AnalogInput mGearCheck;
 	
 	Intake() {
 		mState = SubsystemState.IDLE;
@@ -88,11 +89,11 @@ public class Intake implements Subsystem {
 		
 		mRoller = new VictorSP(Constants.kRollerMotorId);
 		
-		mGearCheck = new DigitalInput(Constants.kGearCheckSwitchId);
+		mGearCheck = new AnalogInput(Constants.kGearCheckSwitchId);
 	}
 	
 	public boolean checkGear() {
-		return mGearCheck.get();
+		return mGearCheck.getValue() > 10;
 	}
 	
 	public void setOpenLoop(double speed) {

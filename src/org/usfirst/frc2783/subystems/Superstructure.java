@@ -32,7 +32,7 @@ public class Superstructure {
 	
 	ActionScheduler scheduler;
 	
-	ArrayList<Subsystem> mSubsystems;
+	ArrayList<Subsystem> mSubsystems = new ArrayList<Subsystem>();
 	
 	SystemState mState;
 	WantedState mWantedState;
@@ -42,9 +42,14 @@ public class Superstructure {
 	public Arm mArm = new Arm();
 	
 	Superstructure() {
-//		mSubsystems.add(mTurret);
-		mSubsystems.add(mIntake);
-		mSubsystems.add(mArm);
+////		mSubsystems.add(mTurret);
+		try {
+			mSubsystems.add(mIntake);
+			mSubsystems.add(mArm);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
 		
 		scheduler = new ActionScheduler();
 		scheduler.start();
@@ -54,6 +59,8 @@ public class Superstructure {
 
 		@Override
 		public void onStart() {
+			mWantedState = WantedState.IDLE;
+			mState = SystemState.IDLE;
 		}
 
 		@Override
@@ -72,6 +79,10 @@ public class Superstructure {
 		}
 		
 	};
+	
+	public void stow() {
+		setWantedState(WantedState.STOW);
+	}
 	
 	public void getGear() {
 		setWantedState(WantedState.DEPLOY);
@@ -132,6 +143,10 @@ public class Superstructure {
 	
 	public void setWantedState(WantedState state) {
 		mWantedState = state;
+	}
+	
+	public Loop getLoop() {
+		return loop;
 	}
 
 }

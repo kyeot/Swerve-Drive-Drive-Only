@@ -1,14 +1,12 @@
 package org.usfirst.frc2783.subystems;
 
 import org.usfirst.frc2783.commands.autonomous.modes.Action;
-import org.usfirst.frc2783.loops.Loop;
 import org.usfirst.frc2783.robot.Constants;
 import org.usfirst.frc2783.robot.Robot;
 
 import com.ctre.CANTalon;
-import com.ctre.CANTalon.TalonControlMode;
 
-import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.AnalogInput;
 
 public class Arm implements Subsystem {
 	
@@ -76,7 +74,7 @@ public class Arm implements Subsystem {
 	
 	CANTalon mArm;
 	
-	DigitalInput mArmTopSwitch;
+	AnalogInput mArmTopSwitch;
 	
 	public Arm() {
 		mState = SubsystemState.IDLE;
@@ -84,11 +82,11 @@ public class Arm implements Subsystem {
 		
 		mArm = new CANTalon(Constants.kArmMotorId);
 		
-		mArmTopSwitch = new DigitalInput(Constants.kGearCheckSwitchId);
+		mArmTopSwitch = new AnalogInput(Constants.kArmTopSwitchId);
 	}
 	
 	public boolean isStowed() {
-		return mArmTopSwitch.get();
+		return mArmTopSwitch.getValue() > 10;
 	}
 	
 	public boolean isLowered() {
@@ -96,7 +94,6 @@ public class Arm implements Subsystem {
 	}
 	
 	public void setOpenLoop(double speed) {
-		mArm.changeControlMode(TalonControlMode.Speed);
 		mArm.set(speed);
 	}
 	

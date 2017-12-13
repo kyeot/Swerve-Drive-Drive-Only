@@ -134,6 +134,9 @@ public class ActionScheduler {
 	}
 	
 	public void queue(Action action) {
+		if(action == null) {
+			return;
+		}
 		for(Task t : tasks) {
 			if(action.getSubsystem() == t.getSubsystem()) {
 				t.queue(action);
