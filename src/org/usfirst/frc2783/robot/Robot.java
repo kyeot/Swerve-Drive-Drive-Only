@@ -1,6 +1,5 @@
 package org.usfirst.frc2783.robot;
 
-import org.usfirst.frc2783.loops.Looper;
 import org.usfirst.frc2783.subystems.SwerveDriveBase;
 
 import com.kauailabs.navx.frc.AHRS;
@@ -15,7 +14,6 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 public class Robot extends IterativeRobot {
 
     public static OI oi;
-    public static Looper looper = new Looper();
     
     private static AHRS navSensor;
     
@@ -23,7 +21,6 @@ public class Robot extends IterativeRobot {
     
     public void robotInit() {
         oi = new OI();
-        looper.startLoops();
         
         try {
 	         navSensor = new AHRS(SPI.Port.kMXP);
