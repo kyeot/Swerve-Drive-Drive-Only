@@ -17,10 +17,10 @@ public class Constants {
 	
 	public static final int kDriverControllerId = 0;
 	
-	public static final int kFrontLeftWheelId = 5;
-	public static final int kFrontRightWheelId = 1;
-	public static final int kRearLeftWheelId = 4;
-	public static final int kRearRightWheelId = 2;
+	public static final int kFrontLeftWheelId = 2;
+	public static final int kFrontRightWheelId = 0;
+	public static final int kRearLeftWheelId = 3;
+	public static final int kRearRightWheelId = 1;
 	
 	public static final int kFrontLeftSwivelId = 2;
 	public static final int kFrontRightSwivelId = 0;

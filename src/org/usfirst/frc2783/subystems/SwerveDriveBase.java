@@ -5,7 +5,6 @@ import org.usfirst.frc2783.commands.SwerveDrive.ControlType;
 import org.usfirst.frc2783.robot.Constants;
 import org.usfirst.frc2783.robot.Robot;
 
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -16,6 +15,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
+import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -39,15 +39,15 @@ public class SwerveDriveBase extends Subsystem {
 	 *
 	 */
 	public class PIDOutputClass implements PIDOutput {
-		private VictorSPX motor;
+		private VictorSP motor;
 		
-		public PIDOutputClass(VictorSPX motor) {
-			this.motor = motor;
+		public PIDOutputClass(VictorSP swivelMot) {
+			this.motor = swivelMot;
 		}
 		
 		@Override
 		public void pidWrite(double output) {
-			motor.set(ControlMode.PercentOutput, output);
+			motor.set(output);
 		}
 	}
 	
@@ -58,7 +58,7 @@ public class SwerveDriveBase extends Subsystem {
 	 */
 	public class SwerveModule {
 		TalonSRX driveMot;
-		VictorSPX swivelMot;
+		VictorSP swivelMot;
 		Encoder enc;
 		
 		PIDOutputClass pidOut;
@@ -74,7 +74,7 @@ public class SwerveDriveBase extends Subsystem {
 		 * @param enc Encoder that tracks the angle of the swivel motor
 		 */
 		public SwerveModule(
-				VictorSPX swivelMot,
+				VictorSP swivelMot,
 				TalonSRX driveMot,
 				Encoder enc
 				) {
@@ -158,7 +158,7 @@ public class SwerveDriveBase extends Subsystem {
 		
 		//Sets the Swivel Motor's speed
 		public void setSwivel(double speed) {
-			swivelMot.set(ControlMode.PercentOutput, speed);
+			swivelMot.set(speed);
 		}
 
 		//Returns where the Encoder is
@@ -205,7 +205,7 @@ public class SwerveDriveBase extends Subsystem {
     	
     	//Creates the front right Swerve Module
     	flMod = new SwerveModule(
-    					new VictorSPX(Constants.kFrontLeftSwivelId),
+    					new VictorSP(Constants.kFrontLeftSwivelId),
     					new TalonSRX(Constants.kFrontLeftWheelId),
     					new Encoder(new DigitalInput(Constants.kFrontLeftEncoderA), 
     								new DigitalInput(Constants.kFrontLeftEncoderB),
@@ -215,7 +215,7 @@ public class SwerveDriveBase extends Subsystem {
     	
     	//Creates the front left Swerve Module
     	rlMod = new SwerveModule(
-    					new VictorSPX(Constants.kRearLeftSwivelId),
+    					new VictorSP(Constants.kRearLeftSwivelId),
     					new TalonSRX(Constants.kRearLeftWheelId),
     					new Encoder(new DigitalInput(Constants.kRearLeftEncoderA), 
     								new DigitalInput(Constants.kRearLeftEncoderB),
@@ -225,7 +225,7 @@ public class SwerveDriveBase extends Subsystem {
     	
     	//Creates the rear right Swerve Module
     	frMod = new SwerveModule(
-    					new VictorSPX(Constants.kFrontRightSwivelId),
+    					new VictorSP(Constants.kFrontRightSwivelId),
     					new TalonSRX(Constants.kFrontRightWheelId),
     					new Encoder(new DigitalInput(Constants.kFrontRightEncoderA), 
     								new DigitalInput(Constants.kFrontRightEncoderB),
@@ -235,7 +235,7 @@ public class SwerveDriveBase extends Subsystem {
     			
     	//Creates the rear left Swerve Module
     	rrMod = new SwerveModule(
-    					new VictorSPX(Constants.kRearRightSwivelId),
+    					new VictorSP(Constants.kRearRightSwivelId),
     					new TalonSRX(Constants.kRearRightWheelId),
     					new Encoder(new DigitalInput(Constants.kRearRightEncoderA), 
     								new DigitalInput(Constants.kRearRightEncoderB),
@@ -293,10 +293,10 @@ public class SwerveDriveBase extends Subsystem {
     	double W = 1.0;
     	double R = Math.sqrt((L*L) + (W*W));
     	
-    	double A = rlMot - rotMot*(L/R);
-    	double B = rlMot + rotMot*(L/R);
-    	double C = fbMot - rotMot*(W/R);
-    	double D = fbMot + rotMot*(W/R);
+    	double A = rlMot + rotMot*(L/R);
+    	double B = rlMot - rotMot*(L/R);
+    	double C = fbMot + rotMot*(W/R);
+    	double D = fbMot - rotMot*(W/R);
     	
     	double frSpd = Math.sqrt((B*B) + (D*D));
     	double flSpd = Math.sqrt((B*B) + (C*C));
