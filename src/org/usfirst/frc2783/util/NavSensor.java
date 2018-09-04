@@ -117,12 +117,9 @@ public class NavSensor {
 			if((Math.abs((findTerm((int) previousTerm) - desiredTime))) >
 			   (Math.abs((findTerm((int) referenceTerm) - desiredTime)))) {
 				return history.get(findTerm((int) referenceTerm));
-				counter++;
 			} else {
 				return history.get(findTerm((int) previousTerm));
-				counter++;
 			}
-			SmartDashboard.putString("DB/String 3", Double.toString(counter));
 		}
 	}
 

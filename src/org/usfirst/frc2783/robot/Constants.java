@@ -51,14 +51,14 @@ public class Constants {
 	public static final int kRearLeftSwivelId = 3;
 	public static final int kRearRightSwivelId = 1;
 	
-	public static final int kFrontLeftEncoderA = 6;
-	public static final int kFrontLeftEncoderB = 7;
-	public static final int kFrontRightEncoderA = 2;
-	public static final int kFrontRightEncoderB = 3;
-	public static final int kRearLeftEncoderA = 4;
-	public static final int kRearLeftEncoderB = 5;
-	public static final int kRearRightEncoderA = 0;
-	public static final int kRearRightEncoderB = 1;
+	public static final int kFrontLeftEncoderA = 4;
+	public static final int kFrontLeftEncoderB = 5;
+	public static final int kFrontRightEncoderA = 0;
+	public static final int kFrontRightEncoderB = 1;
+	public static final int kRearLeftEncoderA = 6;
+	public static final int kRearLeftEncoderB = 7;
+	public static final int kRearRightEncoderA = 2;
+	public static final int kRearRightEncoderB = 3;
 
 	
 
