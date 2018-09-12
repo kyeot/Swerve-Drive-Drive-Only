@@ -71,8 +71,7 @@ public class Robot extends IterativeRobot {
         Scheduler.getInstance().run();
     }
 
-    public void testPeriodic() {
-        LiveWindow.run();
+	public void testPeriodic() {
     }
     
     public static String parseMatchTime() {

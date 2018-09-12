@@ -261,10 +261,10 @@ public class SwerveDriveBase extends Subsystem {
     	double W = 1.0;
     	double R = Math.sqrt((L*L) + (W*W));
     	
-    	double A = rlMot + rotMot*(L/R);
-    	double B = rlMot - rotMot*(L/R);
-    	double C = fbMot + rotMot*(W/R);
-    	double D = fbMot - rotMot*(W/R);
+    	double A = rlMot - rotMot*(L/R);
+    	double B = rlMot + rotMot*(L/R);
+    	double C = fbMot - rotMot*(W/R);
+    	double D = fbMot + rotMot*(W/R);
     	
     	double frSpd = Math.sqrt((A*A) + (C*C));
     	double flSpd = Math.sqrt((A*A) + (D*D));
