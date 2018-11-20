@@ -1,3 +1,4 @@
+// This is the 2018 Season Code with everything that's not necessary to driving removed
 package org.usfirst.frc2783.robot;
 
 import org.usfirst.frc2783.loops.Looper;
